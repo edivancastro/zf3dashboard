@@ -1,0 +1,41 @@
+<div class="container">
+<h1>Usuários</h1>
+<hr/>
+<div class="module module-cadastro clearfix">
+	<div class="module-head">
+			<h3>Alterar cadastro</h3>
+	</div>
+	<div class="module-body">
+	<form autocomplete="off" method="post">
+		<div class="form-group">
+			<label>Nome</label>
+			<input value="<?= $this->usuario->getNome();?>" class="form-control" type="text" name="nome" />
+		</div>
+		<div class="form-group">
+			<label>Email</label>
+			<input value="<?= $this->usuario->getEmail();?>" class="form-control" type="email" name="email" />
+		</div>
+		<div class="form-group form-group-sm">
+			<label>Login</label>
+			<input value="<?= $this->usuario->getLogin();?>" class="form-control" type="text" name="login" />
+		</div>
+		<div class="form-group form-group-sm">
+			<label>Senha</label>
+			<input class="form-control" type="password" name="senha" />
+		</div>
+		<hr/>
+		<div class="form-group form-group-sm">
+			<label>Função</label>
+			<select class="form-control" name="funcao">
+				<option></option>
+				<?php foreach($this->funcoes as $funcao):?>
+				<option <?php if($this->usuario->getRole()->getId()==$funcao->getId()): ?>selected="selected"<?php endif;?> value="<?=$funcao->getId(); ?>"><?=$funcao->getDescricao(); ?></option>
+				<?php endforeach;?>
+			</select>
+		</div>
+		<hr/>
+		<button type="submit" class="btn btn-success pull-right">Cadastrar</button>
+	</form>
+	</div>
+</div>
+</div>

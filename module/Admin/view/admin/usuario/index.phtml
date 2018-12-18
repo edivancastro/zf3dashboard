@@ -1,0 +1,74 @@
+<?php 
+$this->headScript()->appendFile($this->basePath("js/datatables.min.js"));
+$this->headScript()->appendFile($this->basePath("js/datatables.bootstrap.min.js"));
+$this->headLink()->appendStylesheet($this->basePath('css/datatables.min.css'));
+$this->headLink()->appendStylesheet($this->basePath('css/datatables.bootstrap.css'));
+?>
+<div class="container">
+<h1>Usuários</h1>
+<hr/>
+<button id="btn-new" type="button" class="btn btn-primary">Novo</button>
+<table id="Tusuarios" class="dataTable">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th class="all">Nome</th>
+			<th>Login</th>
+			<th>Função</th>
+			<th class="all"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach($usuarios as $usuario):?>
+		<tr>
+			<td><?=$usuario->getId();?></td>
+			<td><?=$usuario->getNome();?></td>
+			<td><?=$usuario->getlogin();?></td>
+			<td><?=$usuario->getRole()->getDescricao();?></td>
+			<td><button value="<?=$usuario->getId();?>" name="editar" class="btn btn-success">Editar</button></td>
+		</tr>
+		<?php endforeach;?>
+	</tbody>
+</table>
+</div>
+<script>
+$().ready(function(){
+
+	$("#btn-new").click(function(){
+		document.location.href = "<?php echo $this->url("usuario",["action"=>"cadastrar"]);?>";
+	});
+
+	$("button[name=editar]").click(function(){
+		document.location.href = "<?php echo $this->url('usuario',['action'=>'editar']);?>/id/" + $(this).attr("value");
+	});
+	
+	$('#Tusuarios').DataTable({
+		responsive:true,
+		"columns": [
+		    { "width": "5%" },
+		    null,
+		    { "width": "20%" },
+		    { "width": "20%" },
+		    { "width": "5%" }
+		 ],
+		info:false,
+		paging:false,
+		searching:false,
+		"language": {
+            "lengthMenu": "Exibir _MENU_ registros",
+            "emptyTable":     "&nbsp;",
+            "zeroRecords": "&nbsp;",
+            "info": "Pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "&nbsp;",
+            "search": "Buscar",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "paginate": {
+                "first":      "Primeiro",
+                "last":       "Ultimo",
+                "next":       "proximo",
+                "previous":   "Anterior"
+            },   
+        },
+	});
+});
+</script>
