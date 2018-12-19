@@ -25,10 +25,14 @@ $this->headLink()->appendStylesheet($this->basePath('css/datatables.bootstrap.cs
 			<td><?=$usuario->getNome();?></td>
 			<td><?=$usuario->getlogin();?></td>
 			<td><?=$usuario->getRole()->getDescricao();?></td>
+<<<<<<< HEAD
 			<td>
 				<button value="<?=$usuario->getId();?>" name="editar" class="btn-icon"><img class="icon" src="<?= $this->basepath().'/img/edit.png';?>" /></button>
 				&nbsp;<button value="<?=$usuario->getId();?>" name="del" class="btn-icon"><img class="icon" src="<?= $this->basepath().'/img/trash.png';?>" /></button>
 			</td>
+=======
+			<td><button value="<?=$usuario->getId();?>" name="editar" class="btn btn-success">Editar</button></td>
+>>>>>>> a50c8e562c19de6b9203525bf6ebed3c51c80098
 		</tr>
 		<?php endforeach;?>
 	</tbody>
@@ -44,12 +48,15 @@ $().ready(function(){
 	$("button[name=editar]").click(function(){
 		document.location.href = "<?php echo $this->url('usuario',['action'=>'editar']);?>/id/" + $(this).attr("value");
 	});
+<<<<<<< HEAD
 
 	$("button[name=del]").click(function(){
 		if(confirm("Deseja remover permanentemente este usuário?")){
 			document.location.href = "<?php echo $this->url('usuario',['action'=>'del']);?>/id/" + $(this).attr("value");
 		}
 	});
+=======
+>>>>>>> a50c8e562c19de6b9203525bf6ebed3c51c80098
 	
 	$('#Tusuarios').DataTable({
 		responsive:true,
@@ -58,11 +65,19 @@ $().ready(function(){
 		    null,
 		    { "width": "20%" },
 		    { "width": "20%" },
+<<<<<<< HEAD
 		    { "width": "70" }
 		 ],
 		info:false,
 		paging:false,
 		searching:true,
+=======
+		    { "width": "5%" }
+		 ],
+		info:false,
+		paging:false,
+		searching:false,
+>>>>>>> a50c8e562c19de6b9203525bf6ebed3c51c80098
 		"language": {
             "lengthMenu": "Exibir _MENU_ registros",
             "emptyTable":     "&nbsp;",

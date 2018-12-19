@@ -42,6 +42,7 @@ return [
 							]
 					]
 			],
+<<<<<<< HEAD
 			'funcao' => [
 					'type' => Segment::class,
 					'options' => [
@@ -52,6 +53,8 @@ return [
 							]
 					]
 			],
+=======
+>>>>>>> a50c8e562c19de6b9203525bf6ebed3c51c80098
 		]
 	],
 	
@@ -74,7 +77,10 @@ return [
 			Controller\IndexController::class => Controller\Factory\ControllerAbstractFactory::class,
 			Controller\LoginController::class => Controller\Factory\ControllerAbstractFactory::class,
 			Controller\UsuarioController::class => Controller\Factory\ControllerAbstractFactory::class,
+<<<<<<< HEAD
 			Controller\FuncaoController::class => Controller\Factory\ControllerAbstractFactory::class,
+=======
+>>>>>>> a50c8e562c19de6b9203525bf6ebed3c51c80098
 		]
 	],
 		

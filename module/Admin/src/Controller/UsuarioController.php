@@ -25,12 +25,17 @@ class UsuarioController extends ControllerAbstract{
 			$usuario = new Usuario();
 			$usuario->setNome($this->request->getPost("nome"))
 			->setEmail($this->request->getPost("email"))
+<<<<<<< HEAD
 			->setLogin($this->request->getPost("login"));
 			
 			if($this->params('senha')<>''){
 				$usuario->setSenha($this->params('senha'));
 			}
 			
+=======
+			->setLogin($this->request->getPost("login"))
+			->setSenha($this->request->getPost("senha"));
+>>>>>>> a50c8e562c19de6b9203525bf6ebed3c51c80098
 			$usuario->setRole($role);
 				
 			$usrService->cadastrar($usuario);
@@ -67,9 +72,14 @@ class UsuarioController extends ControllerAbstract{
 		];
 	}
 	
+<<<<<<< HEAD
 	public function delAction(){
 		$this->serviceManager->get(UsuarioService::class)->remover($this->params("id"));
 		$this->redirect()->toRoute("usuario");
+=======
+	public function removerAction(){
+		
+>>>>>>> a50c8e562c19de6b9203525bf6ebed3c51c80098
 	}
 	
 }
