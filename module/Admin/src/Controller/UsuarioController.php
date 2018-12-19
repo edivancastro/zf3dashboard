@@ -25,7 +25,6 @@ class UsuarioController extends ControllerAbstract{
 			$usuario = new Usuario();
 			$usuario->setNome($this->request->getPost("nome"))
 			->setEmail($this->request->getPost("email"))
-<<<<<<< HEAD
 			->setLogin($this->request->getPost("login"));
 			
 			if($this->params('senha')<>''){
