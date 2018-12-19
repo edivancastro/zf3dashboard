@@ -15,7 +15,7 @@ return [
 			'home' => [
 				'type' => Literal::class,
 				'options' => [
-					'route' => '/admin',
+					'route' => '/',
 					'defaults' => [
 						'controller' => Controller\IndexController::class,
 						'action' => 'index'
@@ -25,7 +25,7 @@ return [
 			'login' => [
 				'type' => Segment::class,
 				'options' => [
-					'route' => '/admin/login[/:action]',
+					'route' => '/login[/:action]',
 					'defaults' => [
 						'controller' => Controller\LoginController::class,
 						'action' => 'index'
@@ -35,7 +35,7 @@ return [
 			'usuario' => [
 					'type' => Segment::class,
 					'options' => [
-							'route' => '/admin/usuario[/:action[/id/:id]]',
+							'route' => '/usuario[/:action[/id/:id]]',
 							'defaults' => [
 									'controller' => Controller\UsuarioController::class,
 									'action' => 'index'
@@ -45,7 +45,7 @@ return [
 			'funcao' => [
 					'type' => Segment::class,
 					'options' => [
-							'route' => '/admin/funcao[/:action[/id/:id]]',
+							'route' => '/funcao[/:action[/id/:id]]',
 							'defaults' => [
 									'controller' => Controller\FuncaoController::class,
 									'action' => 'index'
