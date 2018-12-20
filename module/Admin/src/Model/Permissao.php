@@ -23,12 +23,6 @@ class Permissao{
 	 */	
 	protected $descricao;
 	
-	/**
-	 * @ORM\ManyToOne(targetEntity="Admin\Model\Modulo", inversedBy="permissoes")
-	 * @ORM\joinColumn(name="Modulo_id", referencedColumnName="id")
-	 */
-	protected $modulo;
-	
 	/** 
 	 * @ORM\ManyToMany(targetEntity="Admin\Model\Role", mappedBy="permissoes")
 	 */
@@ -41,11 +35,6 @@ class Permissao{
 	
 	public function setDescricao($descricao){
 		$this->descricao = $descricao;
-		return $this;
-	}
-	
-	public function setModulo(Modulo $modulo){
-		$this->modulo = $modulo;
 		return $this;
 	}
 	
@@ -65,10 +54,6 @@ class Permissao{
 	
 	public function getDescricao(){
 		return $this->descricao;
-	}
-	
-	public function getModulo(){
-		return $this->modulo;
 	}
 	
 	public function getRoles(){
