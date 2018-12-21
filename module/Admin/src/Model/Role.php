@@ -34,6 +34,12 @@ class Role{
 	 */
 	protected $permissoes;
 	
+	/**
+	 * 
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $excluido;
+	
 	public function __construct(){
 		$this->usuarios = new ArrayCollection();
 		$this->permissoes = new ArrayCollection();
@@ -47,6 +53,10 @@ class Role{
 	public function setDescricao($descricao){
 		$this->descricao = $descricao;
 		return $this;
+	}
+	
+	public function setExcluido(Bool $ex){
+	    $this->excluido = $ex;
 	}
 	
 	public function addUsuario(Usuario $usuario){
@@ -83,5 +93,9 @@ class Role{
 	
 	public function getPermissoes(){
 		return $this->permissoes;
+	}
+	
+	public function isExcluido(){
+	    return $this->excluido;
 	}
 }

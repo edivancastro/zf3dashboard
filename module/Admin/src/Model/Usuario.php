@@ -9,6 +9,7 @@ use Admin\Role\Role;
 class Usuario{
 	const STATUS_ATIVO = 1;
 	const STATUS_EXCLUIDO = 2;
+	const STATUS_BLOQUEADO = 3;
 
 	
 	/**

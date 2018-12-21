@@ -1,0 +1,79 @@
+<?php 
+$this->headScript()->appendFile($this->basePath("js/datatables.min.js"));
+$this->headScript()->appendFile($this->basePath("js/datatables.bootstrap.min.js"));
+$this->headLink()->appendStylesheet($this->basePath('css/datatables.min.css'));
+$this->headLink()->appendStylesheet($this->basePath('css/datatables.bootstrap.css'));
+?>
+<div class="container">
+<h1>Função</h1>
+<hr/>
+<button id="btn-new" type="button" class="btn btn-primary">Novo</button>
+<table id="Tfuncao" class="dataTable">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th class="all">Descricao</th>
+			<th class="all"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach($funcoes as $funcao):?>
+		<tr>
+			<td><?=$funcao->getId();?></td>
+			<td><?=$funcao->getDescricao();?></td>
+			<td>
+				<button value="<?=$funcao->getId();?>" name="editar" class="btn-icon"><img class="icon" src="<?= $this->basepath().'/img/edit.png';?>" /></button>
+				&nbsp;<button value="<?=$funcao->getId();?>" name="del" class="btn-icon"><img class="icon" src="<?= $this->basepath().'/img/trash.png';?>" /></button>
+			</td>
+		</tr>
+		<?php endforeach;?>
+	</tbody>
+</table>
+</div>
+<script>
+$().ready(function(){
+
+	$("#btn-new").click(function(){
+		document.location.href = "<?php echo $this->url("role",["action"=>"cadastrar"]);?>";
+	});
+
+	$("button[name=editar]").click(function(){
+		document.location.href = "<?php echo $this->url('role',['action'=>'editar']);?>/id/" + $(this).attr("value");
+	});
+
+	$("button[name=del]").click(function(){
+		if(confirm("Deseja remover permanentemente esta função?")){
+			document.location.href = "<?php echo $this->url('role',['action'=>'del']);?>/id/" + $(this).attr("value");
+		}
+	});
+	
+	$('#Tfuncao').DataTable({
+		responsive:true,
+		"columns": [
+		    { "width": "5%" },
+		    null,
+		    { "width": "70px" }
+		 ],
+		info:false,
+		paging:false,
+		searching:true,
+		info:false,
+		paging:false,
+		"language": {
+            "lengthMenu": "Exibir _MENU_ registros",
+            "emptyTable":     "&nbsp;",
+            "zeroRecords": "&nbsp;",
+            "info": "Pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "&nbsp;",
+            "search": "Buscar",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "paginate": {
+                "first":      "Primeiro",
+                "last":       "Ultimo",
+                "next":       "proximo",
+                "previous":   "Anterior"
+            },   
+        },
+	});
+});
+</script>

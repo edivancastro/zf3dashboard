@@ -42,12 +42,12 @@ return [
 							]
 					]
 			],
-			'funcao' => [
+			'role' => [
 					'type' => Segment::class,
 					'options' => [
-							'route' => '/funcao[/:action[/id/:id]]',
+							'route' => '/role[/:action[/id/:id]]',
 							'defaults' => [
-									'controller' => Controller\FuncaoController::class,
+									'controller' => Controller\RoleController::class,
 									'action' => 'index'
 							]
 					]
@@ -74,7 +74,7 @@ return [
 			Controller\IndexController::class => Controller\Factory\ControllerAbstractFactory::class,
 			Controller\LoginController::class => Controller\Factory\ControllerAbstractFactory::class,
 			Controller\UsuarioController::class => Controller\Factory\ControllerAbstractFactory::class,
-			Controller\FuncaoController::class => Controller\Factory\ControllerAbstractFactory::class,
+			Controller\RoleController::class => Controller\Factory\ControllerAbstractFactory::class,
 
 		]
 	],

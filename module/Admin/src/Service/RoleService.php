@@ -1,6 +1,7 @@
 <?php
 namespace Admin\Service;
 
+
 use Admin\Model\Role;
 
 class RoleService extends ServiceAbstract{
@@ -22,7 +23,7 @@ class RoleService extends ServiceAbstract{
 	}
 	
 	public function getAll(){
-		return $this->entityManager->getRepository(Role::class)->findAll();
+		return $this->entityManager->getRepository(Role::class)->findBy(['excluido'=>false]);
 	}
 
 }
