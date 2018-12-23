@@ -22,6 +22,11 @@ class Role{
 	protected $descricao;
 	
 	/**
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $root=false;
+	
+	/**
 	 * @ORM\OneToMany(targetEntity="Admin\Model\Usuario", mappedBy="role")
 	 */
 	protected $usuarios;
@@ -38,7 +43,7 @@ class Role{
 	 * 
 	 * @ORM\Column(type="boolean")
 	 */
-	protected $excluido;
+	protected $excluido = false;
 	
 	public function __construct(){
 		$this->usuarios = new ArrayCollection();
@@ -57,6 +62,11 @@ class Role{
 	
 	public function setExcluido(Bool $ex){
 	    $this->excluido = $ex;
+	    return $this;
+	}
+	
+	public function setRoot(Bool $root){
+	    $this->root = $root;
 	}
 	
 	public function addUsuario(Usuario $usuario){
@@ -97,5 +107,9 @@ class Role{
 	
 	public function isExcluido(){
 	    return $this->excluido;
+	}
+	
+	public function isRoot(){
+	    return $this->root;
 	}
 }

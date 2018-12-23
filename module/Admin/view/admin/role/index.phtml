@@ -1,18 +1,18 @@
 <?php 
 $this->headScript()->appendFile($this->basePath("js/datatables.min.js"));
 $this->headScript()->appendFile($this->basePath("js/datatables.bootstrap.min.js"));
-$this->headLink()->appendStylesheet($this->basePath('css/datatables.min.css'));
-$this->headLink()->appendStylesheet($this->basePath('css/datatables.bootstrap.css'));
+$this->headScript()->appendFile($this->basePath('js/functions.js'));
 ?>
 <div class="container">
-<h1>Função</h1>
+<h1>Permissões de acesso</h1>
 <hr/>
 <button id="btn-new" type="button" class="btn btn-primary">Novo</button>
 <table id="Tfuncao" class="dataTable">
 	<thead>
 		<tr>
 			<th>#</th>
-			<th class="all">Descricao</th>
+			<th class="all">Função</th>
+			<th class="all">Permissões</th>
 			<th class="all"></th>
 		</tr>
 	</thead>
@@ -21,6 +21,9 @@ $this->headLink()->appendStylesheet($this->basePath('css/datatables.bootstrap.cs
 		<tr>
 			<td><?=$funcao->getId();?></td>
 			<td><?=$funcao->getDescricao();?></td>
+			<td align="center">
+				<button value="<?=$funcao->getId();?>" name="permissao-detalhar" class="btn-icon"><img class="icon" src="<?= $this->basepath().'/img/detail.png';?>" /></button>
+			</td>
 			<td>
 				<button value="<?=$funcao->getId();?>" name="editar" class="btn-icon"><img class="icon" src="<?= $this->basepath().'/img/edit.png';?>" /></button>
 				&nbsp;<button value="<?=$funcao->getId();?>" name="del" class="btn-icon"><img class="icon" src="<?= $this->basepath().'/img/trash.png';?>" /></button>
@@ -32,6 +35,10 @@ $this->headLink()->appendStylesheet($this->basePath('css/datatables.bootstrap.cs
 </div>
 <script>
 $().ready(function(){
+
+	$('button[name="permissao-detalhar"]').click(function(){
+		urlDialog('<?= $this->url('role',['action'=>'detalhar']);?>'+'/id/'+$(this).val(),'Permissões para '+$(this).closest('tr').find('td:eq(1)').html());
+	});
 
 	$("#btn-new").click(function(){
 		document.location.href = "<?php echo $this->url("role",["action"=>"cadastrar"]);?>";
@@ -52,6 +59,7 @@ $().ready(function(){
 		"columns": [
 		    { "width": "5%" },
 		    null,
+		    { "width": "70px" },
 		    { "width": "70px" }
 		 ],
 		info:false,

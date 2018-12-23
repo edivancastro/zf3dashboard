@@ -6,8 +6,9 @@ use Admin\Service\RoleService;
 use Admin\Model\Usuario;
 
 class UsuarioController extends ControllerAbstract{
-	
+    	
 	public function indexAction(){
+	    
 		$usrService = $this->serviceManager->get(UsuarioService::class);
 		
 		return [

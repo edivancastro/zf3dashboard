@@ -1,0 +1,59 @@
+<div class="container">
+<h1>Função</h1>
+<hr/>
+<div class="module module-cadastro clearfix">
+	<div class="module-head">
+			<h3>Editar função</h3>
+	</div>
+	<div class="module-body">
+	<form autocomplete="off" method="post">
+		<div class="form-group form-group-sm">
+			<label>Nome</label>
+			<input class="form-control" type="text" name="descricao" value="<?= $role->getDescricao(); ?>" />
+		</div>
+		<br/>
+		<hr/>
+		<div class="module-head">
+			<h3>Permissões de acesso</h3>
+		</div>
+		<br/>
+		<div class="form-group form-group-sm">
+			<input <?php if($role->isRoot()):?>checked="checked"<?php endif;?> class="inline" type="checkbox" name="root" value="*" />
+			<label class="inline">Tudo</label>
+		</div>
+		<hr/>
+		<?php foreach($this->recursos as $recurso):?>
+		<table class="datalist">
+			<thead>
+				<tr>
+					<td colspan=3><?= $recurso->getNome();?></td>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach($recurso->getPermissoes() as $permissao):?>
+				<tr>
+					<td><input <?php if($role->isRoot()):?>disabled<?php endif;?> <?php if($role->getPermissoes()->contains($permissao) || $role->isRoot()):?>checked="checked"<?php endif;?> name="permissao[]" value="<?= $permissao->getId();?>" type="checkbox" /></td>
+					<td><?= $permissao->getNome();?></td>
+					<td><?= $permissao->getDescricao();?></td>
+				</tr>
+				<?php endforeach;?>
+			</tbody>
+		</table>
+		<br/>
+		<?php endforeach;?>
+		<button type="submit" class="btn btn-success pull-right">Cadastrar</button>
+	</form>
+	</div>
+</div>
+</div>
+<script>
+	$().ready(function(){
+		$('input[name=root]').click(function(){
+			if($(this).is(':checked')){
+				$('.datalist input[name="permissao[]"]').attr('checked',true).attr('disabled',true);
+			}else{
+				$('.datalist input[name="permissao[]"]').attr('checked',false).attr('disabled',false);
+			}
+		});
+	});
+</script>

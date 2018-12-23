@@ -23,14 +23,31 @@ class Permissao{
 	 */	
 	protected $descricao;
 	
+	/**
+	 * @ORM\Column(type="string")
+	 */
+	protected $nome;
+	
 	/** 
 	 * @ORM\ManyToMany(targetEntity="Admin\Model\Role", mappedBy="permissoes")
 	 */
 	protected $roles;
 	
+	/**
+	 * 
+	 * @ORM\ManyToOne(targetEntity="Admin\Model\Recurso", inversedBy="permissoes");
+	 * @ORM\joinColumn(name="Recurso_id", referencedColumnName="id");
+	 */
+	protected $recurso;
+	
 	public function setId($id){
 		$this->id = $id;
 		return $this;
+	}
+	
+	public function setNome($nome){
+	    $this->nome = $nome;
+	    return $this;
 	}
 	
 	public function setDescricao($descricao){
@@ -48,8 +65,17 @@ class Permissao{
 		return $this;
 	}
 	
+	public function setRecurso(Recurso $recurso){
+	    $this->recurso = $recurso;
+	    return $this;
+	}
+	
 	public function getId(){
 		return $this->id;
+	}
+	
+	public function getNome(){
+	    return $this->nome;
 	}
 	
 	public function getDescricao(){
@@ -58,6 +84,10 @@ class Permissao{
 	
 	public function getRoles(){
 		return $this->roles;
+	}
+	
+	public function getRecurso(){
+	    return $this->recurso;
 	}
 	
 }

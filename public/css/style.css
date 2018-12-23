@@ -1,3 +1,11 @@
+@import "bootstrap-theme.min.css";
+@import "jquery-ui.min.css";
+@import "jquery-ui.thene.min.css";
+@import "jquery-ui.structure.min.css";
+@import "bootstrap.min.css";
+@import "datatables.min.css";
+@import "dataTables.bootstrap.css";
+
 body {
     padding-top: 60px;
     padding-bottom: 40px;
@@ -18,6 +26,10 @@ body {
 
 form input{
 	margin-bottom:10px;
+}
+
+.inline{
+	display:inline;
 }
 
 form label{
@@ -94,13 +106,14 @@ div.container a.navbar-brand > img {
 
 .module-head {
 	color: #767676;
-	background-color: #f6f6f6;
+	background-color: #efefef;
 	border-color: #e9e9e9;
 	padding: 10px 15px;
 	border-bottom: 1px solid transparent;
 	border-top-right-radius: 3px;
 	border-top-left-radius: 3px;	
 }
+
 .module-head h3 {
 	font-size: 14px;
 	font-weight:bold;
@@ -149,4 +162,20 @@ div.container a.navbar-brand > img {
 
 .module-cadastro .form-group-sm{
 	max-width:300px;
+}
+
+.datalist thead tr{
+	background: #fff;
+	border-bottom:1px solid #ddd;
+	font-weight:bold;
+}
+
+.datalist tr td{
+	padding:3px 8px 3px 0;
+}
+
+.datalist tbody tr{
+	background: #fafafa;
+	border-bottom:1px solid #ddd;
+	
 }
