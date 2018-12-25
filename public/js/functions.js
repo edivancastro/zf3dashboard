@@ -26,3 +26,4 @@ var urlDialog = function(url,titulo, width=600){
 	});
 }
 
+

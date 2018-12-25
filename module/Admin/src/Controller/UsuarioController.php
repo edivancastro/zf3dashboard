@@ -42,6 +42,21 @@ class UsuarioController extends ControllerAbstract{
 			'funcoes' => $roleService->getAll(),	
 		];
 	}
+
+	public function detalharAction(){
+		$usrService = $this->serviceManager->get(UsuarioService::class);
+
+		if($this->params('id')<>''){
+			$usuario = $usrService->get($this->params('id'));
+		}else{
+			$usuario = $usrService->get(1);
+		}
+
+		return [
+			'usuario' => $usuario,
+			'recursos' => $this->serviceManager->get(RoleService::class)->getAllRecursos()
+		];
+	}
 	
 	public function editarAction(){
 		$usrService = $this->serviceManager->get(UsuarioService::class);

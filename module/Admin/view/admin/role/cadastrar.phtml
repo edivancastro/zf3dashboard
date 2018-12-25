@@ -1,21 +1,17 @@
-<div class="container">
-<h1>Função</h1>
-<hr/>
-<div class="module module-cadastro clearfix">
-	<div class="module-head">
-			<h3>Cadastrar nova função</h3>
-	</div>
-	<div class="module-body">
-	<form autocomplete="off" method="post">
+<div class="container-fluid module-head">
+	<h3>Cadastrar nova função</h3>
+</div>
+<form autocomplete="off" method="post">
+<div class="module-body module-cadastro clearfix">
 		<div class="form-group form-group-sm">
 			<label>Nome</label>
 			<input class="form-control" type="text" name="descricao" />
 		</div>
-		<br/>
-		<hr/>
-		<div class="module-head">
-			<h3>Permissões de acesso</h3>
-		</div>
+</div>
+<div class="module-head">
+	<h3>Permissões de acesso</h3>
+</div>
+<div class="module-body clearfix"/>
 		<br/>
 		<div class="form-group form-group-sm">
 			<input class="inline" type="checkbox" name="root" value="*" />
@@ -23,7 +19,7 @@
 		</div>
 		<hr/>
 		<?php foreach($this->recursos as $recurso):?>
-		<table class="datalist">
+		<table class="table table-striped">
 			<thead>
 				<tr>
 					<td colspan=3><?= $recurso->getNome();?></td>
@@ -41,18 +37,21 @@
 		</table>
 		<br/>
 		<?php endforeach;?>
-		<button type="submit" class="btn btn-success pull-right">Cadastrar</button>
+		<div class="pull-right">
+			<button name="cancelar" onclick="window.history.go(-1);" type="button" class="btn btn-danger">Cancelar</button>&nbsp;&nbsp;&nbsp;
+			<button type="submit" class="btn btn-success">Cadastrar</button>
+		</div>
+</div>
 	</form>
-	</div>
 </div>
 </div>
 <script>
 	$().ready(function(){
 		$('input[name=root]').click(function(){
 			if($(this).is(':checked')){
-				$('.datalist input[name="permissao[]"]').attr('checked',true).attr('disabled',true);
+				$('.table input[name="permissao[]"]').attr('checked',true).attr('disabled',true);
 			}else{
-				$('.datalist input[name="permissao[]"]').attr('checked',false).attr('disabled',false);
+				$('.table input[name="permissao[]"]').attr('checked',false).attr('disabled',false);
 			}
 		});
 	});

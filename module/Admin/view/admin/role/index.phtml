@@ -1,37 +1,37 @@
 <?php 
-$this->headScript()->appendFile($this->basePath("js/datatables.min.js"));
-$this->headScript()->appendFile($this->basePath("js/datatables.bootstrap.min.js"));
 $this->headScript()->appendFile($this->basePath('js/functions.js'));
 ?>
-<div class="container">
-<h1>Permissões de acesso</h1>
-<hr/>
-<button id="btn-new" type="button" class="btn btn-primary">Novo</button>
-<table id="Tfuncao" class="dataTable">
-	<thead>
-		<tr>
-			<th>#</th>
-			<th class="all">Função</th>
-			<th class="all">Permissões</th>
-			<th class="all"></th>
-		</tr>
-	</thead>
-	<tbody>
-		<?php foreach($funcoes as $funcao):?>
-		<tr>
-			<td><?=$funcao->getId();?></td>
-			<td><?=$funcao->getDescricao();?></td>
-			<td align="center">
-				<button value="<?=$funcao->getId();?>" name="permissao-detalhar" class="btn-icon"><img class="icon" src="<?= $this->basepath().'/img/detail.png';?>" /></button>
-			</td>
-			<td>
-				<button value="<?=$funcao->getId();?>" name="editar" class="btn-icon"><img class="icon" src="<?= $this->basepath().'/img/edit.png';?>" /></button>
-				&nbsp;<button value="<?=$funcao->getId();?>" name="del" class="btn-icon"><img class="icon" src="<?= $this->basepath().'/img/trash.png';?>" /></button>
-			</td>
-		</tr>
-		<?php endforeach;?>
-	</tbody>
-</table>
+<div class="container-fluid module-head">
+	<h3>Permissões de acesso</h3>
+</div>
+<div class="container-fluid module-body">
+	<button id="btn-new" type="button" class="btn btn-primary">Novo</button>
+	<table id="Tfuncao" class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Função</th>
+				<th width="150px"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php if(empty($funcoes)):?>
+				<tr class="empty">
+					<td colspan="5">Nenhum registro</td>
+				</tr>
+			<?php else:foreach($funcoes as $funcao):?>
+			<tr>
+				<td><?=$funcao->getId();?></td>
+				<td><?=$funcao->getDescricao();?></td>
+				<td align="center">
+					<button value="<?=$funcao->getId();?>" name="permissao-detalhar" class="btn-icon"><img class="icon" src="<?= $this->basepath().'/img/detail.png';?>" /></button>
+					<button value="<?=$funcao->getId();?>" name="editar" class="btn-icon"><img class="icon" src="<?= $this->basepath().'/img/edit.png';?>" /></button>
+					<button value="<?=$funcao->getId();?>" name="del" class="btn-icon"><img class="icon" src="<?= $this->basepath().'/img/trash.png';?>" /></button>
+				</td>
+			</tr>
+			<?php endforeach;endif;?>
+		</tbody>
+	</table>
 </div>
 <script>
 $().ready(function(){
@@ -54,34 +54,6 @@ $().ready(function(){
 		}
 	});
 	
-	$('#Tfuncao').DataTable({
-		responsive:true,
-		"columns": [
-		    { "width": "5%" },
-		    null,
-		    { "width": "70px" },
-		    { "width": "70px" }
-		 ],
-		info:false,
-		paging:false,
-		searching:true,
-		info:false,
-		paging:false,
-		"language": {
-            "lengthMenu": "Exibir _MENU_ registros",
-            "emptyTable":     "&nbsp;",
-            "zeroRecords": "&nbsp;",
-            "info": "Pagina _PAGE_ de _PAGES_",
-            "infoEmpty": "&nbsp;",
-            "search": "Buscar",
-            "infoFiltered": "(filtered from _MAX_ total records)",
-            "paginate": {
-                "first":      "Primeiro",
-                "last":       "Ultimo",
-                "next":       "proximo",
-                "previous":   "Anterior"
-            },   
-        },
-	});
+	
 });
 </script>

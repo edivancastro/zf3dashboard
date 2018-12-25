@@ -1,11 +1,11 @@
-<div class="container">
-<h1>Usuários</h1>
-<hr/>
-<div class="module module-cadastro clearfix">
-	<div class="module-head">
-			<h3>Alterar cadastro</h3>
-	</div>
-	<div class="module-body">
+<?php
+	$this->headScript()->appendFile($this->basePath('/js/functions.js'));
+?>
+<div class="container-fluid module-head">
+	<h3>Editar conta de <?= $this->usuario->getNome();?> </h3>
+</div>
+<br />
+<div class="module-body clearfix">
 	<form autocomplete="off" method="post">
 		<div class="form-group">
 			<label>Nome</label>
@@ -38,10 +38,11 @@
 			</select>
 		</div>
 		<hr/>
-		<button type="submit" class="btn btn-success pull-right">Cadastrar</button>
+		<div class="pull-right">
+			<button name="cancelar" onclick="window.history.go(-1);" type="button" class="btn btn-danger">Cancelar</button>&nbsp;&nbsp;&nbsp;
+			<button type="submit" class="btn btn-success">Cadastrar</button>
+		</div>
 	</form>
-	</div>
-</div>
 </div>
 <script>
 $().ready(function(){
