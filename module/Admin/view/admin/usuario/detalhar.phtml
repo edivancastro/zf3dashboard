@@ -1,5 +1,5 @@
 <div class="container-fluid module-head">
-	<h3>Usuário</h3>
+	<h3><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Usuário</h3>
 </div>
 <div class="module-body">
 	<button onClick="document.location.href='<?=$this->url('usuario',['action'=>'editar','id'=>$this->usuario->getId()]);?>';" class="pull-right btn btn-warning">Editar</button>
@@ -23,7 +23,6 @@
 		<label class="control-label">Perfil de acesso</label>
 		<p class="form-control-static"><?=$this->usuario->getRole()->getDescricao();?></p>
 	</div>
-	<hr/>
 </div>
 <div class="container-fluid module-head">
 	<h3>::. Permissões</h3>

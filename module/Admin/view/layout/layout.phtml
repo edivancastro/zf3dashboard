@@ -58,7 +58,7 @@
         </nav>
         <!-- FIM TOP NAV BAR -->
         <!-- INICIO BODY -->
-        <div class="container-fluid bg-grey">
+        <div id="body" class="container-fluid">
             <div class="container wrapper">
                 <div class="row">
                     <!-- INICIO WRAPPER MENU ESQUERDO -->
@@ -83,7 +83,7 @@
                                     <li><a href="<?= $this->url('role');?>">Permissão de acesso</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#"><i class="glyphicon glyphicon-cog"></i>Configurações</a></li>
+                            <li><a href="<?= $this->url('config');?>"><i class="glyphicon glyphicon-cog"></i>Configurações</a></li>
                         </ul>
                         <!-- FIM MENU WIDGET -->
 
@@ -92,7 +92,7 @@
 
                     <!-- INICIO WRAPPER CONTEUDO -->
                     <div class="col-sm-9">
-                        <div class="content container-fluid bg-white rounded no-padding">
+                        <div id="content" class="content container-fluid rounded">
                             <?= $this->content;?>
                         </div>
                     </div>
@@ -102,7 +102,7 @@
             </div>
         </div>
         <!-- FIM BODY -->
-        <div class="container-fluid">
+        <div class="container">
             <footer>
                 <p>&copy; 2018 - <?= date('Y') ?> Edmin Painel de controle - Todos direitos reservados.</p>
             </footer>

@@ -1,0 +1,62 @@
+<div class="module-head">
+	<h3><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Configurações do sistema</h3>
+</div>
+<div class="module-body clearfix">
+	<form method="POST">	
+	<div class="form-group">
+		<label>Titulo do site</label>
+		<input value="<?=$this->config->getTitulo();?>" type="text" name="titulo" class="form-control" />
+	</div>
+	<div class="form-group">
+		<label>Tags</label>
+		<textarea name="tags" class="form-control"><?=$this->config->getTags();?></textarea>
+	</div>
+	<div class="form-group">
+		<label>Email</label>
+		<input value="<?=$this->config->getEmailcontato();?>" type="email" name="email" class="form-control" />
+	</div>
+	<div class="form-group form-group-sm">
+		<label>Telefone</label>
+		<input value="<?=$this->config->getTelcontato();?>" type="text" name="tel" class="form-control" />
+	</div>
+	<hr/>
+	<div class="form-group form-group-sm">
+		<label>Fuso Horário</label>
+		<select name="fusohorario" class="form-control" style="display:inline;width:80%;">
+			<option></option>
+			<option <?php if($this->config->getFusohorario()=='AC'):?>selected="selected"<?php endif; ?> value="AC">Acre</option>
+			<option <?php if($this->config->getFusohorario()=='AL'):?>selected="selected"<?php endif; ?> value="AL">Alagoas</option>
+			<option <?php if($this->config->getFusohorario()=='AP'):?>selected="selected"<?php endif; ?> value="AP">Amapá</option>
+			<option <?php if($this->config->getFusohorario()=='AM'):?>selected="selected"<?php endif; ?> value="AM">Amazonas</option>
+			<option <?php if($this->config->getFusohorario()=='BA'):?>selected="selected"<?php endif; ?> value="BA">Bahia</option>
+			<option <?php if($this->config->getFusohorario()=='CE'):?>selected="selected"<?php endif; ?> value="CE">Ceará</option>
+			<option <?php if($this->config->getFusohorario()=='DF'):?>selected="selected"<?php endif; ?> value="DF">Distrito Federal</option>
+			<option <?php if($this->config->getFusohorario()=='ES'):?>selected="selected"<?php endif; ?> value="ES">Espirito Santo</option>
+			<option <?php if($this->config->getFusohorario()=='GO'):?>selected="selected"<?php endif; ?> value="GO">Goiás</option>
+			<option <?php if($this->config->getFusohorario()=='MA'):?>selected="selected"<?php endif; ?> value="MA">Maranhão</option>
+			<option <?php if($this->config->getFusohorario()=='MT'):?>selected="selected"<?php endif; ?> value="MT">Mato Grosso</option>
+			<option <?php if($this->config->getFusohorario()=='MS'):?>selected="selected"<?php endif; ?> value="MS">Mato Grosso do Sul</option>
+			<option <?php if($this->config->getFusohorario()=='MG'):?>selected="selected"<?php endif; ?> value="MG">Minas Gerais</option>
+			<option <?php if($this->config->getFusohorario()=='PR'):?>selected="selected"<?php endif; ?> value="PR">Paraná</option>
+			<option <?php if($this->config->getFusohorario()=='PB'):?>selected="selected"<?php endif; ?> value="PB">Paraíba</option>
+			<option <?php if($this->config->getFusohorario()=='PA'):?>selected="selected"<?php endif; ?> value="PA">Pará</option>
+			<option <?php if($this->config->getFusohorario()=='PE'):?>selected="selected"<?php endif; ?> value="PE">Pernambuco</option>
+			<option <?php if($this->config->getFusohorario()=='PI'):?>selected="selected"<?php endif; ?> value="PI">Piauí</option>
+			<option <?php if($this->config->getFusohorario()=='RJ'):?>selected="selected"<?php endif; ?> value="RJ">Rio de Janeiro</option>
+			<option <?php if($this->config->getFusohorario()=='RN'):?>selected="selected"<?php endif; ?> value="RN">Rio Grande do Norte</option>
+			<option <?php if($this->config->getFusohorario()=='RS'):?>selected="selected"<?php endif; ?> value="RS">Rio Grande do Sul</option>
+			<option <?php if($this->config->getFusohorario()=='RO'):?>selected="selected"<?php endif; ?> value="RO">Rondonia</option>
+			<option <?php if($this->config->getFusohorario()=='RR'):?>selected="selected"<?php endif; ?> value="RR">Roraima</option>
+			<option <?php if($this->config->getFusohorario()=='SC'):?>selected="selected"<?php endif; ?> value="SC">Santa Catarina</option>
+			<option <?php if($this->config->getFusohorario()=='SE'):?>selected="selected"<?php endif; ?> value="SE">Sergipe</option>
+			<option <?php if($this->config->getFusohorario()=='SP'):?>selected="selected"<?php endif; ?> value="SP">São Paulo</option>
+			<option <?php if($this->config->getFusohorario()=='TO'):?>selected="selected"<?php endif; ?> value="TO">Tocantins</option>
+		</select>
+	</div>
+	<div class="form-group pull-right clearfix">
+		<button name="cancelar" type="reset" class="btn btn-danger">Cancelar</button>
+		&nbsp;&nbsp;&nbsp;
+		<button name="salvar" type="submit" class="btn btn-success">Salvar</button>
+	</div>
+	</form>
+</div>

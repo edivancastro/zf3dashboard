@@ -52,6 +52,16 @@ return [
 							]
 					]
 			],
+			'config' => [
+					'type' => Literal::class,
+					'options' => [
+							'route' => '/config',
+							'defaults' => [
+									'controller' => Controller\ConfigController::class,
+									'action' => 'index'
+							]
+					]
+			],
 		]
 	],
 	
@@ -63,6 +73,7 @@ return [
 					Service\AuthService::class => Service\Factory\ServiceFactory::class,
 					Service\UsuarioService::class => Service\Factory\ServiceFactory::class,
 					Service\RoleService::class => Service\Factory\ServiceFactory::class,
+					Service\ConfigService::class => Service\Factory\ServiceFactory::class,
 			]
 	],
 		
@@ -75,6 +86,7 @@ return [
 			Controller\LoginController::class => Controller\Factory\ControllerAbstractFactory::class,
 			Controller\UsuarioController::class => Controller\Factory\ControllerAbstractFactory::class,
 			Controller\RoleController::class => Controller\Factory\ControllerAbstractFactory::class,
+			Controller\ConfigController::class => Controller\Factory\ControllerAbstractFactory::class,
 
 		]
 	],
