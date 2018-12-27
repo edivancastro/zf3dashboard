@@ -110,6 +110,22 @@ return [
 				__DIR__ . '/../view',
 		],
 	],
+
+	/*
+	*
+	*   View Helpers
+	*/
+
+	'view_helpers' => [
+		'factories' => [
+			View\Helper\Menu::class => InvokableFactory::class,
+			View\Helper\Usuario::class => InvokableFactory::class
+		],
+		'aliases' => [
+			'menu' =>	View\Helper\Menu::class,
+			'usuario' => View\Helper\Usuario::class,
+		]
+	],
 	
 	/*
 	 * Doctrine Annotation Driver

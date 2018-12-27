@@ -29,7 +29,7 @@
 		</div>	
 		<hr/>
 		<div class="form-group form-group-sm">
-			<label>Função</label>
+			<label>Perfil de acesso</label>
 			<select class="form-control" name="funcao">
 				<option></option>
 				<?php foreach($this->funcoes as $funcao):?>
@@ -39,17 +39,14 @@
 		</div>
 		<hr/>
 		<div class="pull-right">
-			<button name="cancelar" type="reset" class="btn btn-danger">Cancelar</button>&nbsp;&nbsp;&nbsp;
-			<button type="submit" class="btn btn-success">Cadastrar</button>
+			<button name="cancelar" onclick="window.history.go(-1);" type="reset" class="btn btn-danger">Cancelar</button>&nbsp;&nbsp;&nbsp;
+			<button type="submit" class="btn btn-success">Salvar</button>
 		</div>
 	</form>
 </div>
 <script>
 $().ready(function(){
-	$('input[name=alterarsenha],button[type=reset]').click(function(){
-		if($(this).attr('type')=='reset'){
-			$(this).closest('form').get(0).reset();
-		}
+	$('input[name=alterarsenha]').click(function(){
 		if($('input[name=alterarsenha').is(":checked")){
 			$("#ctrl-senha").removeClass('hide');
 			$("input[name=senha]").attr("disabled",false);

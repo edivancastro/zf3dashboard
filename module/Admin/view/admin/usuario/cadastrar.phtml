@@ -22,7 +22,7 @@
 		</div>
 		<hr/>
 		<div class="form-group form-group-sm">
-			<label>Função</label>
+			<label>Perfil de acesso</label>
 			<select class="form-control" name="funcao">
 				<option></option>
 				<?php foreach($this->funcoes as $funcao):?>
@@ -32,7 +32,7 @@
 		</div>
 		<hr/>
 		<div class="pull-right">
-			<button name="cancelar" type="reset" class="btn btn-danger">Cancelar</button>&nbsp;&nbsp;&nbsp;
+			<button name="cancelar" onclick="window.history.go(-1);" type="reset" class="btn btn-danger">Cancelar</button>&nbsp;&nbsp;&nbsp;
 			<button type="submit" class="btn btn-success">Cadastrar</button>
 		</div>	
 	</form>

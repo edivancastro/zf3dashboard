@@ -2,7 +2,6 @@
 namespace Admin\Controller;
 
 use Admin\Service\AuthService;
-use Admin\Model\Admin;
 
 class LoginController extends ControllerAbstract{
 	

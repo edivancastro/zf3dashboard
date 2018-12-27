@@ -10,7 +10,7 @@ $this->headScript()->appendFile($this->basePath('js/functions.js'));
 		<thead>
 			<tr>
 				<th>#</th>
-				<th>Função</th>
+				<th>Perfil</th>
 				<th width="150px"></th>
 			</tr>
 		</thead>
@@ -49,7 +49,7 @@ $().ready(function(){
 	});
 
 	$("button[name=del]").click(function(){
-		if(confirm("Deseja remover permanentemente esta função?")){
+		if(confirm("Deseja remover permanentemente este perfil?")){
 			document.location.href = "<?php echo $this->url('role',['action'=>'del']);?>/id/" + $(this).attr("value");
 		}
 	});

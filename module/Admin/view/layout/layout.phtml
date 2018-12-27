@@ -1,4 +1,4 @@
-<?= $this->doctype() ?>
+<?= $this->doctype(); ?>
 <html lang="pt-br">
     <head>
         <meta charset="UTF-8">
@@ -31,60 +31,96 @@
                         <img src="<?= $this->basePath('img/zf-logo-mark.svg') ?>" height="28" alt="Painel de controle"/>&nbsp;Painel de Controle
                     </a>
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Menu supeior</span>
+                        <span class="sr-only">Menu superior</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
                 </div>
+                <?php if($this->usuario()->isAutenticado()):?>
                 <div class="collapse navbar-collapse">
-                        <ul class="nav navbar-nav pull-right">
-                            <li><a href="#">Suporte </a></li>
-                            <li class="nav-user dropdown">
-                            	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img class="nav-avatar" src="<?= $this->basePath('/img/user.png'); ?>" />
-                                	<b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="<?= $this->url('usuario',['action'=>'detalhar']) ?>">Minha conta</a></li>
-                                    <li><a href="#">Editar conta</a></li>                            
-                                    <li class="divider"></li>
-                                    <li><a href="<?= $this->url('login',['action'=>'logout']) ?>">Logout</a></li>
-                                </ul>
-                            </li>
-                        </ul>
+                    <ul class="nav navbar-nav pull-right">
+                        <li><a href="#">Suporte </a></li>
+                        <li class="nav-user dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img class="nav-avatar" src="<?= $this->basePath('/img/user.png'); ?>" />
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?= $this->url('usuario',['action'=>'detalhar']) ?>">Minha conta</a></li>
+                                <li><a href="<?=$this->url('usuario',['action'=>'editar']) ?>">Editar conta</a></li>                            
+                                <li class="divider"></li>
+                                <li><a href="<?= $this->url('login',['action'=>'logout']) ?>">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
+            <?php endif;?>
             </div>
         </nav>
         <!-- FIM TOP NAV BAR -->
+        
         <!-- INICIO BODY -->
         <div id="body" class="container-fluid">
+            <!-- INICIO WRAPPER BODY -->
             <div class="container wrapper">
+                <?php if($this->usuario()->isAutenticado()):?>
                 <div class="row">
                     <!-- INICIO WRAPPER MENU ESQUERDO -->
                     <div class="col-sm-3">
-                        <!-- INICIO MENU WIDGET -->
-                        <ul class="menu nav rounded nav-tabs nav-stacked">
-                            <li><a href="<?=$this->url('home');?>"><i class="glyphicon glyphicon-home"></i>Home</a></li>
-                            <li><a href="#"><i class="glyphicon glyphicon-envelope"></i>Mensagens</a></li>
-                        </ul>
+                        <!-- INICIO MENU WIDGET MENU-->
+                        <?php  echo $this->menu()
+                        ->setItens([
+                            ['id'=>'home',
+                            'routes'=>['home'],
+                            'label'=> 'Home',
+                            'icone'=>'glyphicon-home',
+                            'link' => $this->url('home')],
+
+                            ['id'=>'msg',
+                            'routes'=>['msg'],
+                            'label'=>'Mensagens',
+                            'icone'=>'glyphicon-envelope',
+                            'link'=>'#']
+                        ])
+                        ->setRouteName($this->CURRENT_ROUTE_NAME)
+                        ->render(); 
+                        ?>
                         <!-- FIM MENU WIDGET -->
                         <!-- INICIO MENU WIDGET -->
-                        <ul class="menu nav rounded nav-tabs nav-stacked">
-                            <li class="dropdown">
-                                <a data-toggle="collapse" href="#submenu-usr" aria-expanded="false">
-                                    <i class="glyphicon glyphicon-menu-down pull-right"></i>
-                                    <i class="glyphicon glyphicon-menu-up pull-right"></i>
-                                    <i class="glyphicon glyphicon-user"></i>Usuários
-                                </a>
-                                <ul class="nav collapse" id="submenu-usr">
-                                    <li><a href="<?= $this->url('usuario',['action'=>'detalhar']) ?>">Meu cadastro</a></li>
-                                    <li><a href="<?= $this->url('usuario');?>">Contas de usuário</a></li>
-                                    <li><a href="<?= $this->url('role');?>">Permissão de acesso</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="<?= $this->url('config');?>"><i class="glyphicon glyphicon-cog"></i>Configurações</a></li>
-                        </ul>
+                        <?php echo $this->menu()
+                        ->setItens([
+                            ['id'=> 'usuario',
+                            'routes'=>['usuario','role'],
+                            'label'=> 'Usuários',
+                            'icone'=>'glyphicon-user',
+                            'submenu'=>[
+                                ['id'=>'usr-det',
+                                'label'=>'Meu cadastro',
+                                'link'=>$this->url('usuario',['action'=>'detalhar'])],
+
+                                ['id'=>'usr-list',
+                                'label'=>'Contas de usuários',
+                                'link'=>$this->url('usuario')],
+
+                                ['id'=>'role',
+                                'label'=>'Permissão de acesso',
+                                'link'=>$this->url('role')]
+
+                            ]
+                        ],
+
+                        ['id'=> 'config',
+                        'routes'=>['config'],
+                        'label'=>'Configurações',
+                        'link'=>$this->url('config'),
+                        'icone'=>'glyphicon-cog'
+                    ]
+
+                ])
+                        ->setRouteName($this->CURRENT_ROUTE_NAME)
+                        ->render(); 
+                        ?>
                         <!-- FIM MENU WIDGET -->
 
                     </div>
@@ -97,9 +133,12 @@
                         </div>
                     </div>
                     <!-- FIM WRAPPER CONTEUDO -->
-
-                </div>
+                <?php else:?>
+                    <?= $this->content;?>
+                <?php endif;?>
+                </div>    
             </div>
+            <!-- FIM WRAPPER BODY -->
         </div>
         <!-- FIM BODY -->
         <div class="container">

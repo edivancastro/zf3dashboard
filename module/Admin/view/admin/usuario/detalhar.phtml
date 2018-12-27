@@ -25,7 +25,7 @@
 	</div>
 </div>
 <div class="container-fluid module-head">
-	<h3>::. Permissões</h3>
+	<h3><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Permissões de acesso</h3>
 </div>
 <div class="module-body">
 	<?php foreach($this->recursos as $recurso):?>
@@ -38,7 +38,7 @@
 		<tbody>
 			<?php $role = $this->usuario->getRole(); foreach($recurso->getPermissoes() as $permissao):?>
 			<tr>
-				<td><?php if($role->getPermissoes()->contains($permissao) || $role->isRoot()):?><img src="<?= $this->basePath().'/img/checked.png';?>" width="15px" /><?php else: ?><img src="<?= $this->basePath().'/img/del.png';?>" width="15px" /><?php endif?></td>
+				<td><?php if($role->getPermissoes()->contains($permissao) || $role->isRoot()):?><img src="<?= $this->basePath().'/img/checked.png';?>" width="20px" /><?php else: ?><img src="<?= $this->basePath().'/img/del.png';?>" width="20px" /><?php endif?></td>
 				<td><?= $permissao->getNome();?></td>
 				<td><?= $permissao->getDescricao(); ?></td>
 			</tr>

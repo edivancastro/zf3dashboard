@@ -15,8 +15,8 @@ class AuthService extends ServiceAbstract{
 	public function login($usuario, $senha){
 		$result = $this->entityManager->createQueryBuilder()
 		->select('a')
-		->from('Admin\Model\Admin','a')
-		->where('a.usuario = :usuario')
+		->from('Admin\Model\Usuario','a')
+		->where('a.login = :usuario')
 		->andWhere('a.senha = :senha')
 		->setParameter('usuario', $usuario)
 		->setParameter('senha', $senha)
@@ -29,12 +29,13 @@ class AuthService extends ServiceAbstract{
 		
 		return false;
 	}
-	
-	public function isLoged(){
-		print_r($this->session->usuario);exit;
-	}
+
+	public function getUser(){
+		return $this->session->usuario;
+	}	
 	
 	public function logout(){
 		return $this->session->getManager()->getStorage()->clear('Admin\Session');
 	}
+
 }

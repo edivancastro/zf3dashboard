@@ -4,6 +4,7 @@ namespace Admin\Controller;
 use Admin\Service\UsuarioService;
 use Admin\Service\RoleService;
 use Admin\Model\Usuario;
+use Admin\Service\AuthService;
 
 class UsuarioController extends ControllerAbstract{
     	
@@ -49,7 +50,8 @@ class UsuarioController extends ControllerAbstract{
 		if($this->params('id')<>''){
 			$usuario = $usrService->get($this->params('id'));
 		}else{
-			$usuario = $usrService->get(1);
+			$session = $this->serviceManager->get(AuthService::class)->getUser();
+			$usuario = $usrService->get($session->getId());
 		}
 
 		return [
@@ -62,7 +64,12 @@ class UsuarioController extends ControllerAbstract{
 		$usrService = $this->serviceManager->get(UsuarioService::class);
 		$roleService = $this->serviceManager->get(RoleService::class);
 		
-		$usuario = $usrService->get($this->params("id"));
+		if($this->params('id')<>''){
+			$usuario = $usrService->get($this->params('id'));
+		}else{
+			$session = $this->serviceManager->get(AuthService::class)->getUser();
+			$usuario = $usrService->get($session->getId());
+		}
 				
 		if($this->request->isPost()){
 			$role = $roleService->get($this->request->getPost("funcao"));

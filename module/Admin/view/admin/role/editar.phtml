@@ -1,5 +1,5 @@
 <div class="container-fluid module-head">
-	<h3> <span class="glyphicon glyphicon-import" aria-hidden="true"></span> Editar permissões de <?= $this->role->getDescricao();?></h3>
+	<h3> <span class="glyphicon glyphicon-import" aria-hidden="true"></span> Editar perfil de <?= $this->role->getDescricao();?></h3>
 </div>
 <form autocomplete="off" method="post">
 	<div class="module-body module-cadastro clearfix">
@@ -39,8 +39,8 @@
 		<br/>
 		<?php endforeach;?>
 		<div class="pull-right">
-			<button name="cancelar" type="reset" class="btn btn-danger">Cancelar</button>&nbsp;&nbsp;&nbsp;
-			<button type="submit" class="btn btn-success">Cadastrar</button>
+			<button name="cancelar" onclick="window.history.go(-1);" type="reset" class="btn btn-danger">Cancelar</button>&nbsp;&nbsp;&nbsp;
+			<button type="submit" class="btn btn-success">Salvar</button>
 		</div>
 	
 	</div>
