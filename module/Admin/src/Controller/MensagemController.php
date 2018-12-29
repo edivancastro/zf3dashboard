@@ -46,7 +46,10 @@ class MensagemController extends ControllerAbstract{
 	        $this->redirect()->toRoute('home');
 	    }
 	    
-	    
 	    return ['mensagem'=>$mensagem];
+	}
+	
+	public function writeAction(){
+	    
 	}
 }

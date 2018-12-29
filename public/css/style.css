@@ -5,6 +5,8 @@
 
 body {padding-top: 60px;padding-bottom: 40px;}
 
+.btn-submit{background:#ddd;border:1px solid #bbb;}
+
 hr{ border:1px solid #ccc; }
 
 #body{background: #ddd;min-height: 500px;border-bottom: 1px solid #888;}
@@ -138,11 +140,14 @@ div.container a.navbar-brand > img {
 #msg-menu li:not(.active) a:hover{background:#ccc;}
 
 #msg-caixa > .container-fluid{border:1px solid #ccc; border-radius:5px;padding:0}
-#msg-caixa .navbar{margin:0;min-height: 0;padding:5px;background:#e5e5e5}
+#msg-caixa .navbar{margin:0;min-height: 0;padding:5px;background:#e5e5e5;border:1px solid #ccc;}
 #msg-caixa .navbar form input{margin:0;}
+#msg-caixa .navbar a{font-size:12px;}
 
 #msg-caixa .navbar-brand{margin:0;padding:0;}
 #msg-caixa .navbar-brand h3{margin:0;font-size:16px}
+
+#msg-head .input-group{margin:10px 15px;}
 
 #msg-caixa .table{margin:0;}
 #msg-caixa .table *{font-size:11px;}
@@ -164,3 +169,5 @@ div.container a.navbar-brand > img {
 
 #msg-caixa .table tfoot tr:even{background:#eee;}
 #msg-caixa .table tfoot .pagination{margin:0; float:right;}
+
+#msg-body{border:1px solid #ddd;background:#f2f2f2;margin-top: 2px;min-height: 200px;padding:15px 15px;}

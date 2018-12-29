@@ -16,7 +16,7 @@ $this->headLink()->appendStylesheet($this->basePath('css/datatables.bootstrap.cs
 				<th>#</th>
 				<th>Nome</th>
 				<th>Login</th>
-				<th>Perfil</th>
+				<th class="hidden-xs">Perfil</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -30,7 +30,7 @@ $this->headLink()->appendStylesheet($this->basePath('css/datatables.bootstrap.cs
 				<td><?=$usuario->getId();?></td>
 				<td><?=$usuario->getNome();?></td>
 				<td><?=$usuario->getlogin();?></td>
-				<td><?=$usuario->getRole()->getDescricao();?></td>
+				<td class="hidden-xs"><?=$usuario->getRole()->getDescricao();?></td>
 				<td align="center" width="150px">
 					<button value="<?=$usuario->getId();?>" name="detalhar" class="btn-icon"><img class="icon" src="<?= $this->basepath().'/img/detail.png';?>" /></button>
 					<button value="<?=$usuario->getId();?>" name="editar" class="btn-icon"><img class="icon" src="<?= $this->basepath().'/img/edit.png';?>" /></button>

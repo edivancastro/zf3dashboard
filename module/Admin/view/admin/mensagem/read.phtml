@@ -1,3 +1,22 @@
 <div class="module-head">
 	<h3><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Mensagens</h3>
 </div>
+<button style="margin-top:15px;margin-left:15px" name="voltar" onClick="history.go(-1)" class="btn btn-default">
+	<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+	Voltar
+</button>
+<div class="module-body">
+	<div id="msg-caixa">
+		<div id="msg-head" class="navbar navbar-default rounded">
+			<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+			<span class="pull-right"><?=$this->mensagem->getDataenvio()->format('d/m//Y H:s');?></span>
+			<h4>Assunto:&nbsp;<span style="font-size:16px"><?= $this->mensagem->getAssunto();?></span></h4>
+			<a href="#" class="pull-right"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>&nbsp;Responder</a>
+			<h6><?= $mensagem->getRemetente()->getNome();?></h6>
+			
+		</div>
+		<div id="msg-body" class="rounded">
+			<?=$this->mensagem->getTexto();?>
+		</div>
+	</div>
+</div>

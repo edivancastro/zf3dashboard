@@ -35,4 +35,18 @@ return [
 				'type' => SessionArrayStorage::class
 		],
 
+        //banco de dados
+        'doctrine' => [
+            'connection' => [
+                'orm_default' => [
+                    'driverClass' => Doctrine\DBAL\driver\PDOMysql\Driver::class,
+                    'params' => [
+                        'host' => '',
+                        'user' => '',
+                        'password' => '',
+                        'dbname' => ''
+                    ]
+                ]
+            ]   
+        ]
 ];

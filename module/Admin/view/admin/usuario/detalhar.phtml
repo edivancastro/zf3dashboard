@@ -39,7 +39,7 @@
 			<?php $role = $this->usuario->getRole(); foreach($recurso->getPermissoes() as $permissao):?>
 			<tr>
 				<td><?php if($role->getPermissoes()->contains($permissao) || $role->isRoot()):?><img src="<?= $this->basePath().'/img/checked.png';?>" width="20px" /><?php else: ?><img src="<?= $this->basePath().'/img/del.png';?>" width="20px" /><?php endif?></td>
-				<td><?= $permissao->getNome();?></td>
+				<td class="hidden-xs"><?= $permissao->getNome();?></td>
 				<td><?= $permissao->getDescricao(); ?></td>
 			</tr>
 			<?php endforeach;?>

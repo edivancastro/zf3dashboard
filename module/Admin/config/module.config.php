@@ -92,6 +92,16 @@ return [
 		            ]
 		        ]
 		    ],
+		    'msg-write' => [
+		        'type' => Segment::class,
+		        'options' => [
+		            'route' => '/msg/write',
+		            'defaults' => [
+		                'controller' => Controller\MensagemController::class,
+		                'action' => 'write'
+		            ]
+		        ]
+		    ],
 		]
 	],
 	
