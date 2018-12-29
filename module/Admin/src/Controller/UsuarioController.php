@@ -50,8 +50,7 @@ class UsuarioController extends ControllerAbstract{
 		if($this->params('id')<>''){
 			$usuario = $usrService->get($this->params('id'));
 		}else{
-			$session = $this->serviceManager->get(AuthService::class)->getUser();
-			$usuario = $usrService->get($session->getId());
+			$usuario = $usrService->get($this->session->usuario->getId());
 		}
 
 		return [
@@ -67,8 +66,7 @@ class UsuarioController extends ControllerAbstract{
 		if($this->params('id')<>''){
 			$usuario = $usrService->get($this->params('id'));
 		}else{
-			$session = $this->serviceManager->get(AuthService::class)->getUser();
-			$usuario = $usrService->get($session->getId());
+		    $usuario = $usrService->get($this->session->usuario->getId());
 		}
 				
 		if($this->request->isPost()){
@@ -76,8 +74,12 @@ class UsuarioController extends ControllerAbstract{
 				
 			$usuario->setNome($this->request->getPost("nome"))
 			->setEmail($this->request->getPost("email"))
-			->setLogin($this->request->getPost("login"))
-			->setSenha($this->request->getPost("senha"));
+			->setLogin($this->request->getPost("login"));
+
+			if($this->request->getPost('senha')<>''){
+				$usuario->setSenha($this->request->getPost("senha"));
+			}
+
 			$usuario->setRole($role);
 		
 			$usrService->cadastrar($usuario);

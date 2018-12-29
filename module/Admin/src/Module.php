@@ -10,6 +10,7 @@ namespace Admin;
 use Zend\EventManager\EventInterface as Event;
 use Zend\Session\Container;
 use Zend\Mvc\MvcEvent;
+use Admin\Service\ConfigService;
 
 class Module
 {
@@ -30,35 +31,43 @@ class Module
     	$request = $serviceManager->get('Request');
     	$matchedRoute = $router->match($request);
 
-    	$params = $matchedRoute->getParams();
+            if(is_object($matchedRoute)){
 
-        $controller = explode('\\', $params['controller']);
-        $this->controllerName = array_pop($controller);
-        $this->actionName = $params['action'];
-        $this->routeName = $matchedRoute->getMatchedRouteName();
+        	$params = $matchedRoute->getParams();
 
-        $view = $event->getViewModel();
+            $controller = explode('\\', $params['controller']);
+            $this->controllerName = array_pop($controller);
+            $this->actionName = $params['action'];
+            $this->routeName = $matchedRoute->getMatchedRouteName();
 
-        $view->setVariables(
-            array(
-                'CURRENT_CONTROLLER_NAME' => $this->controllerName,
-                'CURRENT_ACTION_NAME' => $this->actionName,
-                'CURRENT_ROUTE_NAME' => $this->routeName,
-            )
-        );
+            $view = $event->getViewModel();
+
+            $view->setVariables(
+                array(
+                    'CURRENT_CONTROLLER_NAME' => $this->controllerName,
+                    'CURRENT_ACTION_NAME' => $this->actionName,
+                    'CURRENT_ROUTE_NAME' => $this->routeName,
+                )
+            );
+        }
 
         $eventManager = $event->getApplication()->getEventManager();
-
         $eventManager->attach(MvcEvent::EVENT_DISPATCH,[$this, 'verificaAutenticacao']);
+
+        $config = $serviceManager->get(ConfigService::class)->get();
+
+        if(!empty($config)){
+            date_default_timezone_set($config->getTimezone());
+        }
 
     }
 
     public function verificaAutenticacao(MvcEvent $event){
         $session = new Container('Admin\Session');
-
+        
         if(!is_object($session->usuario) && $this->routeName<>'login'){
             $controller = $event->getTarget();
-            $controller->redirect()->toRoute('login');
+            return $controller->redirect()->toRoute('login');
         }
     }
 

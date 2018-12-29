@@ -29,7 +29,7 @@
 				<?php foreach($recurso->getPermissoes() as $permissao):?>
 				<tr>
 					<td><input name="permissao[]" value="<?= $permissao->getId();?>" type="checkbox" /></td>
-					<td><?= $permissao->getNome();?></td>
+					<td class="hidden-xs"><?= $permissao->getNome();?></td>
 					<td><?= $permissao->getDescricao();?></td>
 				</tr>
 				<?php endforeach;?>

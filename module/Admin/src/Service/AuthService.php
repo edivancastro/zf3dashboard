@@ -2,15 +2,9 @@
 namespace Admin\Service;
 
 use Zend\Session\Container;
-use Doctrine\ORM\EntityManager;
 
 class AuthService extends ServiceAbstract{
-	private $session;
 	
-	public function __construct(EntityManager $em){
-		parent::__construct($em);
-		$this->session = new Container('Admin\Session');
-	}
 	
 	public function login($usuario, $senha){
 		$result = $this->entityManager->createQueryBuilder()
@@ -23,16 +17,13 @@ class AuthService extends ServiceAbstract{
 		->getQuery()->getResult();
 		
 		if(!empty($result)){
+			$this->entityManager->detach($result[0]);
 			$this->session->usuario = $result[0];
 			return true;
 		}
 		
 		return false;
 	}
-
-	public function getUser(){
-		return $this->session->usuario;
-	}	
 	
 	public function logout(){
 		return $this->session->getManager()->getStorage()->clear('Admin\Session');

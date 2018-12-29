@@ -62,6 +62,36 @@ return [
 							]
 					]
 			],
+		    'msg-inbox' => [
+		        'type' => literal::class,
+		        'options' => [
+		            'route' => '/msg',
+		            'defaults' => [
+		                'controller' => Controller\MensagemController::class,
+		                'action' => 'index'
+		            ]
+		        ]
+		    ],
+		    'msg-enviadas' => [
+		        'type' => literal::class,
+		        'options' => [
+		            'route' => '/msg/enviadas',
+		            'defaults' => [
+		                'controller' => Controller\MensagemController::class,
+		                'action' => 'enviadas'
+		            ]
+		        ]
+		    ],
+		    'msg-read' => [
+		        'type' => Segment::class,
+		        'options' => [
+		            'route' => '/msg/read/:id',
+		            'defaults' => [
+		                'controller' => Controller\MensagemController::class,
+		                'action' => 'read'
+		            ]
+		        ]
+		    ],
 		]
 	],
 	
@@ -74,6 +104,7 @@ return [
 					Service\UsuarioService::class => Service\Factory\ServiceFactory::class,
 					Service\RoleService::class => Service\Factory\ServiceFactory::class,
 					Service\ConfigService::class => Service\Factory\ServiceFactory::class,
+					Service\MensagemService::class => Service\Factory\ServiceFactory::class,
 			]
 	],
 		
@@ -87,6 +118,7 @@ return [
 			Controller\UsuarioController::class => Controller\Factory\ControllerAbstractFactory::class,
 			Controller\RoleController::class => Controller\Factory\ControllerAbstractFactory::class,
 			Controller\ConfigController::class => Controller\Factory\ControllerAbstractFactory::class,
+			Controller\MensagemController::class => Controller\Factory\ControllerAbstractFactory::class,
 
 		]
 	],

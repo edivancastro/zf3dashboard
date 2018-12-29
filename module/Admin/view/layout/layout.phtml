@@ -24,7 +24,7 @@
     </head>
     <body>
         <!-- INICIO TOP NAV BAR -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <nav id="navbartop" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="<?= $this->url('home') ?>">
@@ -78,10 +78,10 @@
                             'link' => $this->url('home')],
 
                             ['id'=>'msg',
-                            'routes'=>['msg'],
+                            'routes'=>['msg-inbox','msg-enviadas','msg-excluidas','msg-read','msg-write'],
                             'label'=>'Mensagens',
                             'icone'=>'glyphicon-envelope',
-                            'link'=>'#']
+                            'link'=>$this->url('msg-inbox')]
                         ])
                         ->setRouteName($this->CURRENT_ROUTE_NAME)
                         ->render(); 

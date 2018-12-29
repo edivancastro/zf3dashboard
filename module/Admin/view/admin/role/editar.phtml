@@ -30,7 +30,7 @@
 				<?php foreach($recurso->getPermissoes() as $permissao):?>
 				<tr>
 					<td><input <?php if($role->isRoot()):?>disabled<?php endif;?> <?php if($role->getPermissoes()->contains($permissao) || $role->isRoot()):?>checked="checked"<?php endif;?> name="permissao[]" value="<?= $permissao->getId();?>" type="checkbox" /></td>
-					<td><?= $permissao->getNome();?></td>
+					<td class="hidden-xs"><?= $permissao->getNome();?></td>
 					<td><?= $permissao->getDescricao();?></td>
 				</tr>
 				<?php endforeach;?>

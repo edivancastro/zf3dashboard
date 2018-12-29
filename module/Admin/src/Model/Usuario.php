@@ -1,7 +1,7 @@
 <?php
 namespace Admin\Model;
 Use Doctrine\ORM\Mapping as ORM;
-use Admin\Role\Role;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -49,7 +49,24 @@ class Usuario{
 	 * @ORM\joinColumn(name="Role_id", referencedColumnName="id")
 	 */
 	protected $role;
+
+	/**
+	* @ORM\OneToMany(targetEntity="Admin\Model\Mensagem", mappedBy="remetente")
+	*/
+	protected $mensagensenviadas;
+
+	/**
+	* @ORM\ManyToMany(targetEntity="Admin\Model\Mensagem", mappedBy="destinatarios")
+	*/
+	protected $mensagensrecebidas;
+
 	
+	public function __construct(){
+		$this->mensagensenviadas = new ArrayCollection();
+		$this->mensagensrecebidas = new ArrayCollection();
+	}
+	
+
 	public function setId($id){
 		$this->id = $id;
 		return $this;
@@ -83,7 +100,16 @@ class Usuario{
 	public function setRole($role){
 		$this->role = $role;
 		return $this;
-	}	
+	}
+
+	public function addMensagemEnviada(Mensagem $mensagem){
+		$this->mensagensenviadas[] = $mensagem;	
+	}
+
+
+	public function addMensagemRecebida(Mensagem $mensagem){
+		$this->mensagensrecebidas[] = $mensagem;	
+	}
 
 	public function getId(){
 		return $this->id;
@@ -107,6 +133,14 @@ class Usuario{
 	
 	public function getStatus(){
 		return $this->status;
+	}
+
+	public function getMensagensEnviadas(){
+		return $this->mensagensenviadas;
+	}
+	
+	public function getMensagensRecebidas(){
+		return $this->mensagensrecebidas;
 	}
 	
 	public function getRole(){

@@ -16,13 +16,10 @@ footer{margin-top:20px;}
 
 .wrapper{padding: 20px 0;}
 
-.navbar{min-height: 60px;}
-
-.navbar-inverse .navbar-nav > li > a{color:#eee;}
-
-.navbar-inverse .navbar-nav > li > a, .navbar-brand{line-height: 30px;}
-
-.nav-avatar{height:30px;}
+#navbartop{min-height: 60px;}
+#navbartop .navbar-nav > li > a{color:#eee;}
+#navbartop .navbar-nav > li > a,#navbartop .navbar-brand{line-height: 30px;}
+#navbartop .nav-avatar{height:30px;}
 
 .menu{background: #333; margin-bottom:20px;}
 .menu > li > a{background:inherit !important;color:#bbb;border:0; border-bottom:1px solid #ccc;}
@@ -115,7 +112,7 @@ div.container a.navbar-brand > img {
 	margin: 0 15px
 }
 .module-body {
-	padding: 15px
+	padding: 15px;
 }
 
 .module-login{margin-top:50px;}
@@ -133,3 +130,37 @@ div.container a.navbar-brand > img {
 .form-group-sm{
 	max-width:300px;
 }
+
+#msg-menu ul{margin:30px 0;} 
+#msg-menu li{background: #bbb; border-radius:5px;}
+#msg-menu li a{color:white;font-size:12px; padding:5px;}
+#msg-menu li.active a{font-weight: bold;cursor: default}
+#msg-menu li:not(.active) a:hover{background:#ccc;}
+
+#msg-caixa > .container-fluid{border:1px solid #ccc; border-radius:5px;padding:0}
+#msg-caixa .navbar{margin:0;min-height: 0;padding:5px;background:#e5e5e5}
+#msg-caixa .navbar form input{margin:0;}
+
+#msg-caixa .navbar-brand{margin:0;padding:0;}
+#msg-caixa .navbar-brand h3{margin:0;font-size:16px}
+
+#msg-caixa .table{margin:0;}
+#msg-caixa .table *{font-size:11px;}
+
+#msg-caixa thead{background: #efefef;}
+#msg-caixa thead th{border-right: 1px solid #ccc;border-bottom:1px solid #ccc;padding:3px;color:#777;padding-left:10px}
+
+#msg-caixa .table tbody tr{width: 100%;}
+#msg-caixa .table tbody tr.empty td{ text-align: center; color: #666; }
+#msg-caixa .table tbody tr{background: #fafafa;border-bottom:1px solid #d9d9d9}
+#msg-caixa .table tbody tr:nth-child(even){background: #f2f2f2;}
+#msg-caixa .table tbody tr:not(.empty){cursor:pointer}
+#msg-caixa .table tbody tr:hover {background:#dfdfdf}
+#msg-caixa .table tbody tr.new {font-weight: bold;}
+
+#msg-caixa .table tbody td{border:0;padding-left:10px}
+
+#msg-caixa .table tbody td a{color:black;}
+
+#msg-caixa .table tfoot tr:even{background:#eee;}
+#msg-caixa .table tfoot .pagination{margin:0; float:right;}
