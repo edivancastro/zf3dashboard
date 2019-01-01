@@ -44,16 +44,16 @@ class Menu extends AbstractHelper{
 				$icone = "<i class=\"glyphicon {$item['icone']}\"></i>";
 			}
 
-			$active = '';
-			$expand = 'false';
-			$in='';
-
-			if(isset($item['routes']) && in_array($this->route, $item['routes'])){
+			if(isset($item['active']) && in_array($this->route, $item['active'])){
 				$active = 'active';
 				if(isset($item['submenu'])){
 					$expand = 'true';
 					$in='in';
 				}
+			}else{
+				$active = '';
+				$expand = 'false';
+				$in='';
 			}
 
 			if(isset($item['submenu'])){
@@ -71,8 +71,16 @@ class Menu extends AbstractHelper{
 				$this->html .= "\n</li>";
 
 			}else{
+
+				if(isset($item['count']) && $item['count']>0){
+					$count = $item['count']>10?'+10':$item['count'];
+					$widget = '<b class="label '.@$item['countClass'].' pull-right">'.$count.'</b>';
+				}else{
+					$widget='';
+				}
+
 				$link =
-				$this->html .= "<li><a class=\"$active\" href=\"{$item['link']}\">$icone {$item['label']}</a></li>\n";
+				$this->html .= "<li><a class=\"$active\" href=\"{$item['link']}\">$icone {$item['label']}{$widget}</a></li>\n";
 			}
 			
 		}

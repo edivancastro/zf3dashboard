@@ -1,35 +1,187 @@
-<?php 
-$this->headLink()->appendStylesheet($this->basePath('/css/simple-editor.css'));
-$this->headScript()->appendFile($this->basePath('/js/simple-editor.js'));
+<?php
+ 	$this->inlineScript()->appendFile($this->basePath('/froala/js/froala_editor.min.js'));
+ 	$this->inlineScript()->appendFile($this->basePath('/froala/js/plugins/image.min.js'));
+ 	$this->inlineScript()->appendFile($this->basePath('/froala/js/plugins/align.min.js'));
+ 	$this->inlineScript()->appendFile($this->basePath('/froala/js/languages/pt_br.js'));
+ 	$this->inlineScript()->appendFile($this->basePath('/js/functions.js'));
+
+ 	$this->headLink()->prependStylesheet($this->basePath('/froala/css/froala_editor.min.css'));
+ 	$this->headLink()->appendStylesheet($this->basePath('/froala/css/froala_style.min.css'));
+ 	$this->headLink()->prependStylesheet($this->basePath('/froala/css/plugins/image.min.css'));
+ 	$this->headLink()->appendStylesheet('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css');
 ?>
 <div class="module-head">
 	<h3><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Enviar mensagem</h3>
 </div>
 <div class="module-body">
 	<form method="post">
-		<button type="reset" style="margin:15px;" name="voltar" onClick="history.go(-1)" class="btn btn-default">
-			<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-			Voltar
-		</button>
-		<button type="submit" style="margin:15px;" name="submit" class="btn btn-submit pull-right">
-			<span class="glyphicon glyphicon-" aria-hidden="true"></span>
-			Enviar
-		</button>
+	<div class="row">
+		<div class="col-xs-12 text-right">
+			<button type="submit" style="margin:15px;padding:5px 10px;" name="submit" class="btn btn-submit">
+				<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+				Enviar
+			</button>	
+		</div>
+	</div>
 	<div id="msg-caixa">
 		<div id="msg-head" class="navbar navbar-default rounded">
-			<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
 			<div class="input-group">
 				<span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp; Para:</span>
-				<input type="text" name="destinatarios" class="form-control" />
+				<div class="input">
+					<?php if(is_object($this->reply)): ?>
+					<span class="widget users">
+						<a><?= $this->reply->getRemetente()->getNome();?></a>
+						<input type="hidden" name="user[]" value="<?= $this->reply->getRemetente()->getId();?>" /><button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					</span>
+					<?php endif; ?>	
+				</div>
 			</div>
+			
 			<div class="input-group">
-				<span class="input-group-addon">Assunto:</span>
-				<input type="text" name="assunto" class="form-control" />
+				<span class="input-group-addon"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span>&nbsp; Assunto:</span>
+				<input value="<?= is_object($this->reply) ? 'Re: '.$this->reply->getAssunto():null;?>" maxlength="70" type="text" name="assunto" class="form-control" />
 			</div>
 		</div>
 		<div id="msg-body" class="rounded">
-			<textarea rows="10" name="texto" class="form-control"></textarea>
+			<textarea id="texto" rows="10" name="texto" class="form-control">
+				<?php if(is_object($this->reply)): 
+						echo "<br/><br/><br/>";
+						echo "<hr/>";
+						echo '<i><p align="right">'.$this->reply->getDataenvio()->format('d/m/Y H:s').'<p>';
+						echo "<b>de</b>: {$this->reply->getRemetente()->getNome()} <br/>";
+						echo "<b>Para</b>: {$this->usuario->getNome()} <br/>";
+						echo "<b>Assunto</b>: {$this->reply->getAssunto()} <br/><br/>";
+						echo substr(strip_tags($this->reply->getTexto()),0,100)."</i>";
+						echo "...";
+					endif;
+				?>				
+			</textarea>
 		</div>
 	</div>
+	<button type="reset" style="margin:15px;padding:5px 10px;" name="voltar" onClick="history.go(-1)" class="btn btn-link">
+			<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+			Voltar
+		</button>
 	</form>
 </div>
+<?php 
+if(is_object($this->reply)){
+	
+	$nome = $this->reply->getRemetente()->getNome();
+
+	if(nome.length > 1 ){
+		$nome = array_shift(explode(' ',$nome)).' '.array_pop(explode(' ',$nome));
+	}
+
+	$user = "{nome:'{$nome}', id:'{$this->reply->getRemetente()->getId()}' }";
+
+}else{
+
+	$user = "";
+
+}
+$script = <<<Script
+
+  $(function() {
+
+  	var users=[{$user}];
+
+  	var inputSort = function(){
+  		$('#msg-caixa .widget.users, #widget-mais').remove();
+  		for(var i = 0; i < users.length; i++){
+  			if(i==3){
+  				var outros = users.length-3;
+  				$('#msg-head .input').append('<span id="widget-mais" class="widget"><a>+'+outros+'..</a></span>');
+  			}
+  			
+  			var nome = users[i].nome;
+  			var id = users[i].id;
+
+  			if(i>2){
+				$('#msg-head .input').append('<span class="widget hide users"><input type="hidden" name="user[]" value="'+id+'" /></span');					
+				continue;  				 
+  			}
+
+  			$('#msg-head .input').append('<span class="widget users"><a>'+nome+'</a><input type="hidden" name="user[]" value="'+id+'" /><button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></span>');
+  		}
+  	};
+
+  	var remove = function(usuario){
+  		$(users).each(function(key,value){
+  			if(value.id==usuario){
+  				users.splice(key,1); 
+  				inputSort();
+  				return;
+  			}
+  		});
+  	}
+  	
+  	$('#msg-head div.input').click(function(){
+  		$('body').append('<div id="dialog"></div>');
+
+		$('#dialog').load('{$this->url("msg",['action'=>'write'])}?users=1', function(){
+			$(users).each(function(key,user){
+				$('#dialog input[name^=user][value="'+user.id+'"]').attr('checked',true);
+			});	
+		}).dialog({
+			width: "auto",
+			position:{my:"center top", at:"center top+100", of: window},
+			title: 'Selecionar usuários',
+			width: '300px',
+			maxHeight: dialogHeight,
+			modal: true,
+			close: false,
+			resizable: true,
+			buttons: {
+				Cancelar : function(){
+					$(this).dialog('close');
+				},
+				Selecionar : function(){
+					selected = $('#dialog input[name^="user"]:checked');
+					
+					if($(selected).length==0){
+						return alert('Selecione ao menos um destinatário');
+					}
+					
+					users = [];
+
+					$(selected).each(function(index,input){
+						var userid = $(input).val();
+							
+						var nome=$('#dialog input[name^="user"][value="'+userid+'"]').closest('tr').find('td:eq(1)').html();
+							
+						if(nome.split(" ").length > 2){
+							nome = nome.split(" ").shift() +' '+ nome.split(" ").pop();
+						}
+
+						users.push({'id':userid,'nome':nome});
+						
+					});
+
+					inputSort();
+					$(this).dialog('close');
+				},
+			},
+			close: function(){
+				$('#dialog').remove();
+			}
+		});
+
+	$('#msg-head div.input').on('click','.widget.users',function(event){
+  		event.stopPropagation();
+  		id = $(this).find('input[name^="user"]').val();
+  		remove(id);
+  	});
+
+  });
+
+    
+ $('#texto').froalaEditor({language:'pt_br',heightMin:200, toolbarButtons: ['bold', 'italic', 'underline','align','insertImage','insertHR','undo', 'redo']});
+ });
+
+
+
+Script;
+
+$this->inlineScript()->appendScript($script);
+?>

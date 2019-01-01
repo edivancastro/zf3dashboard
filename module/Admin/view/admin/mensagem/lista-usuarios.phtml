@@ -1,0 +1,56 @@
+<div>
+	<input name="filtro" class="form-control" type="text" placeholder="Filtrar" />
+	<?php 
+	foreach($this->perfis as $perfil): 
+		if(!empty($perfil->getUsuarios())):
+			?>
+			<table class="table listausuarios">
+				<thead>
+					<tr>
+						<th><input type="checkbox" /></th>
+						<th><?= $perfil->getDescricao();?> </th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach($perfil->getUsuariosAtivos() as $usuario):?>
+						<tr>
+							<td><input name="user[]" value="<?=$usuario->getId();?>" type="checkbox" /></td>
+							<td><?= $usuario->getNome(); ?></td>
+						</tr>
+					<?php endforeach;?>
+				</tbody>
+			</table>
+		<?php endif;endforeach; ?>
+</div>
+<script>
+$().ready(function(){
+	$('.table thead input[type=checkbox]').click(function(){
+		$(this).closest('.table').find('tbody tr').removeClass('hidden');
+		if($(this).is(':checked')){
+			$(this).closest('.table').find('tbody tr input[type=checkbox]').prop('checked',true);
+		}else{
+			$(this).closest('.table').find('tbody tr input[type=checkbox]').prop('checked',false);
+		}
+	});
+
+	$('input[name=filtro]').keyup(function(event){
+		var filtro = $(this);
+		
+		$("#dialog table.listausuarios").each(function(key1,table){
+			$(table).find('tbody tr').each(function(key2,row){
+				if($(row).find('td:eq(1)').html().toUpperCase().indexOf($(filtro).val().toUpperCase()) > -1){
+					$(row).removeClass('hidden');
+				}else{
+					$(row).addClass('hidden');
+				}	
+			});
+			if($(table).find('tbody tr:not(.hidden)').length==0){
+				$(table).addClass('hidden');
+			}else{
+				$(table).removeClass('hidden');
+			}
+		})
+	});
+
+});
+</script>

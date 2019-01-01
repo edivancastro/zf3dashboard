@@ -2,6 +2,7 @@
 namespace Admin\Service;
 
 use Zend\Session\Container;
+use Admin\Model\Usuario;
 
 class AuthService extends ServiceAbstract{
 	
@@ -12,6 +13,8 @@ class AuthService extends ServiceAbstract{
 		->from('Admin\Model\Usuario','a')
 		->where('a.login = :usuario')
 		->andWhere('a.senha = :senha')
+		->andWhere('a.status = :status')
+		->setParameter('status',Usuario::STATUS_ATIVO)
 		->setParameter('usuario', $usuario)
 		->setParameter('senha', $senha)
 		->getQuery()->getResult();

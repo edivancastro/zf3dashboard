@@ -5,6 +5,7 @@ use Admin\Service\RoleService;
 use Admin\Model\Role;
 use Admin\Model\Permissao;
 use Zend\View\Model\ViewModel;
+use Zend\Captcha\Image as Captcha;
 
 class RoleController extends ControllerAbstract{
 	
@@ -41,6 +42,10 @@ class RoleController extends ControllerAbstract{
 	
 	public function editarAction(){
 	    $role = $this->serviceManager->get(RoleService::class)->get($this->params('id'));
+
+	    if(!is_object($role)){
+	    	$this->redirect()->toRoute("role");
+	    }
 	    
 	    if($this->request->isPost()){
 	        $role->setDescricao($this->request->getPost('descricao'));
@@ -73,13 +78,27 @@ class RoleController extends ControllerAbstract{
 	        'role' => $this->serviceManager->get(RoleService::class)->get($this->params('id')),
 	        'recursos' => $this->serviceManager->get(RoleService::class)->getAllRecursos(),
 	    ]);
-	    $view->setTerminal(true);
 	    return $view;
 	}
 	
 	public function delAction(){
-	    $this->serviceManager->get(RoleService::class)->remover($this->params('id'));
-	    $this->redirect()->toRoute('role');
+		$captcha = new Captcha();
+
+		if($this->request->isPost() && $captcha->isValid($this->request->getPost('captcha'))){
+			$this->serviceManager->get(RoleService::class)->remover($this->params('id'));
+	    	$this->redirect()->toRoute('role');
+		}			
+
+		$captcha->setDotNoiseLevel(10)
+				->setImgDir(realpath(ROOT_PATH.'/public/temp/captcha'))
+				->setLineNoiseLevel(0);
+		
+		$id = $captcha->setFont(ROOT_PATH.'/public/fonts/arial.ttf')->generate();
+		
+		return ['captcha'=>$id,
+				'role'=>$this->serviceManager->get(RoleService::class)->get($this->params("id"))
+			];
+		
 	}
 	
 }

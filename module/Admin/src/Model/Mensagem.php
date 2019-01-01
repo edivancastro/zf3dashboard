@@ -7,7 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
 * @ORM\Entity
 */
-class Mensagem{
+class Mensagem implements \JsonSerializable{
+
 	/**
 	* @ORM\Id
 	* @ORM\GeneratedValue
@@ -122,5 +123,10 @@ class Mensagem{
 	
 	public function isVisualizada(){
         return $this->dataleitura == null ? false: true;	    
+	}
+
+	public function jsonSerialize(){
+		$vars = get_object_vars($this);
+        return $vars;
 	}
 }

@@ -41,10 +41,10 @@ return [
                 'orm_default' => [
                     'driverClass' => Doctrine\DBAL\driver\PDOMysql\Driver::class,
                     'params' => [
-                        'host' => '',
-                        'user' => '',
+                        'host' => 'localhost',
+                        'user' => 'root',
                         'password' => '',
-                        'dbname' => ''
+                        'dbname' => 'sistema'
                     ]
                 ]
             ]   

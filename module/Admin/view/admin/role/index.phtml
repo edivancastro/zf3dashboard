@@ -2,7 +2,7 @@
 $this->headScript()->appendFile($this->basePath('js/functions.js'));
 ?>
 <div class="container-fluid module-head">
-	<h3><span class="glyphicon glyphicon-import" aria-hidden="true"></span> Permissões de acesso</h3>
+	<h3><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Perfil de acesso</h3>
 </div>
 <div class="container-fluid module-body">
 	<button id="btn-new" type="button" class="btn btn-primary">Novo</button>
@@ -11,7 +11,7 @@ $this->headScript()->appendFile($this->basePath('js/functions.js'));
 			<tr>
 				<th>#</th>
 				<th>Perfil</th>
-				<th width="150px"></th>
+				<th width="50px"></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -25,8 +25,6 @@ $this->headScript()->appendFile($this->basePath('js/functions.js'));
 				<td><?=$funcao->getDescricao();?></td>
 				<td align="center">
 					<button value="<?=$funcao->getId();?>" name="permissao-detalhar" class="btn-icon"><img class="icon" src="<?= $this->basepath().'/img/detail.png';?>" /></button>
-					<button value="<?=$funcao->getId();?>" name="editar" class="btn-icon"><img class="icon" src="<?= $this->basepath().'/img/edit.png';?>" /></button>
-					<button value="<?=$funcao->getId();?>" name="del" class="btn-icon"><img class="icon" src="<?= $this->basepath().'/img/trash.png';?>" /></button>
 				</td>
 			</tr>
 			<?php endforeach;endif;?>
@@ -37,23 +35,12 @@ $this->headScript()->appendFile($this->basePath('js/functions.js'));
 $().ready(function(){
 
 	$('button[name="permissao-detalhar"]').click(function(){
-		urlDialog('<?= $this->url('role',['action'=>'detalhar']);?>'+'/id/'+$(this).val(),'Permissões para '+$(this).closest('tr').find('td:eq(1)').html());
+		document.location.href = "<?php echo $this->url("role",["action"=>"detalhar"]);?>/id/"+$(this).val();
 	});
 
 	$("#btn-new").click(function(){
 		document.location.href = "<?php echo $this->url("role",["action"=>"cadastrar"]);?>";
-	});
-
-	$("button[name=editar]").click(function(){
-		document.location.href = "<?php echo $this->url('role',['action'=>'editar']);?>/id/" + $(this).attr("value");
-	});
-
-	$("button[name=del]").click(function(){
-		if(confirm("Deseja remover permanentemente este perfil?")){
-			document.location.href = "<?php echo $this->url('role',['action'=>'del']);?>/id/" + $(this).attr("value");
-		}
-	});
-	
+	});	
 	
 });
 </script>

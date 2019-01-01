@@ -1,4 +1,26 @@
-<div class="container-fluid">
+<div class="container-fluid module-head">
+	<h3><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Usuário</h3>
+</div>
+<div class="module-body">
+	<div class="btn-actions btn-group pull-right" role="group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<span class="glyphicon glyphicon-th" aria-hidden="true"></span>&nbsp;&nbsp;Ação
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+			<li><a href="<?=$this->url('role',['action'=>'editar','id'=>$this->role->getId()]);?>">Alterar</a></li>
+			<li><a href="<?=$this->url('role',['action'=>'del','id'=>$this->role->getId()]);?>">Excluir</a></li>
+		</ul>
+	</div>
+	<div class="form-group">
+		<label class="control-label">Descrição</label>
+		<p class="form-control-static"><?=$this->role->getDescricao();?></p>
+	</div>
+</div>
+<div class="container-fluid module-head">
+	<h3><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Permissões de acesso</h3>
+</div>
+<div class="module-body">
 	<?php foreach($this->recursos as $recurso):?>
 	<table class="table table-striped">
 		<thead>
@@ -9,7 +31,7 @@
 		<tbody>
 			<?php foreach($recurso->getPermissoes() as $permissao):?>
 			<tr>
-				<td><?php if($this->role->getPermissoes()->contains($permissao) || $this->role->isRoot()):?><img src="<?= $this->basePath().'/img/checked.png';?>" width="15px" /><?php else: ?><img src="<?= $this->basePath().'/img/del.png';?>" width="15px" /><?php endif?></td>
+				<td><?php if($this->role->getPermissoes()->contains($permissao) || $role->isRoot()):?><img src="<?= $this->basePath().'/img/checked.png';?>" width="20px" /><?php else: ?><img src="<?= $this->basePath().'/img/del.png';?>" width="20px" /><?php endif?></td>
 				<td class="hidden-xs"><?= $permissao->getNome();?></td>
 				<td><?= $permissao->getDescricao(); ?></td>
 			</tr>
@@ -17,4 +39,6 @@
 		</tbody>
 	</table>
 	<?php endforeach;?>
+	<br/>
+	<button name="cancelar" onclick="window.history.go(-1);" type="button" class="btn btn-link">Voltar</button>
 </div>

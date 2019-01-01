@@ -29,13 +29,20 @@ class RoleService extends ServiceAbstract{
 	}
 	
 	public function get($id){
-		return $this->entityManager->getRepository(Role::class)->find($id);
+		$result = $this->entityManager->getRepository(Role::class)->findBy(['excluido'=>false,'id'=>$id]);
+		return array_shift($result);
 	}
 	
 	public function getAll(){
-		return $this->entityManager->getRepository(Role::class)->findBy(['excluido'=>false]);
+		return $this->entityManager->createQueryBuilder()
+				->select('r')
+				->from('Admin\Model\Role','r')
+				->where('r.excluido=false')
+				->orderBy('r.descricao','ASC')
+				->getQuery()->getResult();
 	}
 	
+
 	public function getAllPermissoes(){
 	    return $this->entityManager->getRepository(Permissao::class)->findAll();
 	}

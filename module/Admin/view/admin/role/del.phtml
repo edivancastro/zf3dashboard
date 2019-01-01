@@ -1,0 +1,27 @@
+<div class="container-fluid module-head">
+	<h3><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Perfil de acesso</h3>
+</div>
+<div class="module-body">
+	<div class="alert alert-danger" role="alert"><b>Atenção!</b> Você esta prestes a excluir o seguinte registro</div>
+	<div class="form-group">
+		<label class="control-label">Perfil</label>
+		<p class="form-control-static"><?=$this->role->getDescricao();?></p>
+	</div>
+	<hr/>
+	<h4>Segurança</h4>
+	<div class="row">
+		<div style="min-width:200px;" class="col-xs-3">
+			<p><img class="captcha" src="<?=$this->basePath('/temp/captcha/'.$this->captcha.'.png');?>" /></p>
+		</div>
+		<div class="col-xs-9">
+			<form method="POST" class="form-inline">
+				<input type="hidden" name="captcha[id]" value="<?=$this->captcha;?>" />
+				<div class="form-group">
+					<input style="max-width: 200px;" type="text" class="form-control" name="captcha[input]" />
+				</div>
+				<button type="submit" class="btn btn-primary">Confirmar</button>
+			</form>
+			<p>Reescreva o codigo ao lado para confirmar a exclusão</p>
+		</div>
+	</div>
+</div>

@@ -301,6 +301,28 @@ class Role extends \Admin\Model\Role implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
+    public function getUsuariosAtivos()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUsuariosAtivos', []);
+
+        return parent::getUsuariosAtivos();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getUsuariosDesativados()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUsuariosDesativados', []);
+
+        return parent::getUsuariosDesativados();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getPermissoes()
     {
 

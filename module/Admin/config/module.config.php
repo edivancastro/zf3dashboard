@@ -62,46 +62,17 @@ return [
 							]
 					]
 			],
-		    'msg-inbox' => [
-		        'type' => literal::class,
+		    'msg' => [
+		        'type' => Segment::class,
 		        'options' => [
-		            'route' => '/msg',
+		            'route' => '/msg[/:action[/:id]]',
 		            'defaults' => [
 		                'controller' => Controller\MensagemController::class,
 		                'action' => 'index'
 		            ]
 		        ]
 		    ],
-		    'msg-enviadas' => [
-		        'type' => literal::class,
-		        'options' => [
-		            'route' => '/msg/enviadas',
-		            'defaults' => [
-		                'controller' => Controller\MensagemController::class,
-		                'action' => 'enviadas'
-		            ]
-		        ]
-		    ],
-		    'msg-read' => [
-		        'type' => Segment::class,
-		        'options' => [
-		            'route' => '/msg/read/:id',
-		            'defaults' => [
-		                'controller' => Controller\MensagemController::class,
-		                'action' => 'read'
-		            ]
-		        ]
-		    ],
-		    'msg-write' => [
-		        'type' => Segment::class,
-		        'options' => [
-		            'route' => '/msg/write',
-		            'defaults' => [
-		                'controller' => Controller\MensagemController::class,
-		                'action' => 'write'
-		            ]
-		        ]
-		    ],
+		   
 		]
 	],
 	
@@ -151,6 +122,9 @@ return [
 		'template_path_stack' => [
 				__DIR__ . '/../view',
 		],
+		'strategies' => [
+			'ViewJsonStrategy',
+		]
 	],
 
 	/*
@@ -161,11 +135,13 @@ return [
 	'view_helpers' => [
 		'factories' => [
 			View\Helper\Menu::class => InvokableFactory::class,
-			View\Helper\Usuario::class => InvokableFactory::class
+			View\Helper\Usuario::class => InvokableFactory::class,
+			View\Helper\Msg::class => View\Helper\Factory\Factory::class,
 		],
 		'aliases' => [
 			'menu' =>	View\Helper\Menu::class,
 			'usuario' => View\Helper\Usuario::class,
+			'msg' => View\Helper\Msg::class
 		]
 	],
 	

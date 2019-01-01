@@ -4,6 +4,7 @@ namespace Admin\Model;
 Use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Admin\Model\Usuario;
+use Doctrine\Common\Collections\Criteria;
 
 /**
  * @ORM\Entity
@@ -28,6 +29,7 @@ class Role{
 	
 	/**
 	 * @ORM\OneToMany(targetEntity="Admin\Model\Usuario", mappedBy="role")
+	 * @ORM\OrderBy({"nome" = "ASC"})
 	 */
 	protected $usuarios;
 	
@@ -99,6 +101,18 @@ class Role{
 	
 	public function getUsuarios(){
 		return $this->usuarios;
+	}
+
+	public function getUsuariosAtivos(){
+		$criteria = Criteria::create()->where(Criteria::expr()->eq("status",Usuario::STATUS_ATIVO))
+									  ->OrderBy(array('nome'=>'asc'));
+		return $this->usuarios->matching($criteria);
+	}
+
+	public function getUsuariosDesativados(){
+		$criteria = Criteria::create()->where(Criteria::expr()->eq("status",Usuario::STATUS_DESATIVADO))
+									  ->OrderBy(array('nome'=>'asc'));
+		return $this->usuarios->matching($criteria);
 	}
 	
 	public function getPermissoes(){

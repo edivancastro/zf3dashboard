@@ -72,16 +72,18 @@
                         <?php  echo $this->menu()
                         ->setItens([
                             ['id'=>'home',
-                            'routes'=>['home'],
+                            'active'=>['home'],
                             'label'=> 'Home',
                             'icone'=>'glyphicon-home',
                             'link' => $this->url('home')],
 
                             ['id'=>'msg',
-                            'routes'=>['msg-inbox','msg-enviadas','msg-excluidas','msg-read','msg-write'],
+                            'active'=>['msg'],
                             'label'=>'Mensagens',
                             'icone'=>'glyphicon-envelope',
-                            'link'=>$this->url('msg-inbox')]
+                            'count'=> $this->msg()->countNews(),
+                            'countClass'=>'green',
+                            'link'=>$this->url('msg')]
                         ])
                         ->setRouteName($this->CURRENT_ROUTE_NAME)
                         ->render(); 
@@ -91,7 +93,7 @@
                         <?php echo $this->menu()
                         ->setItens([
                             ['id'=> 'usuario',
-                            'routes'=>['usuario','role'],
+                            'active'=>['usuario','role'],
                             'label'=> 'Usuários',
                             'icone'=>'glyphicon-user',
                             'submenu'=>[
@@ -104,14 +106,14 @@
                                 'link'=>$this->url('usuario')],
 
                                 ['id'=>'role',
-                                'label'=>'Permissão de acesso',
+                                'label'=>'Perfil de acesso',
                                 'link'=>$this->url('role')]
 
                             ]
                         ],
 
                         ['id'=> 'config',
-                        'routes'=>['config'],
+                        'active'=>['config'],
                         'label'=>'Configurações',
                         'link'=>$this->url('config'),
                         'icone'=>'glyphicon-cog'
@@ -143,7 +145,7 @@
         <!-- FIM BODY -->
         <div class="container">
             <footer>
-                <p>&copy; 2018 - <?= date('Y') ?> Edmin Painel de controle - Todos direitos reservados.</p>
+                <p>&copy; 2018 - <?= date('Y') ?> Zend Painel de controle - Todos direitos reservados.</p>
             </footer>
         </div>
         <?= $this->inlineScript() ?>

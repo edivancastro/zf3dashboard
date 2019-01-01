@@ -6,10 +6,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity
  */
-class Usuario{
+class Usuario implements \JsonSerializable{
 	const STATUS_ATIVO = 1;
 	const STATUS_EXCLUIDO = 2;
-	const STATUS_BLOQUEADO = 3;
+	const STATUS_DESATIVADO = 3;
 
 	
 	/**
@@ -145,6 +145,11 @@ class Usuario{
 	
 	public function getRole(){
 		return $this->role;
+	}
+
+	public function jsonSerialize(){
+		$vars = get_object_vars($this);
+		return $vars;
 	}
 	
 }

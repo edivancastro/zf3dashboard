@@ -77,10 +77,46 @@ class MensagemService extends ServiceAbstract{
         return $msg;
     }
 
+    public function getTotalNaoLidas(){
+       $usuario = $this->session->usuario;
+
+      return $this->entityManager->createQueryBuilder()
+            ->select('count(m.id)')
+            ->from('Admin\Model\Mensagem','m')
+            ->leftJoin('m.destinatarios','d')
+            ->Where('d.id=:usuario')
+            ->andWhere('m.dataleitura is null')
+            ->setParameter('usuario', $usuario->getId())
+            ->getQuery()->getSingleScalarResult();
+
+    }
+
+
 	public function enviar(Mensagem $mensagem){
 	    $mensagem->setDataenvio(new \DateTime("now"));
 		$this->entityManager->persist($mensagem);
 		$this->entityManager->flush();
 	}
+
+  public function like($valor, $options){
+    $query = $this->entityManager->createQueryBuilder()
+      ->select('m')
+      ->from('Admin\Model\Mensagem','m')
+      ->join('m.remetente','r')
+      ->where('r.status = :status')
+      ->setParameter('status',Usuario::STATUS_ATIVO)
+      ->andWhere('r.nome like :valor')
+      ->orWhere("m.assunto like :valor")
+      ->setParameter('valor',"%$valor%")
+      ->getQuery();
+
+    $adapter = new Adapter(new DoctrinePaginator($query,false));  
+    $paginator = new Paginator($adapter);
+    $paginator->setItemCountPerPage($options['ItemPerPage']);
+    $paginator->setCurrentPageNumber($options['CurrentPage']);
+
+    return $paginator;
+  }
+
 	
 }

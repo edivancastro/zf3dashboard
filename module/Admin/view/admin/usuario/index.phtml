@@ -31,10 +31,8 @@ $this->headLink()->appendStylesheet($this->basePath('css/datatables.bootstrap.cs
 				<td><?=$usuario->getNome();?></td>
 				<td><?=$usuario->getlogin();?></td>
 				<td class="hidden-xs"><?=$usuario->getRole()->getDescricao();?></td>
-				<td align="center" width="150px">
+				<td align="center" width="50px">
 					<button value="<?=$usuario->getId();?>" name="detalhar" class="btn-icon"><img class="icon" src="<?= $this->basepath().'/img/detail.png';?>" /></button>
-					<button value="<?=$usuario->getId();?>" name="editar" class="btn-icon"><img class="icon" src="<?= $this->basepath().'/img/edit.png';?>" /></button>
-					<button value="<?=$usuario->getId();?>" name="del" class="btn-icon"><img class="icon" src="<?= $this->basepath().'/img/trash.png';?>" /></button>
 				</td>
 			</tr>
 			<?php endforeach;endif;?>
@@ -48,18 +46,8 @@ $().ready(function(){
 		document.location.href = "<?php echo $this->url("usuario",["action"=>"cadastrar"]);?>";
 	});
 
-	$("button[name=editar]").click(function(){
-		document.location.href = "<?php echo $this->url('usuario',['action'=>'editar']);?>/id/" + $(this).attr("value");
-	});
-
 	$("button[name=detalhar]").click(function(){
 		document.location.href = "<?php echo $this->url('usuario',['action'=>'detalhar']);?>/id/" + $(this).attr("value");
-	});
-
-	$("button[name=del]").click(function(){
-		if(confirm("Deseja remover permanentemente este usuário?")){
-			document.location.href = "<?php echo $this->url('usuario',['action'=>'del']);?>/id/" + $(this).attr("value");
-		}
 	});
 	
 });
