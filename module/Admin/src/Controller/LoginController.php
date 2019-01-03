@@ -6,6 +6,8 @@ use Admin\Service\AuthService;
 class LoginController extends ControllerAbstract{
 	
 	public function indexAction(){
+
+		if(is_object($this->session->usuario)){$this->redirect()->toRoute('home');}
 		
 		$authService = $this->serviceManager->get(AuthService::class);
 		

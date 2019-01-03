@@ -16,9 +16,9 @@
 					<div class="navbar-brand pull-left">
 						<h3><?= $this->box==1?'Caixa de entrada':'Enviadas';?></h3>
 					</div>
-					<form class="pull-right">
-						<input placeholder="Pesquisar" type="text" name="busca" />
-					</form>
+					<div class="pull-right">
+						<input placeholder="Filtrar" type="text" name="busca" />
+					</div>
 				</div>
 				<table class="table table-striped table-hover">
 					<thead>
@@ -30,11 +30,11 @@
 					</thead>
 					<tbody>
 						<?php if(count($this->mensagens)>0):foreach($this->mensagens as $msg):?>
-						<tr <?php if($this->box==1 & !$msg->isVisualizada()):?>class="new"<?php endif;?>>
-							<td><a href="<?=$this->url('msg',['action'=>'read','id'=>$msg->getId()]) ?>"><?=$msg->getAssunto();?></a></td>
-							<td class="hidden-xs"><a href="<?=$this->url('msg',['action'=>'read','id'=>$msg->getId()]) ?>"><?=substr($msg->getRemetente()->getNome(),0,20);?></a></td>
-							<td><a href="<?=$this->url('msg',['action'=>'read','id'=>$msg->getId()]) ?>"><?php 
-							       $data = $msg->getDataenvio();
+						<tr <?php if($this->box==1 && !$msg->foiLida()): ?>class="new"<?php endif;?> >
+							<td><a href="<?=$this->url('msg',['action'=>'read','id'=>$msg->getMensagem()->getId()]) ?>"><?=$msg->getMensagem()->getAssunto();?></a></td>
+							<td class="hidden-xs"><a href="<?=$this->url('msg',['action'=>'read','id'=>$msg->getMensagem()->getId()]) ?>"><?=substr($msg->getMensagem()->getRemetente()->getNome(),0,20);?></a></td>
+							<td><a href="<?=$this->url('msg',['action'=>'read','id'=>$msg->getMensagem()->getId()]) ?>"><?php 
+							       $data = $msg->getMensagem()->getDataenvio();
 							       if($data->format('d/m/Y')== date('d/m/Y')){
 							           echo $data->format('H:i');
 							       }else{
@@ -51,13 +51,7 @@
 					</tbody>
 					<tfoot>
 						<tr>
-							<?php if($this->box==1){
-							    $route = ['route' => 'msg', 'action'=>'index'];
-							}else{
-							    $route = ['route' => 'msg', 'action'=>'enviadas'];
-							}		    
-							 ?>
-							<td colspan="3"><?= $this->paginationControl($mensagens,'Sliding','admin/mensagem/paginator', $route); ?>
+							<td colspan="3"><?= $this->paginationControl($mensagens,'Sliding','admin/mensagem/paginator.phtml',['route'=>'msg','action'=>'find','box'=>$this->box]); ?>
 							</td>
 						</tr>
 					</tfoot>
@@ -66,18 +60,61 @@
 		</div>
 	</div>
 </div>
-<script>
+<?php
+$script = <<<JS
+
+
+
 $().ready(function(){
-	$('#msg-caixa tbody tr:not(.empty)').click(function(){
+
+	$('#msg-caixa tbody').on('click','tr:not(.empty)',function(){
 		document.location.href = $(this).find('td a').attr('href');
 	});
 
 	$('button[name=nova]').click(function(){
-		document.location.href='<?= $this->url('msg',['action'=>'write']);?>';
+		document.location.href='{$this->url('msg',['action'=>'write'])}';
 	});
 
+	var typingTimer;
 	$('#msg-caixa input[name=busca]').keyup(function(){
-		alert($(this).val());
+		clearTimeout(typingTimer);
+		var input = $('#msg-caixa input[name=busca]');
+
+    	typingTimer = setTimeout(function(){
+
+    		 $(input).addClass('loading');
+    		var urlRequest = '{$this->url('msg',['action'=>'find'])}?box={$this->box}&query='+$(input).val();
+    		$.getJSON(urlRequest,function(data){
+				$(input).removeClass('loading');
+				updateMsgBox(data,'{$this->url('msg')}','find',$('#msg-caixa .table'));
+			}).fail(function(jqxhr, textStatus, error){
+				$(input).removeClass('loading');
+				var e = jQuery.Event( 'keyup', { which: $.ui.keyCode.ENTER } );
+				$(input).trigger(e);
+			});
+
+    	}, 1000);			
+
 	});
+
+	$('#msg-caixa tfoot > tr > td').on('click','.pagination a',function(event){
+		event.preventDefault();
+		var link = $(this);
+
+		var urlRequest = $(this).attr('href');
+
+    	$.getJSON(urlRequest,function(data){
+			updateMsgBox(data,'{$this->url('msg')}','find',$('#msg-caixa .table'));
+		}).fail(function(jqxhr, textStatus, error){
+			var e = jQuery.Event( 'click', { which: $.ui.keyCode.ENTER } );
+			$(link).trigger(e);
+		});
+	});
+
+
 });
-</script>
+JS;
+$this->inlineScript()->appendScript($script);
+$this->inlineScript()->prependFile($this->basePath('/js/functions.js'));
+$this->inlineScript()->prependFile($this->basePath('/js/moment.min.js'));
+?>

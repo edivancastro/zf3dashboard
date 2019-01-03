@@ -56,7 +56,7 @@ class Usuario implements \JsonSerializable{
 	protected $mensagensenviadas;
 
 	/**
-	* @ORM\ManyToMany(targetEntity="Admin\Model\Mensagem", mappedBy="destinatarios")
+	* @ORM\OneToMany(targetEntity="Admin\Model\DestinatarioMensagem", mappedBy="destinatario")
 	*/
 	protected $mensagensrecebidas;
 

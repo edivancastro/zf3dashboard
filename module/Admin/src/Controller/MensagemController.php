@@ -7,17 +7,19 @@ use Admin\Service\MensagemService;
 use Admin\Service\UsuarioService;
 use Admin\Service\RoleService;
 use Admin\Model\Mensagem;
+use Admin\Model\DestinatarioMensagem;
 
 class MensagemController extends ControllerAbstract{
 	
 	//caixa de entrada
 	public function indexAction(){
 	    
-	    $options['ItemPerPage'] = 8;
-	    $options['order']='desc';
-	    $options['CurrentPage'] = $this->request->getQuery('page') <> '' ? $this->request->getQuery('page'):1;
 	    
-	    $mensagens = $this->serviceManager->get(MensagemService::class)->getMensagensRecebidas($options);
+	    $CurrentPage = $this->request->getQuery('page') <> null ? $this->request->getQuery('page'):1;
+	    
+	    $mensagens = $this->serviceManager->get(MensagemService::class)->getMensagensRecebidas();
+	    $mensagens->setItemCountPerPage(8);
+    	$mensagens->setCurrentPageNumber($CurrentPage);
 
 		$view = new ViewModel();
 		$view->box=1;
@@ -27,12 +29,12 @@ class MensagemController extends ControllerAbstract{
 
 	//itens enviados
 	public function enviadasAction(){
-	    $options['ItemPerPage'] = 8;
-	    $options['order']='desc';
-	    $options['CurrentPage'] = $this->request->getQuery('page') <> '' ? $this->request->getQuery('page'):1;
+	    $CurrentPage = $this->request->getQuery('page') <> '' ? $this->request->getQuery('page'):1;
 	    
-	    $mensagens = $this->serviceManager->get(MensagemService::class)->getMensagensEnviadas($options);
-		
+	    $mensagens = $this->serviceManager->get(MensagemService::class)->getMensagensEnviadas();
+		$mensagens->setItemCountPerPage(8);
+    	$mensagens->setCurrentPageNumber($CurrentPage);
+
 		$view = new ViewModel();
 		$view->setTemplate('admin\mensagem\index');
 		$view->box=2;
@@ -50,7 +52,8 @@ class MensagemController extends ControllerAbstract{
 	    
 	    return ['mensagem'=>$mensagem];
 	}
-	
+
+	//nova mensagem ou responder mensagem	
 	public function writeAction(){
 		
 
@@ -64,7 +67,9 @@ class MensagemController extends ControllerAbstract{
 
 	    	foreach($this->request->getPost('user') as $user){
 	    		$user = $usrService->get($user);
-	    		$msg->addDestinatario($user);
+	    		$destinatario = new DestinatarioMensagem();
+	    		$destinatario->setDestinatario($user);
+	    		$msg->addDestinatarioMensagem($destinatario);
 	    	}
 
 	    	$this->serviceManager->get(MensagemService::class)->enviar($msg);
@@ -98,20 +103,31 @@ class MensagemController extends ControllerAbstract{
 
 	} 
 
-	public function jsonAction(){
+	//filtragem ajax
+	public function findAction(){
+		error_reporting(E_ALL|E_STRICT);
+		ini_set('display_errors', 'off');
 
-		if($this->request->getQuery('query')==null){
+		if($this->request->getQuery('box')==null || !$this->request->isXmlHttpRequest()){
 			return $this->redirect()->toRoute('msg');
 		}
 
 		$currentPage = $this->request->getQuery('page') <> '' ? $this->request->getQuery('page'):1;
+		$filter = $this->request->getQuery('query'); 
+		$box = $this->request->getQuery('box');
 
-		$paginator = $this->serviceManager->get(MensagemService::class)->like($this->request->getQuery('query'),['ItemPerPage'=>8,'CurrentPage'=>$currentPage]);
-
-
-		$json = new JsonModel();
-		$json->mensagens = $paginator->getItemsByPage($currentPage);
+		$paginator = $this->serviceManager->get(MensagemService::class)->filter($filter,$box);
 		
+		$paginator->setItemCountPerPage(8);
+    	$paginator->setCurrentPageNumber($currentPage);
+
+		
+		$json = new JsonModel();
+		$json->query = $filter;
+		$json->box = $box; 
+		$json->mensagens = $paginator->getItemsByPage($currentPage);
+		$json->paginator = $paginator->getPages();
+
 		return $json;
 	}
 }

@@ -10,110 +10,109 @@ use Zend\Paginator\Paginator;
 
 class MensagemService extends ServiceAbstract{
 
-    public function getMensagensRecebidas($options=['ItemPerPage'=>10,'CurrentPage'=>1,'order'=>'desc']){
-       $usuario = $this->session->usuario;
-       
-       $query = $this->entityManager->createQueryBuilder()
-                           ->select('m')
-                           ->from('Admin\Model\Mensagem','m')
-                           ->where(':usuario MEMBER OF m.destinatarios')
-                           ->setParameter('usuario',$usuario->getId())
-                           ->orderBy('m.dataenvio',$options['order'])
-                           ->getQuery();
-       
-      $adapter = new Adapter(new DoctrinePaginator($query,false));
-      
-      $paginator = new Paginator($adapter);
-      $paginator->setItemCountPerPage($options['ItemPerPage']);
-      $paginator->setCurrentPageNumber($options['CurrentPage']);
-      
-      return $paginator;
+    public function getMensagensRecebidas($filter=null){
+        return $this->filter($filter, Mensagem::INBOX);       
     }
         
-    public function getMensagensEnviadas($options=['ItemPerPage'=>10,'CurrentPage'=>1,'order'=>'desc']){
-        $usuario = $this->session->usuario;
-        
-        $query = $this->entityManager->createQueryBuilder()
-        ->select('m')
-        ->from('Admin\Model\Mensagem','m')
-        ->where('m.remetente = :usuario')
-        ->setParameter('usuario',$usuario->getId())
-        ->orderBy('m.dataenvio',$options['order'])
-        ->getQuery();
-        
-        $adapter = new Adapter(new DoctrinePaginator($query,false));
-        
-        $paginator = new Paginator($adapter);
-        $paginator->setItemCountPerPage($options['ItemPerPage']);
-        $paginator->setCurrentPageNumber($options['CurrentPage']);
-        
-        return $paginator;
+    public function getMensagensEnviadas($filter=null){
+        return $this->filter($filter, Mensagem::OUTBOX);
     }
     
     public function get($id){
         $usuario = $this->session->usuario;
         
-        $result = $this->entityManager->createQueryBuilder()
+        $msg = $this->entityManager->createQueryBuilder()
                       ->select('m')
                       ->from('Admin\Model\Mensagem','m')
-                      ->leftJoin('m.destinatarios','d')
                       ->where('m.id=:id')
-                      ->andWhere('m.remetente=:usuario or d.id=:usuario')
-                      ->setParameter('usuario',$usuario->getId())
+                      ->andWhere('m.remetente=:usuario or :usuario MEMBER OF m.destinatarios')
+                      ->setParameter('usuario',$usuario)
                       ->setParameter('id', $id)
                       ->setMaxResults(1)
-                      ->getQuery()->getResult();
-       if(!empty($result)){
-           $msg = $result[0];
-           if(!$msg->isVisualizada()){
-               $msg->setDataleitura(new \DateTime("now"));
-               $this->entityManager->persist($msg);
-               $this->entityManager->flush();
-           }
-       }else{
-           $msg = $result;
-       }
-       
+                      ->getQuery()->getSingleResult();       
+      
+        
+        foreach($msg->getDestinatarioMensagem() as $dm){
+            if($dm->getDestinatario()->getId() === $usuario->getId()){
+                if($dm->getDataleitura()==null){
+                  $dm->setDataLeitura(new \DateTime());
+                  $this->entityManager->persist($dm);
+                  $this->entityManager->flush();
+                  break;
+                }
+            }
+        }
+        
+
         return $msg;
     }
 
     public function getTotalNaoLidas(){
-       $usuario = $this->session->usuario;
+      $usuario = $this->session->usuario;
 
-      return $this->entityManager->createQueryBuilder()
+      $result = $this->entityManager->createQueryBuilder()
             ->select('count(m.id)')
             ->from('Admin\Model\Mensagem','m')
-            ->leftJoin('m.destinatarios','d')
-            ->Where('d.id=:usuario')
-            ->andWhere('m.dataleitura is null')
-            ->setParameter('usuario', $usuario->getId())
+            ->join('m.destinatarios','d')
+            ->Where('d.destinatario=:usuario')
+            ->andWhere('d.dataleitura is null')
+            ->setParameter('usuario', $usuario)
             ->getQuery()->getSingleScalarResult();
+      
+      return $result;
 
     }
 
 
 	public function enviar(Mensagem $mensagem){
-	    $mensagem->setDataenvio(new \DateTime("now"));
+	  $mensagem->setDataenvio(new \DateTime("now"));
 		$this->entityManager->persist($mensagem);
 		$this->entityManager->flush();
 	}
 
-  public function like($valor, $options){
-    $query = $this->entityManager->createQueryBuilder()
-      ->select('m')
-      ->from('Admin\Model\Mensagem','m')
-      ->join('m.remetente','r')
-      ->where('r.status = :status')
-      ->setParameter('status',Usuario::STATUS_ATIVO)
-      ->andWhere('r.nome like :valor')
-      ->orWhere("m.assunto like :valor")
-      ->setParameter('valor',"%$valor%")
-      ->getQuery();
+  public function filter($valor=null, $box=Mensagem::INBOX){
 
-    $adapter = new Adapter(new DoctrinePaginator($query,false));  
+    $query = $this->entityManager->createQueryBuilder();
+    $query->select('d,m,r')
+          ->from('Admin\Model\DestinatarioMensagem','d')
+          ->join('d.mensagem','m')
+          ->join('m.remetente','r');      
+            
+     
+    if($box==Mensagem::INBOX){
+      $query->where('d.destinatario = :usuario');
+    }elseif($box==Mensagem::OUTBOX){
+      $query->where('m.remetente = :usuario');
+    }else{
+      $query->where("d.destinatario = :usuario or m.remetente = :usuario");
+    }
+
+    $query->setParameter('usuario',$this->session->usuario);            
+
+    if($valor <> null){
+      $dataformat = explode('/',$valor);
+
+      if(sizeof($dataformat)==1){
+        $dataformat = '%-'.$dataformat[0].'%';
+      }elseif(sizeof($dataformat)==2){
+        $dataformat = '%-'.$dataformat[1].'-'.$dataformat[0].'%';
+      }else{
+        $dataformat = $dataformat[2].'-'.$dataformat[1].'-'.$dataformat[0].'%';
+      }  
+
+      $query->andWhere("m.assunto like :valor or r.nome like :valor or d.dataleitura like :valor2")
+           ->setParameter('valor',"%$valor%")
+           ->setParameter('valor2',$dataformat);
+    }
+    
+
+    
+    $query->groupBy('m.id') 
+           ->orderBy('m.dataenvio','DESC');
+
+
+    $adapter = new Adapter(new DoctrinePaginator($query->getQuery(),false));
     $paginator = new Paginator($adapter);
-    $paginator->setItemCountPerPage($options['ItemPerPage']);
-    $paginator->setCurrentPageNumber($options['CurrentPage']);
 
     return $paginator;
   }

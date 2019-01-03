@@ -95,8 +95,22 @@ class UsuarioController extends ControllerAbstract{
 	}
 
 	public function desativarAction(){
-		$this->serviceManager->get(UsuarioService::class)->desativar($this->params("id"));
-		$this->redirect()->toRoute("usuario");
+		$captcha = new Captcha();
+
+		if($this->request->isPost() && $captcha->isValid($this->request->getPost('captcha'))){
+			$this->serviceManager->get(UsuarioService::class)->desativar($this->params("id"));
+			$this->redirect()->toRoute("usuario");
+		}			
+
+		$captcha->setDotNoiseLevel(10)
+				->setImgDir(realpath(ROOT_PATH.'/public/temp/captcha'))
+				->setLineNoiseLevel(0);
+		
+		$id = $captcha->setFont(ROOT_PATH.'/public/fonts/arial.ttf')->generate();
+		
+		return ['captcha'=>$id,
+				'usuario'=>$this->serviceManager->get(UsuarioService::class)->get($this->params("id"))
+			];
 	}
 	
 

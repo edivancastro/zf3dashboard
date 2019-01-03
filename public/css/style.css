@@ -8,11 +8,11 @@ body {padding-top: 60px;padding-bottom: 40px;font-size: 13px}
 .fr-wrapper > div:first-child:not(.fr-view){display:none!important;}
 
 
-
 .btn{font-size:13px; padding:5px 10px;}
 .btn-submit{background:#ddd;border:1px solid #bbb;}
 .form-inline button{margin-bottom: 10px;}
 .captcha{border:1px solid #ccc;padding:5px 0;}
+input.loading{background-image: url("../img/loading.gif");background-size: 18px 18px;background-repeat: no-repeat; background-position: right center; }
 
 hr{ border:1px solid #ccc; }
 
@@ -193,9 +193,8 @@ div.container a.navbar-brand > img {
 #msg-caixa .table tbody td a{color:#444;}
 #msg-caixa .table tbody tr.new a{color:black;}
 
-
+#msg-caixa tfoot tr{height: 50px;}
 #msg-caixa .table tfoot tr:even{background:#eee;}
 #msg-caixa .table tfoot .pagination{margin:0; float:right;}
 
 #msg-body{border:1px solid #ddd;background:#f2f2f2;margin-top: 2px;min-height: 200px;padding:15px 15px;}
-

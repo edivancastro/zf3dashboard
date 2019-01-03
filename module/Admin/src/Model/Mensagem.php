@@ -3,11 +3,14 @@ namespace Admin\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
 
 /**
 * @ORM\Entity
 */
 class Mensagem implements \JsonSerializable{
+	const INBOX=1;
+	const OUTBOX=2;
 
 	/**
 	* @ORM\Id
@@ -30,11 +33,6 @@ class Mensagem implements \JsonSerializable{
 	* @ORM\Column(type="datetime")
 	*/
 	private $dataenvio;
-	
-	/**
-	* @ORM\Column(type="datetime")
-	*/
-	private $dataleitura;
 
 	/**
 	* @ORM\ManyToOne(targetEntity="Admin\Model\Usuario", inversedBy="mensagensenviadas")
@@ -43,9 +41,7 @@ class Mensagem implements \JsonSerializable{
 	private $remetente;
 
 	/**
-	 * 
-	 * @ORM\ManyToMany(targetEntity="Admin\Model\Usuario", inversedBy="mensagensrecebidas")
-	 * @ORM\JoinTable(name="Destinatario_Mensagem", joinColumns={@ORM\joinColumn(name="Mensagem_id", referencedColumnName="id")}, inverseJoinColumns={@ORM\joinColumn(name="Usuario_id", referencedColumnName="id")})
+	 * @ORM\OneToMany(targetEntity="Admin\Model\DestinatarioMensagem", mappedBy="mensagem", cascade={"all"})
 	 */
 	private $destinatarios;
 
@@ -73,23 +69,19 @@ class Mensagem implements \JsonSerializable{
 		return $this;
 	}
 
-	public function setDataleitura($data){
-		$this->dataleitura = $data;
-		return $this;
-	}
-
 	public function setRemetente($usuario){
 		$this->remetente = $usuario;
 		return $this;
 	}
 
-	public function addDestinatario($usuario){
-		$this->destinatarios[] = $usuario;
+	public function addDestinatarioMensagem(DestinatarioMensagem $destinatario){
+		$destinatario->setMensagem($this);
+		$this->destinatarios[] = $destinatario;
 		return $this;
 	}
 
-	public function remDestinatario($usuario){
-		$this->destinatarios->removeElement($usuario);
+	public function remDestinatarioMensagem(DestinatarioMensagem $destinatario){
+		$this->destinatarios->removeElement($destinatario);
 		return $this;
 	}
 
@@ -109,24 +101,17 @@ class Mensagem implements \JsonSerializable{
 		return $this->dataenvio;
 	}
 
-	public function getDataleitura(){
-		return $this->dataleitura;
-	}
-
 	public function getRemetente(){
 		return $this->remetente;
 	}
 	
-	public function getDestinatarios(){
+	public function getDestinatarioMensagem(){
 		return $this->destinatarios;
 	}
 	
-	public function isVisualizada(){
-        return $this->dataleitura == null ? false: true;	    
-	}
-
 	public function jsonSerialize(){
 		$vars = get_object_vars($this);
         return $vars;
 	}
+
 }

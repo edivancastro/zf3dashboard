@@ -5,17 +5,24 @@
 	<div id="msg-caixa">
 		<div id="msg-head" class="navbar navbar-default rounded">
 			<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-			<span class="pull-right"><?=$this->mensagem->getDataenvio()->format('d/m//Y H:s');?></span>
+			<span class="pull-right"><?=$this->mensagem->getDataenvio()->format('d/m/Y H:s');?></span>
 			<h4>Assunto:&nbsp;<span style="font-size:16px"><?= $this->mensagem->getAssunto();?></span></h4>
-			<h6><b>De:</b> <?= $mensagem->getRemetente()->getNome();?></h6>
+			<h6><b>De:</b>&nbsp;<a><?= $mensagem->getRemetente()->getNome();?></a></h6>
 			<a href="<?=$this->url('msg',['action'=>'write']); ?>?resp=<?=$this->mensagem->getId();?>" class="pull-right"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>&nbsp;Responder</a>
+			<div class="row">
+				<div class="col-xs-6">
+					<h6 style="text-align: justify;"><b>Para:</b>&nbsp;
 			<?php
-			foreach($mensagem->getDestinatarios() as $destinatario ):
-				$nome = explode(' ',$destinatario->getNome());
-				$nome = sizeof($nome) > 2? array_shift($nome).' '.array_pop($nome):$destinatario->getNome();
+			foreach($mensagem->getDestinatarioMensagem() as $dm ):
+				$nome = explode(' ',$dm->getDestinatario()->getNome());
+				$nome = sizeof($nome) > 2? array_shift($nome).' '.array_pop($nome):$dm->getDestinatario()->getNome();
+				echo "<a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a>";
 			endforeach;
 			?>		
-
+					</h6>
+				</div>
+				<div class="col-xs-6"></div>
+			</div>
 		</div>
 		<div id="msg-body" class="rounded">
 			<?=$this->mensagem->getTexto();?>
