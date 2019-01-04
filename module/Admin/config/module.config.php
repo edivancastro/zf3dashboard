@@ -86,6 +86,7 @@ return [
 					Service\RoleService::class => Service\Factory\ServiceFactory::class,
 					Service\ConfigService::class => Service\Factory\ServiceFactory::class,
 					Service\MensagemService::class => Service\Factory\ServiceFactory::class,
+					Service\RbacManager::class => Service\Factory\RbacFactory::class,
 			]
 	],
 		
@@ -103,7 +104,15 @@ return [
 
 		]
 	],
-    
+
+
+	/*
+	* Role Bases Access Control RBAC
+	*/
+	 'rbac_manager' => [
+        'assertions' => [Service\RbacAssertionManager::class],
+    ],
+
 		
 	/*
 	 * View 
@@ -137,11 +146,13 @@ return [
 			View\Helper\Menu::class => InvokableFactory::class,
 			View\Helper\Usuario::class => InvokableFactory::class,
 			View\Helper\Msg::class => View\Helper\Factory\Factory::class,
+			View\Helper\resumeNome::class => View\Helper\Factory\Factory::class,
 		],
 		'aliases' => [
 			'menu' =>	View\Helper\Menu::class,
 			'usuario' => View\Helper\Usuario::class,
-			'msg' => View\Helper\Msg::class
+			'msg' => View\Helper\Msg::class,
+			'resumeNome' => View\Helper\resumeNome::class,
 		]
 	],
 	

@@ -30,7 +30,7 @@
 				<div class="input">
 					<?php if(is_object($this->reply)): ?>
 					<span class="widget users">
-						<a><?= $this->reply->getRemetente()->getNome();?></a>
+						<a><?= $this->resumeNome($this->reply->getRemetente()->getNome());?></a>
 						<input type="hidden" name="user[]" value="<?= $this->reply->getRemetente()->getId();?>" /><button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					</span>
 					<?php endif; ?>	
@@ -69,8 +69,9 @@ if(is_object($this->reply)){
 	
 	$nome = $this->reply->getRemetente()->getNome();
 
-	if(nome.length > 1 ){
-		$nome = array_shift(explode(' ',$nome)).' '.array_pop(explode(' ',$nome));
+	if(sizeof(explode(' ',$nome)) > 1 ){
+		$nome = explode(' ',$nome);
+		$nome = array_shift($nome).' '.array_pop($nome);
 	}
 
 	$user = "{nome:'{$nome}', id:'{$this->reply->getRemetente()->getId()}' }";
@@ -122,7 +123,7 @@ $script = <<<Script
 		$('#dialog').load('{$this->url("msg",['action'=>'write'])}?users=1', function(){
 			$(users).each(function(key,user){
 				$('#dialog input[name^=user][value="'+user.id+'"]').attr('checked',true);
-			});	
+			});
 		}).dialog({
 			width: "auto",
 			position:{my:"center top", at:"center top+100", of: window},

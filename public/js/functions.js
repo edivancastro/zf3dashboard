@@ -57,9 +57,15 @@ var updateMsgBox = function(dados, url,action, table){
 				classe = 'class="new"';
 			}
 
+			var nome = msg.mensagem.remetente.nome;
+
+			if(nome != null && nome.split(' ').length > 1){
+				nome = nome.split(' ').shift()+" "+nome.split(' ').pop();
+			}
+
 			var row = '<tr '+classe+'>';
-			row += '<td><a href="'+url+'/read/'+msg.id+'">'+(msg.mensagem.assunto==null?"":msg.mensagem.assunto)+'</a></td>';
-			row += '<td class="hidden-xs"><a href="'+url+'/read/'+msg.id+'">'+(msg.mensagem.remetente.nome==null?"":msg.mensagem.remetente.nome)+'</a></td>';
+			row += '<td><a href="'+url+'/read/'+msg.mensagem.id+'">'+(msg.mensagem.assunto==null?"":msg.mensagem.assunto)+'</a></td>';
+			row += '<td class="hidden-xs"><a href="'+url+'/read/'+msg.mensagem.id+'">'+( nome==null?'':nome )+'</a></td>';
 			row += '<td>'+data+'</td>';
 			row += '</tr>';
 

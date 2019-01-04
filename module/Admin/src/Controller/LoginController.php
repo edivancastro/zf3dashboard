@@ -23,6 +23,11 @@ class LoginController extends ControllerAbstract{
 		}
 	}
 	
+
+	public function naoautorizadoAction(){
+		
+	}
+
 	public function logoutAction(){
 		$authService = $this->serviceManager->get(AuthService::class);
 		$authService->logout();

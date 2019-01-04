@@ -32,7 +32,7 @@
 						<?php if(count($this->mensagens)>0):foreach($this->mensagens as $msg):?>
 						<tr <?php if($this->box==1 && !$msg->foiLida()): ?>class="new"<?php endif;?> >
 							<td><a href="<?=$this->url('msg',['action'=>'read','id'=>$msg->getMensagem()->getId()]) ?>"><?=$msg->getMensagem()->getAssunto();?></a></td>
-							<td class="hidden-xs"><a href="<?=$this->url('msg',['action'=>'read','id'=>$msg->getMensagem()->getId()]) ?>"><?=substr($msg->getMensagem()->getRemetente()->getNome(),0,20);?></a></td>
+							<td class="hidden-xs"><a href="<?=$this->url('msg',['action'=>'read','id'=>$msg->getMensagem()->getId()]) ?>"><?=$this->resumeNome($msg->getMensagem()->getRemetente()->getNome());?></a></td>
 							<td><a href="<?=$this->url('msg',['action'=>'read','id'=>$msg->getMensagem()->getId()]) ?>"><?php 
 							       $data = $msg->getMensagem()->getDataenvio();
 							       if($data->format('d/m/Y')== date('d/m/Y')){

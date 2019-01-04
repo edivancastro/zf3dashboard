@@ -13,6 +13,7 @@
 use Zend\Session\Storage\SessionArrayStorage;
 use Zend\Session\Validator\RemoteAddr;
 use Zend\Session\Validator\HttpUserAgent;
+use Zend\Cache\Storage\Adapter\Filesystem;
 
 return [
 		// Session configuration.
@@ -43,10 +44,31 @@ return [
                     'params' => [
                         'host' => 'localhost',
                         'user' => 'root',
-                        'password' => '',
+                        'password' => '1234',
                         'dbname' => 'sistema'
                     ]
                 ]
             ]   
-        ]
+        ],
+
+        'caches' => [
+        	'FilesystemCache' => [
+            	'adapter' => [
+                	'name'    => Filesystem::class,
+                	'options' => [
+                    	// Store cached data in this directory.
+                    	'cache_dir' => './data/cache',
+                    	// Store cached data for 1 hour.
+                    	'ttl' => 60*60*1 
+                	],
+            	],
+            	'plugins' => [
+                	[
+                    	'name' => 'serializer',
+                    	'options' => [                        
+                    	],
+                	],
+            	],
+            ],
+        ],
 ];

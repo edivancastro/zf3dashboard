@@ -1,3 +1,8 @@
+<?php $this->headStyle()->captureStart();?>
+#collapse.btn {margin:0 0 2px 0;padding:0;}
+#collapse[aria-expanded=true]{display:none;}
+#mais.in{display:inline}
+<?php $this->headStyle()->captureEnd();?>
 <div class="module-head">
 	<h3><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Mensagens</h3>
 </div>
@@ -7,22 +12,41 @@
 			<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
 			<span class="pull-right"><?=$this->mensagem->getDataenvio()->format('d/m/Y H:s');?></span>
 			<h4>Assunto:&nbsp;<span style="font-size:16px"><?= $this->mensagem->getAssunto();?></span></h4>
-			<h6><b>De:</b>&nbsp;<a><?= $mensagem->getRemetente()->getNome();?></a></h6>
-			<a href="<?=$this->url('msg',['action'=>'write']); ?>?resp=<?=$this->mensagem->getId();?>" class="pull-right"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>&nbsp;Responder</a>
+			<h6><b>De:</b>&nbsp;<a><?= $this->resumeNome($mensagem->getRemetente()->getNome());?></a></h6>
 			<div class="row">
-				<div class="col-xs-6">
-					<h6 style="text-align: justify;"><b>Para:</b>&nbsp;
+				<div class="col-xs-12 col-sm-9">
+					<h6><b>Para:</b>&nbsp;
 			<?php
-			foreach($mensagem->getDestinatarioMensagem() as $dm ):
-				$nome = explode(' ',$dm->getDestinatario()->getNome());
-				$nome = sizeof($nome) > 2? array_shift($nome).' '.array_pop($nome):$dm->getDestinatario()->getNome();
-				echo "<a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a><a>$nome, </a>";
-			endforeach;
+			$destinatarios = $mensagem->getDestinatarioMensagem();
+			
+			if(sizeof($destinatarios) > 3):
+				for($i=0;$i<3;$i++){
+					$nome = $this->resumeNome($destinatarios[$i]->getDestinatario()->getNome());
+					echo "<a>".$nome.($i<sizeof($destinatarios)-1?', ':'')."</a>";
+				}
+			?>
+			<span id="mais" class="collapse">
+			<?php
+				for($i=3;$i<sizeof($destinatarios);$i++){
+					$nome = $this->resumeNome($destinatarios[$i]->getDestinatario()->getNome());
+					echo "<a>".$nome.($i<sizeof($destinatarios)-1?', ':'')."</a>";	
+				}
+			?>
+			</span>
+			<button id="collapse" class="btn btn-link" aria-expanded=false data-toggle="collapse" data-target="#mais">e outros...</button>
+			<?php
+			else:
+				for($i=0;$i<sizeof($destinatarios);$i++){
+					$nome = $this->resumeNome($destinatarios[$i]->getDestinatario()->getNome());
+					echo "<a>".$nome.($i<sizeof($destinatarios)-1?', ':'')."</a>";	
+				}
+			endif;
 			?>		
 					</h6>
 				</div>
-				<div class="col-xs-6"></div>
+				<div class="col-sm-3"></div>
 			</div>
+			<a href="<?=$this->url('msg',['action'=>'write']); ?>?resp=<?=$this->mensagem->getId();?>" class="pull-right"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>&nbsp;Responder</a>
 		</div>
 		<div id="msg-body" class="rounded">
 			<?=$this->mensagem->getTexto();?>
