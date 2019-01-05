@@ -1,3 +1,4 @@
+<?php header('Content-type: text/html; charset= iso-8859-1 ');?>
 <?= $this->doctype(); ?>
 <html lang="pt-br">
     <head>
@@ -96,7 +97,7 @@
                         ->setItens([
                             ['id'=> 'usuario',
                             'active'=>['usuario','role'],
-                            'label'=> 'UsuÃ¡rios',
+                            'label'=> 'Usuários',
                             'icone'=>'glyphicon-user',
                             'submenu'=>[
                                 ['id'=>'usr-det',
@@ -104,7 +105,7 @@
                                 'link'=>$this->url('usuario',['action'=>'detalhar'])],
 
                                 ['id'=>'usr-list',
-                                'label'=>'Contas de usuÃ¡rios',
+                                'label'=>'Contas de usuários',
                                 'link'=>$this->url('usuario')],
 
                                 ['id'=>'role',
@@ -116,7 +117,7 @@
 
                         ['id'=> 'config',
                         'active'=>['config'],
-                        'label'=>'ConfiguraÃ§Ãµes',
+                        'label'=>'Configurações',
                         'link'=>$this->url('config'),
                         'icone'=>'glyphicon-cog'
                     ]

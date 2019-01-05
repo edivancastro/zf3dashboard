@@ -66,7 +66,7 @@ class RbacService extends ServiceAbstract{
 	}
 
 	/**
-     * checa permissão de um determinado usuario.
+     * checa permissao de um determinado usuario.
      * @param Usuario|null $user
      * @param string $permission
      * @param array|null $params
@@ -77,7 +77,7 @@ class RbacService extends ServiceAbstract{
         if ($this->rbac==null) {
             $this->init();
         }
-        
+                
         if ($user==null) {
             
             $session = $this->session->usuario;
@@ -90,13 +90,12 @@ class RbacService extends ServiceAbstract{
                     ->find($session->getId());
 
             if ($user==null) {
-                throw new \Exception('Usuario não encontrado!');
+                throw new \Exception('Usuario nao encontrado!');
             }
         }
         
         $role = $user->getRole();
         
-
         if ($role->isRoot() || $this->rbac->isGranted($role->getDescricao(), $permission)) {
             return true;
         }

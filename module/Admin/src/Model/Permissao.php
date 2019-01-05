@@ -2,7 +2,7 @@
 namespace Admin\Model;
 
 Use Doctrine\ORM\Mapping as ORM;
-use Admin\Role\Role;
+use Admin\Model\Role;
 
 /**
  * 

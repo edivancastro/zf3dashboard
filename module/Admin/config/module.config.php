@@ -132,8 +132,8 @@ return [
     	    ],
     		Controller\UsuarioController::class => [
     		    ['actions'=>['index'], 'allow'=>'@'],
-    			['actions'=>['detalhar'], 'allow'=>'+user.own.manager'],
-    			['actions'=>['cadastrar','editar','del','desativar'], 'allow'=>'+user.manager'],
+    			['actions'=>['detalhar','editar'], 'allow'=>'+user.own.manager'],
+    			['actions'=>['cadastrar','editar','del','desativar','detalhar'], 'allow'=>'+user.manager'],
     		],
     	    Controller\RoleController::class =>[
     	       ['actions'=>['index','detalhar','cadastrar','editar','remover'], 'allow'=>'+role.manager'],

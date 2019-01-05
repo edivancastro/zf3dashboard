@@ -59,7 +59,9 @@ class RoleController extends ControllerAbstract{
 	            
 	            foreach($this->request->getPost('permissao') as $idPermissao){
 	                $permissao = $this->serviceManager->get(RoleService::class)->getPermissao($idPermissao);
-	                $role->addPermissao($permissao);
+	                if(!$role->getPermissoes()->contains($permissao)){
+	                   $role->addPermissao($permissao);
+	                }
 	            }
 	        }
 	        
