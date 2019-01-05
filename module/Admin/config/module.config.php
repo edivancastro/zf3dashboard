@@ -22,16 +22,26 @@ return [
 					]
 				]
 			],
-			'login' => [
-				'type' => Segment::class,
-				'options' => [
-					'route' => '/login[/:action]',
-					'defaults' => [
-						'controller' => Controller\LoginController::class,
-						'action' => 'index'
-					]
-				]
-			],
+		    'login' => [
+		        'type' => Segment::class,
+		        'options' => [
+		            'route' => '/login[/:action]',
+		            'defaults' => [
+		                'controller' => Controller\LoginController::class,
+		                'action' => 'index'
+		            ]
+		        ]
+		    ],
+		    'acessonegado' => [
+		        'type' => Literal::class,
+		        'options' => [
+		            'route' => '/acessonegado',
+		            'defaults' => [
+		                'controller' => Controller\LoginController::class,
+		                'action' => 'acessonegado'
+		            ]
+		        ]
+		    ],
 			'usuario' => [
 					'type' => Segment::class,
 					'options' => [
@@ -86,7 +96,8 @@ return [
 					Service\RoleService::class => Service\Factory\ServiceFactory::class,
 					Service\ConfigService::class => Service\Factory\ServiceFactory::class,
 					Service\MensagemService::class => Service\Factory\ServiceFactory::class,
-					Service\RbacManager::class => Service\Factory\RbacFactory::class,
+			        Service\AuthService::class => Service\Factory\AuthServiceFactory::class,
+			        Service\RbacService::class => Service\Factory\RbacServiceFactory::class,
 			]
 	],
 		
@@ -106,13 +117,38 @@ return [
 	],
 
 
-	/*
-	* Role Bases Access Control RBAC
-	*/
-	 'rbac_manager' => [
-        'assertions' => [Service\RbacAssertionManager::class],
-    ],
 
+    /*
+    * Filtro de acesso
+    */
+    'filtro' => [
+    	'options'=>[
+    	    //permissivo ou restritivo
+    		'modo'=>'restritivo',
+    	],
+    	'controllers' => [
+    	    Controller\IndexController::class => [
+    	        ['actions'=>['index'],'allow'=>'@']
+    	    ],
+    		Controller\UsuarioController::class => [
+    		    ['actions'=>['index'], 'allow'=>'@'],
+    			['actions'=>['detalhar'], 'allow'=>'+user.own.manager'],
+    			['actions'=>['cadastrar','editar','del','desativar'], 'allow'=>'+user.manager'],
+    		],
+    	    Controller\RoleController::class =>[
+    	       ['actions'=>['index','detalhar','cadastrar','editar','remover'], 'allow'=>'+role.manager'],
+    	    ],
+    	    Controller\MensagemController::class => [
+    	        ['actions'=>['index','enviadas','write','read','find'], 'allow'=>'+msg.own.manager'],
+    	    ],
+    	    Controller\ConfigController::class => [
+    	        ['actions'=>['index'],'allow'=>'+config.manager']
+    	    ],
+    	    
+    	]
+    ],
+    
+    
 		
 	/*
 	 * View 

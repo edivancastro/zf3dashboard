@@ -11,6 +11,8 @@ use Zend\EventManager\EventInterface as Event;
 use Zend\Session\Container;
 use Zend\Mvc\MvcEvent;
 use Admin\Service\ConfigService;
+use Admin\Controller\LoginController;
+use Admin\Service\AuthService;
 
 class Module
 {
@@ -54,20 +56,30 @@ class Module
         $eventManager = $event->getApplication()->getEventManager();
         $eventManager->attach(MvcEvent::EVENT_DISPATCH,[$this, 'verificaAutenticacao']);
 
+
         $config = $serviceManager->get(ConfigService::class)->get();
 
         if(!empty($config)){
             date_default_timezone_set($config->getTimezone());
         }
-
     }
 
     public function verificaAutenticacao(MvcEvent $event){
-        $session = new Container('Admin\Session');
         
-        if(!is_object($session->usuario) && $this->routeName<>'login'){
+        $controllerName = $event->getRouteMatch()->getParam('controller', null);
+        $actionName = $event->getRouteMatch()->getParam('action', null);
+       
+        $authService = $event->getApplication()->getServiceManager()->get(AuthService::class);
+        
+        if($controllerName<>LoginController::class){
+            $result = $authService->filtrar($controllerName, $actionName);
             $controller = $event->getTarget();
-            return $controller->redirect()->toRoute('login');
+            
+            if($result == AuthService::REQUER_AUTH){ 
+                return $controller->redirect()->toRoute('login');
+            }elseif($result == AuthService::ACESSO_NEGADO){
+                 return $controller->redirect()->toRoute('acessonegado');
+            }
         }
     }
 

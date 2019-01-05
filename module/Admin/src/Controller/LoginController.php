@@ -21,10 +21,11 @@ class LoginController extends ControllerAbstract{
 			
 			return['erro'=>'Usuário e/ou senha incorretos'];
 		}
+		
 	}
 	
 
-	public function naoautorizadoAction(){
+	public function acessonegadoAction(){
 		
 	}
 

@@ -2,7 +2,7 @@
 	<input name="filtro" class="form-control" type="text" placeholder="Filtrar" />
 	<?php 
 	foreach($this->perfis as $perfil): 
-		if(!empty($perfil->getUsuarios())):
+		if(!$perfil->getUsuarios()->isEmpty()):
 			?>
 			<table class="table listausuarios">
 				<thead>

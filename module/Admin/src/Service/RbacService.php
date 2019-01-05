@@ -2,13 +2,15 @@
 namespace Admin\Service;
 use Zend\Permissions\Rbac\Rbac;
 use Zend\Permissions\Rbac\Role as RbacRole;
+use Zend\Cache\Storage\StorageInterface;
 use Admin\Model\Usuario;
 use Admin\Model\Role;
 use Admin\Model\Permissao;
 use Admin\Model\Recurso;
 
 
-class RbacManager extends ServiceAbstract{
+
+class RbacService extends ServiceAbstract{
 	
 	/*
 	* @var Zend\Permissions\Rbac\Rbac;
@@ -18,18 +20,14 @@ class RbacManager extends ServiceAbstract{
 	/*
 	* @var Zend\Cache\Storage\StorageInterface;
 	*/
-	protected $cache
-
-	/*
-	* @var Array;
-	*/
-	protected $assertionsManager=[];
+	protected $cache;
 
 
-	public function __contruct($entityManager, StorageInterface $cache, array $assertions){
-		parent::construct($entityManager);
+
+	public function __construct($entityManager, StorageInterface $cache){
+		parent::__construct($entityManager);
 		$this->cache = $cache;
-		$this->assertionsManager = $assertionsManager;
+	
 	}
 
 	public function init($force=false){
@@ -38,6 +36,7 @@ class RbacManager extends ServiceAbstract{
 		if($force){$this->cache->removeItem('rbac_container');}
 
 		$this->rbac = $this->cache->getItem('rbac_container', $result);
+
         if (!$result)
         {
             // Create Rbac container.
@@ -68,12 +67,12 @@ class RbacManager extends ServiceAbstract{
 
 	/**
      * checa permissão de um determinado usuario.
-     * @param User|null $user
+     * @param Usuario|null $user
      * @param string $permission
      * @param array|null $params
      */
 
-	public function isGranted($user, $permission, $params = null)
+	public function isGranted($user, $permission)
     {
         if ($this->rbac==null) {
             $this->init();
@@ -98,18 +97,12 @@ class RbacManager extends ServiceAbstract{
         $role = $user->getRole();
         
 
-        if ($this->rbac->isGranted($role->getName(), $permission)) {
-
-        	if ($params==null)
-        		return true;
-
-        	foreach ($this->assertionManagers as $assertionManager) {
-        		if ($assertionManager->assert($this->rbac, $permission, $params))
-        			return true;
-        	}
+        if ($role->isRoot() || $this->rbac->isGranted($role->getDescricao(), $permission)) {
+            return true;
         }
         
         return false;
     }
+    
     
 }

@@ -1,0 +1,37 @@
+<?php
+$this->headStyle()->captureStart();
+?>
+.alert{
+	margin:50px 20px;
+	font-size:16px;
+}
+.alert img{
+		vertical-align:text-top;
+		float:left;
+}
+
+div#autorizacao{
+	background:white;
+	padding:0;
+}
+
+<?php
+$this->headStyle()->captureEnd();
+?>
+<div id="autorizacao" class="container-fluid">
+	<div class="container-fluid module-head">
+		<h3><i class="fas fa-lock"></i> Acesso Negado</h3>
+	</div>
+	<div class="row">
+	<div class="col-md-offset-1 col-md-10">
+		<div class="alert alert-warning clearfix">
+			<img width="50px" src="<?=$this->basePath("/img/alert.png"); ?>" />
+			<span>Desculpe, você não tem autorização para acessar esta página.</span>
+		</div>
+	</div>
+	</div>
+	<button style="margin-bottom:15px;margin-left:15px" name="voltar" onClick="history.go(-1)" class="btn btn-link">
+		<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+		Voltar
+	</button>
+</div>

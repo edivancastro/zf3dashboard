@@ -20,7 +20,8 @@
         "zendframework/zend-session": "^2.8",
         "zendframework/zend-captcha": "^2.8",
         "zendframework/zend-text": "^2.7",
-        "zendframework/zend-permissions-rbac": "^3.0"
+        "zendframework/zend-permissions-rbac": "^3.0",
+        "zendframework/zend-serializer": "^2.9"
     },
     "autoload": {
         "psr-4": {
