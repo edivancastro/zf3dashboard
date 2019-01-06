@@ -2,6 +2,7 @@
 	<h3><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Usuário</h3>
 </div>
 <div class="module-body">
+	<?php if($this->permitido($this->url('usuario',['action'=>'editar','id'=>$this->usuario->getId()]))):?>
 	<div class="btn-actions btn-group pull-right" role="group">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			<span class="glyphicon glyphicon-th" aria-hidden="true"></span>&nbsp;&nbsp;Ação
@@ -9,10 +10,15 @@
 		</button>
 		<ul class="dropdown-menu">
 			<li><a href="<?=$this->url('usuario',['action'=>'editar','id'=>$this->usuario->getId()]);?>">Alterar</a></li>
+			<?php if($this->permitido($this->url('usuario',['action'=>'desativar','id'=>$this->usuario->getId()]))):?>
 			<li><a href="<?=$this->url('usuario',['action'=>'desativar','id'=>$this->usuario->getId()]);?>">Desativar</a></li>
+			<?php endif;?>
+			<?php if($this->permitido($this->url('usuario',['action'=>'del','id'=>$this->usuario->getId()]))):?>
 			<li><a href="<?=$this->url('usuario',['action'=>'del','id'=>$this->usuario->getId()]);?>">Excluir</a></li>
+			<?php endif;?>
 		</ul>
 	</div>
+	<?php endif;?>
 	<div class="form-group">
 		<label class="control-label">Nome</label>
 		<p class="form-control-static"><?=$this->usuario->getNome();?></p>
@@ -27,7 +33,7 @@
 	</div>
 	<div class="form-group">
 		<label class="control-label">Senha</label>
-		<p class="form-control-static">********* &nbsp;&nbsp;&nbsp;<a href="<?= $this->url('usuario',['action'=>'editar', 'id'=> $this->usuario->getId()]); ?>">Alterar</a></p>
+		<p class="form-control-static">********* &nbsp;&nbsp;&nbsp;<?php if($this->permitido($this->url('usuario',['action'=>'editar']))):?><a href="<?= $this->url('usuario',['action'=>'editar', 'id'=> $this->usuario->getId()]); ?>">Alterar</a><?php endif;?></p>
 	</div>
 	<div class="form-group">
 		<label class="control-label">Perfil de acesso</label>

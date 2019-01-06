@@ -8,7 +8,10 @@ $this->headStyle()->captureStart();
 .alert img{
 		vertical-align:text-top;
 		float:left;
+		margin-right:10px;
 }
+
+.alert span{text-align:justify;}
 
 div#autorizacao{
 	background:white;
@@ -18,7 +21,7 @@ div#autorizacao{
 <?php
 $this->headStyle()->captureEnd();
 ?>
-<div id="autorizacao" class="container-fluid">
+<div id="autorizacao" class="container-fluid rounded">
 	<div class="container-fluid module-head">
 		<h3><i class="fas fa-lock"></i> Acesso Negado</h3>
 	</div>
@@ -26,7 +29,7 @@ $this->headStyle()->captureEnd();
 	<div class="col-md-offset-1 col-md-10">
 		<div class="alert alert-warning clearfix">
 			<img width="50px" src="<?=$this->basePath("/img/alert.png"); ?>" />
-			<span>Desculpe, você não tem autorização para acessar esta página.</span>
+			<span>Desculpe, você não tem permissão para acessar este recurso. Contate o administrador do sistema e verifique seu perfil de acesso</span>
 		</div>
 	</div>
 	</div>

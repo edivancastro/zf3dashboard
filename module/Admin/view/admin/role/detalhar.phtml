@@ -1,7 +1,8 @@
 <div class="container-fluid module-head">
-	<h3><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Usuário</h3>
+	<h3><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Perfil de acesso</h3>
 </div>
 <div class="module-body">
+	<?php if($this->permitido($this->url('role',['action'=>'editar','id'=>$this->role->getId()]))):?>
 	<div class="btn-actions btn-group pull-right" role="group">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			<span class="glyphicon glyphicon-th" aria-hidden="true"></span>&nbsp;&nbsp;Ação
@@ -9,9 +10,12 @@
 		</button>
 		<ul class="dropdown-menu">
 			<li><a href="<?=$this->url('role',['action'=>'editar','id'=>$this->role->getId()]);?>">Alterar</a></li>
+			<?php if($this->permitido($this->url('role',['action'=>'del','id'=>$this->role->getId()]))):?>
 			<li><a href="<?=$this->url('role',['action'=>'del','id'=>$this->role->getId()]);?>">Excluir</a></li>
+			<?php endif;?>
 		</ul>
 	</div>
+	<?php endif;?>
 	<div class="form-group">
 		<label class="control-label">Descrição</label>
 		<p class="form-control-static"><?=$this->role->getDescricao();?></p>

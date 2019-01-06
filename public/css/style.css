@@ -29,6 +29,7 @@ footer{margin-top:20px;}
 #navbartop .navbar-nav > li > a{color:#eee;}
 #navbartop .navbar-nav > li > a,#navbartop .navbar-brand{line-height: 30px;}
 #navbartop .nav-avatar{height:30px;}
+#navbartop .navbar-brand > img {float: left;margin-right: 4px;margin-top: -2px;}
 
 .menu{background: #333; margin-bottom:20px;}
 .menu > li > a{background:inherit !important;color:#bbb;border:0; border-bottom:1px solid #ccc;}
@@ -90,12 +91,6 @@ form label.info{
 
 form input, form label{
 	display:block;
-}
-
-div.container a.navbar-brand > img {
-    display: inline;
-    margin-right: 4px;
-    margin-top: -2px;
 }
 
 .module {

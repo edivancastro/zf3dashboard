@@ -7,11 +7,13 @@ class Menu extends AbstractHelper{
 	private $html=null;
 	protected $itens;
 	protected $route;
+	protected $serviceManager;
 
-	public function __construct($itens=[]){
-		$this->itens = $itens;
-	}
-
+	public function __invoke($itens=[]){
+	    $this->itens = $itens;
+	    return $this;
+    }
+	
 	public function setItens($itens){
 		$this->itens=$itens;
 		return $this;
@@ -78,9 +80,10 @@ class Menu extends AbstractHelper{
 				}else{
 					$widget='';
 				}
-
-				$link =
-				$this->html .= "<li><a class=\"$active\" href=\"{$item['link']}\">$icone {$item['label']}{$widget}</a></li>\n";
+                
+				if($this->view->permitido($item['link'])){
+			     	$this->html .= "<li><a class=\"$active\" href=\"{$item['link']}\">$icone {$item['label']}{$widget}</a></li>\n";
+				}
 			}
 			
 		}

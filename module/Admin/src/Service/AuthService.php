@@ -5,9 +5,9 @@ use Admin\Model\Usuario;
 use Doctrine\ORM\EntityManager;
 
 class AuthService extends ServiceAbstract{
-	const ACESSO_NEGADO = 0;
+    const REQUER_AUTH = -1;
+    const ACESSO_NEGADO = 0;
 	const ACESSO_PERMITIDO = 1;
-	const REQUER_AUTH = 2;
 	
 	/*
 	 * @var Array
@@ -51,7 +51,7 @@ class AuthService extends ServiceAbstract{
 		return $this->session->getManager()->getStorage()->clear('Admin\Session');
 	}
 	
-	public function filtrar($controllerName, $actionName)
+	public function filtrar($controllerName, $actionName, Array $params=null)
 	{
 	   
 	    $modo = isset($this->config['options']['modo'])?$this->config['options']['modo']:'restritivo';
@@ -82,10 +82,11 @@ class AuthService extends ServiceAbstract{
                         
                     } else if (substr($allow, 0, 1)=='+') {
                         
+                        
                         // Only the user with this permission is allowed to see the page.
                         $permission = substr($allow, 1);
-                        
-                        if ($this->rbacService->isGranted(null, $permission)){
+              
+                        if ($this->rbacService->isGranted(null, $permission, $params)){
                             return self::ACESSO_PERMITIDO;
                         }else{
                             return self::ACESSO_NEGADO;

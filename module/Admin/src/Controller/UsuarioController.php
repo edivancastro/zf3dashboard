@@ -62,6 +62,12 @@ class UsuarioController extends ControllerAbstract{
 	}
 	
 	public function editarAction(){
+	    $usuario = $this->serviceManager->get(UsuarioService::class)->get($this->session->usuario->getId());
+	    
+	    if(!$this->permitido($usuario,'user.manager') && (!$this->permitido($usuario,'user.own.manager') || !$usuario->getId()==$this->params('id',$usuario->getId())) ){
+	        $this->redirect()->toRoute('acessonegado');
+	    }
+	    
 		$usrService = $this->serviceManager->get(UsuarioService::class);
 		$roleService = $this->serviceManager->get(RoleService::class);
 		

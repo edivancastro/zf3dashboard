@@ -13,7 +13,7 @@ class UsuarioService extends ServiceAbstract{
 		$usuario->setStatus(Usuario::STATUS_ATIVO);
 		
 		if(empty($usuario->getRole())){
-			throw new \Exception("É necessário informar uma função!");
+			throw new \Exception("É necessario informar uma func�o!");
 		}
 		
 		$this->entityManager->persist($usuario);
@@ -21,9 +21,9 @@ class UsuarioService extends ServiceAbstract{
 		return $this;
 	}
 	
-	public function editar($usuario){
+	public function editar($usuario){	    
 		if(empty($usuario->getRole())){
-			throw new \Exception("É necessário informar uma função!");
+			throw new \Exception("É necessario informar uma fun��o!");
 		}
 		
 		$this->entityManager->persist($usuario);

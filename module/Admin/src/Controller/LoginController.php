@@ -26,7 +26,7 @@ class LoginController extends ControllerAbstract{
 	
 
 	public function acessonegadoAction(){
-		
+	    if(!is_object($this->session->usuario)){$this->redirect()->toRoute('login');}
 	}
 
 	public function logoutAction(){

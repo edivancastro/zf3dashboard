@@ -21,13 +21,12 @@ class RbacService extends ServiceAbstract{
 	* @var Zend\Cache\Storage\StorageInterface;
 	*/
 	protected $cache;
-
+	
 
 
 	public function __construct($entityManager, StorageInterface $cache){
 		parent::__construct($entityManager);
 		$this->cache = $cache;
-	
 	}
 
 	public function init($force=false){
@@ -72,7 +71,7 @@ class RbacService extends ServiceAbstract{
      * @param array|null $params
      */
 
-	public function isGranted($user, $permission)
+	public function isGranted($user, $permission, $params=null)
     {
         if ($this->rbac==null) {
             $this->init();
@@ -96,8 +95,21 @@ class RbacService extends ServiceAbstract{
         
         $role = $user->getRole();
         
-        if ($role->isRoot() || $this->rbac->isGranted($role->getDescricao(), $permission)) {
-            return true;
+        if($role->isRoot()){return true;}
+        
+        if ($this->rbac->isGranted($role->getDescricao(), $permission)) {
+            
+            if($params==null || empty($params)){
+                return true;
+            }
+            
+            if(strpos($permission,'.own.') && isset($params['id'])){
+                if($user->getId()==$params['id']){
+                    return true;
+                }
+            }else{
+                return true;
+            }
         }
         
         return false;

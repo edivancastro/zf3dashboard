@@ -13,6 +13,7 @@ class RbacServiceFactory implements FactoryInterface{
 		$cache = $container->get('FilesystemCache');
 		
 		$entityManager = $container->get('doctrine.entitymanager.orm_default');
+				
 
 		return new RbacService($entityManager, $cache);
 	}

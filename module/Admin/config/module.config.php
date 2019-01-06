@@ -116,7 +116,18 @@ return [
 		]
 	],
 
-
+	
+	/*
+	 *Controller Plugins
+	 */
+    'controller_plugins' => [
+        'factories' =>[
+            Controller\Plugin\PermissaoPlugin::class => Controller\Plugin\Factory\PermissaoPluginFactory::class,
+        ],
+        'aliases' => [
+            'permitido' => Controller\Plugin\PermissaoPlugin::class,
+        ]
+    ],
 
     /*
     * Filtro de acesso
@@ -131,12 +142,12 @@ return [
     	        ['actions'=>['index'],'allow'=>'@']
     	    ],
     		Controller\UsuarioController::class => [
-    		    ['actions'=>['index'], 'allow'=>'@'],
-    			['actions'=>['detalhar','editar'], 'allow'=>'+user.own.manager'],
+    		    ['actions'=>['index','detalhar'], 'allow'=>'@'],
+    			['actions'=>['editar'], 'allow'=>'+user.own.manager'],
     			['actions'=>['cadastrar','editar','del','desativar','detalhar'], 'allow'=>'+user.manager'],
     		],
     	    Controller\RoleController::class =>[
-    	       ['actions'=>['index','detalhar','cadastrar','editar','remover'], 'allow'=>'+role.manager'],
+    	       ['actions'=>['index','detalhar','cadastrar','editar','del'], 'allow'=>'+role.manager'],
     	    ],
     	    Controller\MensagemController::class => [
     	        ['actions'=>['index','enviadas','write','read','find'], 'allow'=>'+msg.own.manager'],
@@ -145,10 +156,8 @@ return [
     	        ['actions'=>['index'],'allow'=>'+config.manager']
     	    ],
     	    
-    	]
+    	],
     ],
-    
-    
 		
 	/*
 	 * View 
@@ -180,17 +189,20 @@ return [
 	'view_helpers' => [
 		'factories' => [
 			View\Helper\Menu::class => InvokableFactory::class,
-			View\Helper\Usuario::class => InvokableFactory::class,
+		    View\Helper\Usuario::class => View\Helper\Factory\Factory::class,
 			View\Helper\Msg::class => View\Helper\Factory\Factory::class,
 			View\Helper\resumeNome::class => View\Helper\Factory\Factory::class,
+		    View\Helper\Permissao::class => View\Helper\Factory\Factory::class,
 		],
 		'aliases' => [
 			'menu' =>	View\Helper\Menu::class,
 			'usuario' => View\Helper\Usuario::class,
 			'msg' => View\Helper\Msg::class,
 			'resumeNome' => View\Helper\resumeNome::class,
+		    'permitido' => View\Helper\Permissao::class,
 		]
 	],
+    
 	
 	/*
 	 * Doctrine Annotation Driver

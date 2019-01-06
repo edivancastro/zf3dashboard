@@ -6,6 +6,7 @@ use Admin\Model\Role;
 use Admin\Model\Permissao;
 use Zend\View\Model\ViewModel;
 use Zend\Captcha\Image as Captcha;
+use Admin\Service\RbacService;
 
 class RoleController extends ControllerAbstract{
 	
@@ -30,6 +31,8 @@ class RoleController extends ControllerAbstract{
 	                $role->addPermissao($permissao);
 	            }
 	        }
+	        
+	        $this->serviceManager->get(RbacService::class)->init(true);
 	                
 	        $this->serviceManager->get(RoleService::class)->cadastrar($role);
 	        $this->redirect()->toRoute("role");
@@ -56,14 +59,14 @@ class RoleController extends ControllerAbstract{
                 
 	        }else{
 	            $role->setRoot(false);
-	            
+	            $role->getPermissoes()->clear();
 	            foreach($this->request->getPost('permissao') as $idPermissao){
 	                $permissao = $this->serviceManager->get(RoleService::class)->getPermissao($idPermissao);
-	                if(!$role->getPermissoes()->contains($permissao)){
-	                   $role->addPermissao($permissao);
-	                }
+	                $role->addPermissao($permissao);
 	            }
 	        }
+	        
+	        $this->serviceManager->get(RbacService::class)->init(true);
 	        
 	        $this->serviceManager->get(RoleService::class)->cadastrar($role);
 	        $this->redirect()->toRoute("role");

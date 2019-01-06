@@ -9,7 +9,7 @@ $this->headLink()->appendStylesheet($this->basePath('css/datatables.bootstrap.cs
 </div>
 <br />
 <div class="container-fluid">
-	<button id="btn-new" type="button" class="btn btn-primary">Novo</button>
+	<button <?php if(!$this->permitido($this->url('usuario',['action'=>'cadastrar']))):?>disabled="disabled"<?php endif;?> id="btn-new" type="button" class="btn btn-primary">Novo</button>
 	<table id="Tusuarios" class="table table-striped table-hover">
 		<thead>
 			<tr>
@@ -42,7 +42,7 @@ $this->headLink()->appendStylesheet($this->basePath('css/datatables.bootstrap.cs
 <script>
 $().ready(function(){
 
-	$("#btn-new").click(function(){
+	$("#btn-new:not(disabled)").click(function(){
 		document.location.href = "<?php echo $this->url("usuario",["action"=>"cadastrar"]);?>";
 	});
 

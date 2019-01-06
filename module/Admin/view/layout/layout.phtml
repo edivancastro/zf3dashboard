@@ -30,8 +30,9 @@
         <nav id="navbartop" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="<?= $this->url('home') ?>">
-                        <img src="<?= $this->basePath('img/zf-logo-mark.svg') ?>" height="28" alt="Painel de controle"/>&nbsp;Painel de Controle
+                    <a href="<?= $this->url('home') ?>" class="navbar-brand">
+                        <img src="<?= $this->basePath('img/zf-logo-mark.svg') ?>" height="28" alt="Painel de controle"/>
+						Painel de Controle &nbsp;&nbsp;
                     </a>
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="sr-only">Menu superior</span>
@@ -40,7 +41,7 @@
                         <span class="icon-bar"></span>
                     </button>
                 </div>
-                <?php if($this->usuario()->isAutenticado()):?>
+                <?php if($this->usuario()):?>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav pull-right">
                         <li><a href="#">Suporte </a></li>
@@ -67,7 +68,7 @@
         <div id="body" class="container-fluid">
             <!-- INICIO WRAPPER BODY -->
             <div class="container wrapper">
-                <?php if($this->usuario()->isAutenticado()):?>
+                <?php if($this->usuario()):?>
                 <div class="row">
                     <!-- INICIO WRAPPER MENU ESQUERDO -->
                     <div class="col-sm-3">
@@ -86,7 +87,8 @@
                             'icone'=>'glyphicon-envelope',
                             'count'=> $this->msg()->countNews(),
                             'countClass'=>'green',
-                            'link'=>$this->url('msg')]
+                            'link'=>$this->url('msg'),
+                            ]
                         ])
                         ->setRouteName($this->CURRENT_ROUTE_NAME)
                         ->render(); 
@@ -111,7 +113,6 @@
                                 ['id'=>'role',
                                 'label'=>'Perfil de acesso',
                                 'link'=>$this->url('role')]
-
                             ]
                         ],
 
@@ -119,8 +120,7 @@
                         'active'=>['config'],
                         'label'=>'Configurações',
                         'link'=>$this->url('config'),
-                        'icone'=>'glyphicon-cog'
-                    ]
+                        'icone'=>'glyphicon-cog']
 
                 ])
                         ->setRouteName($this->CURRENT_ROUTE_NAME)
