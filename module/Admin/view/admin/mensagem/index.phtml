@@ -1,6 +1,13 @@
 <div class="module-head">
 	<h3><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Mensagens</h3>
 </div>
+<?php
+#exibe mensagens do método addErrorMessage();
+echo $this->flashMessenger()->render('error',   array('alert', 'alert-dismissible', 'alert-danger'));
+
+#exibe mensagens do método addSucessMessage();
+echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissible', 'alert-success'));
+?>
 <div style="padding:15px 10px 15px 25px;" class="module-body">
 	<div id="msg" class="row">
 		<div id="msg-menu" style="padding-left:0;" class="col-sm-3">

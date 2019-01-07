@@ -1,6 +1,13 @@
 <div class="module-head">
 	<h3><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Configurações do sistema</h3>
 </div>
+<?php
+#exibe mensagens do método addErrorMessage();
+echo $this->flashMessenger()->render('error',   array('alert', 'alert-dismissible', 'alert-danger'));
+
+#exibe mensagens do método addSucessMessage();
+echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissible', 'alert-success'));
+?>
 <div class="module-body clearfix">
 	<form method="POST">	
 	<div class="form-group">

@@ -28,6 +28,7 @@ class Module
     }
     
     public function onBootstrap(Event $event){
+
     	$serviceManager = $event->getApplication()->getServiceManager();
     	$router = $serviceManager->get('Router');
     	$request = $serviceManager->get('Request');
@@ -55,8 +56,7 @@ class Module
 
         $eventManager = $event->getApplication()->getEventManager();
         $eventManager->attach(MvcEvent::EVENT_DISPATCH,[$this, 'verificaAutenticacao']);
-
-
+        
         $config = $serviceManager->get(ConfigService::class)->get();
 
         if(!empty($config)){
@@ -73,6 +73,7 @@ class Module
         
         if($controllerName<>LoginController::class){
             $result = $authService->filtrar($controllerName, $actionName);
+
             $controller = $event->getTarget();
             
             if($result == AuthService::REQUER_AUTH){ 
@@ -83,5 +84,6 @@ class Module
         }
     }
 
-    
+
+
 }

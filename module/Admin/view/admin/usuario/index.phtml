@@ -1,15 +1,31 @@
-<?php 
-$this->headScript()->appendFile($this->basePath("js/datatables.min.js"));
-$this->headScript()->appendFile($this->basePath("js/datatables.bootstrap.min.js"));
-$this->headLink()->appendStylesheet($this->basePath('css/datatables.min.css'));
-$this->headLink()->appendStylesheet($this->basePath('css/datatables.bootstrap.css'));
-?>
 <div class="container-fluid module-head">
 	<h3><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Contas de usuários</h3>
 </div>
-<br />
-<div class="container-fluid">
+<?php
+#exibe mensagens do método addErrorMessage();
+echo $this->flashMessenger()->render('error',   array('alert', 'alert-dismissible', 'alert-danger'));
+
+#exibe mensagens do método addSucessMessage();
+echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissible', 'alert-success'));
+?>
+<div style="margin-top:20px;" class="container-fluid">
 	<button <?php if(!$this->permitido($this->url('usuario',['action'=>'cadastrar']))):?>disabled="disabled"<?php endif;?> id="btn-new" type="button" class="btn btn-primary">Novo</button>
+	<div class="row" style="margin:15px 0;">
+		<div class="hidden-xs col-sm-6 col-md-8"></div>
+		<div class="col-xs-12 col-sm-6 col-md-4">
+			<form class="" method="get">
+				<div class="input-group">
+					<input class="form-control" placeholder="Pesquisar" value="<?=$this->busca?>" type="text" name="busca" />
+					<div class="input-group-btn">
+						<button style="margin-left: 10px;" class="btn" type="submit">Ok</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<?php if($this->busca <>''):?>
+		<p>Resultado da pesquisa por "<?=$this->busca;?>":</p>
+	<?php endif;?>
 	<table id="Tusuarios" class="table table-striped table-hover">
 		<thead>
 			<tr>
@@ -27,16 +43,21 @@ $this->headLink()->appendStylesheet($this->basePath('css/datatables.bootstrap.cs
 				</tr>
 			<?php else:foreach($usuarios as $usuario):?>
 			<tr>
-				<td><?=$usuario->getId();?></td>
+				<td width="50px"><?=$usuario->getId();?></td>
 				<td><?=$usuario->getNome();?></td>
-				<td><?=$usuario->getlogin();?></td>
-				<td class="hidden-xs"><?=$usuario->getRole()->getDescricao();?></td>
+				<td width="100px"><?=$usuario->getlogin();?></td>
+				<td width="160px" class="hidden-xs"><?=$usuario->getRole()->getDescricao();?></td>
 				<td align="center" width="50px">
 					<button value="<?=$usuario->getId();?>" name="detalhar" class="btn-icon"><img class="icon" src="<?= $this->basepath().'/img/detail.png';?>" /></button>
 				</td>
 			</tr>
 			<?php endforeach;endif;?>
 		</tbody>
+		<tfoot>
+			<tr>
+				<td align="right" colspan="5"><?= $this->paginationControl($usuarios,'Sliding','admin/usuario/paginator.phtml',['route'=>'usuario','busca'=>$this->busca]); ?></td>
+			</tr>
+		</tfoot>
 	</table>
 </div>
 <script>

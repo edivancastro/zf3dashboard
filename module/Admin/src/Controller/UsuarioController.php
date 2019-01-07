@@ -11,11 +11,17 @@ use Zend\Captcha\Image as Captcha;
 class UsuarioController extends ControllerAbstract{
     	
 	public function indexAction(){
+
+		$CurrentPage = $this->request->getQuery('page',null);
 	    
-		$usrService = $this->serviceManager->get(UsuarioService::class);
+		$usuarios = $this->serviceManager->get(UsuarioService::class)->find($this->request->getQuery('busca',null));
+		$usuarios->setItemCountPerPage(15);
+		$usuarios->setCurrentPageNumber($CurrentPage);
+		
 		
 		return [
-				'usuarios' => $usrService->getAll(),
+				'usuarios' => $usuarios,
+				'busca' => $this->request->getQuery('busca',''),
 		];
 	}
 	
@@ -38,6 +44,8 @@ class UsuarioController extends ControllerAbstract{
 			$usuario->setRole($role);
 				
 			$usrService->cadastrar($usuario);
+			$this->flashMessenger()->addSuccessMessage("Registro salvo!");
+			$this->log->info("Usuario cadastrado");
 			$this->redirect()->toRoute("usuario");
 		}
 		
@@ -91,6 +99,8 @@ class UsuarioController extends ControllerAbstract{
 			$usuario->setRole($role);
 		
 			$usrService->cadastrar($usuario);
+			$this->flashMessenger()->addSuccessMessage("Registro salvo!");
+			$this->log->info("Cadastro de usuario alterada");
 			$this->redirect()->toRoute("usuario");
 		}
 		
@@ -105,6 +115,8 @@ class UsuarioController extends ControllerAbstract{
 
 		if($this->request->isPost() && $captcha->isValid($this->request->getPost('captcha'))){
 			$this->serviceManager->get(UsuarioService::class)->desativar($this->params("id"));
+			$this->flashMessenger()->addSuccessMessage("Conta desativada!");
+			$this->log->info("Conta de usuario desativada");
 			$this->redirect()->toRoute("usuario");
 		}			
 
@@ -126,6 +138,8 @@ class UsuarioController extends ControllerAbstract{
 
 		if($this->request->isPost() && $captcha->isValid($this->request->getPost('captcha'))){
 			$this->serviceManager->get(UsuarioService::class)->remover($this->params("id"));
+			$this->flashMessenger()->addSuccessMessage("Registro excluido!");
+			$this->log->alert("Conta de usuario excluida");
 			$this->redirect()->toRoute("usuario");
 		}			
 

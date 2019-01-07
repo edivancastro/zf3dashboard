@@ -8,7 +8,7 @@ insert into role(id,descricao,excluido,root) values('2','Recursos Humanos',0,0);
 
 insert into permissao(id, nome, descricao, Recurso_id) values(1,'role.manager', 'Gerenciar perfis de acesso',1);
 insert into permissao(id, nome, descricao, Recurso_id) values(2,'user.manager','Gerenciar contas de qualquer usuario',2);
-insert into permissao(id, nome, descricao, Recurso_id) values(3,'user.own.manager','Gerenciar sua propria conta de usuario',2);
+insert into permissao(id, nome, descricao, Recurso_id) values(3,'user.own.manager','Editar sua propria conta de usuario',2);
 insert into permissao(id, nome, descricao, Recurso_id) values(4,'msg.own.manager','Enviar/Receber mensagens',3);
 insert into permissao(id, nome, descricao, Recurso_id) values(5,'config.manager','Gerenciar configuração do sistema',4);
 

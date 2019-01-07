@@ -13,7 +13,7 @@ class UsuarioService extends ServiceAbstract{
 		$usuario->setStatus(Usuario::STATUS_ATIVO);
 		
 		if(empty($usuario->getRole())){
-			throw new \Exception("Ã‰ necessario informar uma funcão!");
+			throw new \Exception("É necessario informar uma funcão!");
 		}
 		
 		$this->entityManager->persist($usuario);
@@ -23,7 +23,7 @@ class UsuarioService extends ServiceAbstract{
 	
 	public function editar($usuario){	    
 		if(empty($usuario->getRole())){
-			throw new \Exception("Ã‰ necessario informar uma função!");
+			throw new \Exception("É necessario informar uma função!");
 		}
 		
 		$this->entityManager->persist($usuario);
@@ -52,8 +52,24 @@ class UsuarioService extends ServiceAbstract{
 		return $this->entityManager->getRepository(Usuario::class)->findOneBy(['status'=>Usuario::STATUS_ATIVO, 'id'=>$id]);
 	}
 	
-	public function getAll(){
-		return $this->entityManager->getRepository(Usuario::class)->findByStatus(Usuario::STATUS_ATIVO);
+	public function find($find=null){
+		$query = $this->entityManager->createQueryBuilder()
+					  ->select('u')
+					  ->from('Admin\Model\Usuario','u')
+					  ->join('u.role', 'r')
+					  ->where('u.status = :status')
+					  ->setParameter('status',Usuario::STATUS_ATIVO)
+					  ->orderBy('u.id','ASC');
+		if($find){
+			$query->andWhere('u.nome like :find or u.login like :find or r.descricao like :find')
+			->setParameter('find',"%$find%");
+		}
+		
+
+		$adapter = new Adapter(new DoctrinePaginator($query->getQuery(),false));
+    	$paginator = new Paginator($adapter);
+
+		return $paginator;
 	}
 
 	

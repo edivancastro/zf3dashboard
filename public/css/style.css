@@ -1,11 +1,12 @@
 @import "bootstrap.min.css";
-@import "jquery-ui.min.css"; 
-@import "jquery-ui.thene.min.css";
-@import "jquery-ui.structure.min.css";
+@import "jquery-ui.min.css";
 
 body {padding-top: 60px;padding-bottom: 40px;font-size: 13px}
 
 .fr-wrapper > div:first-child:not(.fr-view){display:none!important;}
+
+
+.alert-container{padding:10px 10px 0 10px;}
 
 
 .btn{font-size:13px; padding:5px 10px;}
@@ -29,7 +30,7 @@ footer{margin-top:20px;}
 #navbartop .navbar-nav > li > a{color:#eee;}
 #navbartop .navbar-nav > li > a,#navbartop .navbar-brand{line-height: 30px;}
 #navbartop .nav-avatar{height:30px;}
-#navbartop .navbar-brand > img {float: left;margin-right: 4px;margin-top: -2px;}
+#navbartop .navbar-brand > img {display:inline;margin-right: 4px;margin-top: -2px;}
 
 .menu{background: #333; margin-bottom:20px;}
 .menu > li > a{background:inherit !important;color:#bbb;border:0; border-bottom:1px solid #ccc;}

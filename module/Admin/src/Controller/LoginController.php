@@ -16,10 +16,13 @@ class LoginController extends ControllerAbstract{
 			$senha = $this->request->getPost("senha");
 			
 			if($authService->login($usuario, $senha)){
+				$this->log->info('Login efetuado');
 				return $this->redirect()->toRoute('home');
 			}
-			
-			return['erro'=>'Usuário e/ou senha incorretos'];
+
+			$this->log->alert('Tentativa de login');
+			$this->flashMessenger()->addErrorMessage("Usuario ou senha incorretos");
+			$this->redirect()->toRoute('login');
 		}
 		
 	}
@@ -32,6 +35,7 @@ class LoginController extends ControllerAbstract{
 	public function logoutAction(){
 		$authService = $this->serviceManager->get(AuthService::class);
 		$authService->logout();
+		$this->log->info('Logout realizado');
 		$this->redirect()->toRoute('home');
 	}
 }

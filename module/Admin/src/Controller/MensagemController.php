@@ -49,7 +49,7 @@ class MensagemController extends ControllerAbstract{
 	    if(empty($mensagem)){
 	        $this->redirect()->toRoute('home');
 	    }
-	    
+	    $this->log->info('Leitura de Mensagem');
 	    return ['mensagem'=>$mensagem];
 	}
 
@@ -73,7 +73,8 @@ class MensagemController extends ControllerAbstract{
 	    	}
 
 	    	$this->serviceManager->get(MensagemService::class)->enviar($msg);
-
+	    	$this->log->info('Mensagem enviada');
+	    	$this->flashMessenger()->addSuccessMessage("Mensagem enviada!");
 	    	$this->redirect()->toRoute('msg');
 	    }
 
@@ -112,7 +113,7 @@ class MensagemController extends ControllerAbstract{
 			return $this->redirect()->toRoute('msg');
 		}
 
-		$currentPage = $this->request->getQuery('page') <> '' ? $this->request->getQuery('page'):1;
+		$currentPage = $this->request->getQuery('page',null);
 		$filter = $this->request->getQuery('query'); 
 		$box = $this->request->getQuery('box');
 
@@ -121,7 +122,8 @@ class MensagemController extends ControllerAbstract{
 		$paginator->setItemCountPerPage(8);
     	$paginator->setCurrentPageNumber($currentPage);
 
-		
+		$this->log->info('Pesquisa na caixa de mensagens');
+
 		$json = new JsonModel();
 		$json->query = $filter;
 		$json->box = $box; 

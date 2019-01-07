@@ -31,10 +31,12 @@
 		<label class="control-label">Login</label>
 		<p class="form-control-static"><?=$this->usuario->getLogin();?></p>
 	</div>
+	<?php if($this->permitido($this->url('usuario',['action'=>'editar']))):?>
 	<div class="form-group">
 		<label class="control-label">Senha</label>
-		<p class="form-control-static">********* &nbsp;&nbsp;&nbsp;<?php if($this->permitido($this->url('usuario',['action'=>'editar']))):?><a href="<?= $this->url('usuario',['action'=>'editar', 'id'=> $this->usuario->getId()]); ?>">Alterar</a><?php endif;?></p>
+		<p class="form-control-static">********* &nbsp;&nbsp;&nbsp;<a href="<?= $this->url('usuario',['action'=>'editar', 'id'=> $this->usuario->getId()]); ?>">Alterar</a></p>
 	</div>
+	<?php endif;?>
 	<div class="form-group">
 		<label class="control-label">Perfil de acesso</label>
 		<p class="form-control-static"><?=$this->usuario->getRole()->getDescricao();?></p>

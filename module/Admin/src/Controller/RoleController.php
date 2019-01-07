@@ -32,9 +32,11 @@ class RoleController extends ControllerAbstract{
 	            }
 	        }
 	        
-	        $this->serviceManager->get(RbacService::class)->init(true);
-	                
 	        $this->serviceManager->get(RoleService::class)->cadastrar($role);
+	        $this->serviceManager->get(RbacService::class)->init(true);
+	        $this->flashMessenger()->addSuccessMessage("Registro salvo");
+	        $this->log->info('Role/Perfil de acesso cadastrado');
+
 	        $this->redirect()->toRoute("role");
 	    }
 	    
@@ -65,10 +67,11 @@ class RoleController extends ControllerAbstract{
 	                $role->addPermissao($permissao);
 	            }
 	        }
-	        
-	        $this->serviceManager->get(RbacService::class)->init(true);
-	        
+	       	        
 	        $this->serviceManager->get(RoleService::class)->cadastrar($role);
+	       	$this->serviceManager->get(RbacService::class)->init(true);
+	       	$this->flashMessenger()->addSuccessMessage("Registro salvo");
+	        $this->log->info('Role/Perfil de acesso alterado');
 	        $this->redirect()->toRoute("role");
 	    }
 	    
@@ -91,6 +94,9 @@ class RoleController extends ControllerAbstract{
 
 		if($this->request->isPost() && $captcha->isValid($this->request->getPost('captcha'))){
 			$this->serviceManager->get(RoleService::class)->remover($this->params('id'));
+			$this->serviceManager->get(RbacService::class)->init(true);
+			$this->log->warn("Perfil de acesso deletado");
+			$this->flashMessenger()->addSuccessMessage("Registro excluido");
 	    	$this->redirect()->toRoute('role');
 		}			
 

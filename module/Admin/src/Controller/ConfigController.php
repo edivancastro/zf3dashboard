@@ -26,7 +26,9 @@ class ConfigController extends ControllerAbstract{
 
 			$service->salvar($config);
 
-			$this->redirect()->toRoute('home');
+			$this->log->alert('Configuração do sistema alterado');
+			$this->flashMessenger()->addSuccessMessage("Registro salvo");
+			$this->redirect()->toRoute('config');
 		}
 
 		return [

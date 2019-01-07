@@ -12,7 +12,7 @@
 			<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
 			<span class="pull-right"><?=$this->mensagem->getDataenvio()->format('d/m/Y H:s');?></span>
 			<h4>Assunto:&nbsp;<span style="font-size:16px"><?= $this->mensagem->getAssunto();?></span></h4>
-			<h6><b>De:</b>&nbsp;<a><?= $this->resumeNome($mensagem->getRemetente()->getNome());?></a></h6>
+			<h6><b>De:</b>&nbsp;<a href="<?=$this->url('usuario',['action'=>'detalhar','id'=>$mensagem->getRemetente()->getId()]);?>"><?= $this->resumeNome($mensagem->getRemetente()->getNome());?></a></h6>
 			<div class="row">
 				<div class="col-xs-12 col-sm-9">
 					<h6><b>Para:</b>&nbsp;
@@ -22,14 +22,14 @@
 			if(sizeof($destinatarios) > 3):
 				for($i=0;$i<3;$i++){
 					$nome = $this->resumeNome($destinatarios[$i]->getDestinatario()->getNome());
-					echo "<a>".$nome.($i<sizeof($destinatarios)-1?', ':'')."</a>";
+					echo "<a href=\"{$this->url('usuario',['action'=>'detalhar','id'=>$destinatarios[$i]->getDestinatario()->getId()])}\">".$nome.($i<sizeof($destinatarios)-1?', ':'')."</a>";
 				}
 			?>
 			<span id="mais" class="collapse">
 			<?php
 				for($i=3;$i<sizeof($destinatarios);$i++){
 					$nome = $this->resumeNome($destinatarios[$i]->getDestinatario()->getNome());
-					echo "<a>".$nome.($i<sizeof($destinatarios)-1?', ':'')."</a>";	
+					echo "<a href=\"{$this->url('usuario',['action'=>'detalhar','id'=>$destinatarios[$i]->getDestinatario()->getId()])}\">".$nome.($i<sizeof($destinatarios)-1?', ':'')."</a>";	
 				}
 			?>
 			</span>
@@ -38,7 +38,7 @@
 			else:
 				for($i=0;$i<sizeof($destinatarios);$i++){
 					$nome = $this->resumeNome($destinatarios[$i]->getDestinatario()->getNome());
-					echo "<a>".$nome.($i<sizeof($destinatarios)-1?', ':'')."</a>";	
+					echo "<a href=\"{$this->url('usuario',['action'=>'detalhar','id'=>$destinatarios[$i]->getDestinatario()->getId()])}\">".$nome.($i<sizeof($destinatarios)-1?', ':'')."</a>";	
 				}
 			endif;
 			?>		

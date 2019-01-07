@@ -22,7 +22,10 @@
 		"zendframework/zend-text" : "^2.7",
 		"zendframework/zend-permissions-rbac" : "^3.0",
 		"zendframework/zend-serializer" : "^2.9",
-		"zendframework/zend-i18n": "^2.9"
+		"zendframework/zend-i18n": "^2.9",
+		"zendframework/zend-mvc-plugin-flashmessenger": "^1.1",
+		"zendframework/zend-log": "^2.10",
+		"zendframework/zend-db": "^2.9"
 	},
 	"autoload" : {
 		"psr-4" : {

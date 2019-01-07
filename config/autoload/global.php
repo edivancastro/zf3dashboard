@@ -36,7 +36,7 @@ return [
 				'type' => SessionArrayStorage::class
 		],
 
-        //banco de dados
+        //banco de dados da aplicação
         'doctrine' => [
             'connection' => [
                 'orm_default' => [
@@ -49,6 +49,19 @@ return [
                     ]
                 ]
             ]   
+        ],
+
+        //Banco de dados de log
+        'db'=> [
+            'adapters' =>[
+                'Db\Adapter\Log' =>[
+                    'driver' => 'PdoMysql',
+                    'host' => 'localhost',
+                    'user' => 'root',
+                    'password' => '1234',
+                    'dbname' => 'log'
+                ]
+            ]
         ],
 
         'caches' => [

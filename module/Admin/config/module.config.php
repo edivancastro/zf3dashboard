@@ -98,7 +98,10 @@ return [
 					Service\MensagemService::class => Service\Factory\ServiceFactory::class,
 			        Service\AuthService::class => Service\Factory\AuthServiceFactory::class,
 			        Service\RbacService::class => Service\Factory\RbacServiceFactory::class,
-			]
+			        'Db\Adapter\Log' => Zend\Db\Adapter\AdapterAbstractServiceFactory::class,
+			        Service\Logger::class => Service\Factory\LoggerServiceFactory::class,
+			],
+			
 	],
 		
 	/*
@@ -202,6 +205,14 @@ return [
 		    'permitido' => View\Helper\Permissao::class,
 		]
 	],
+
+	'view_helper_config' => [
+		'flashmessenger' => [
+		'message_open_format' => '<div class="row"><div class="alert-container col-xs-offset-1 col-xs-10"><div%s><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><ul><li>',
+        'message_close_string'     => '</li></ul></div></div></div>',
+        'message_separator_string' => '</li><li>'
+		]
+	],
     
 	
 	/*
@@ -217,10 +228,12 @@ return [
 						]
 				],
 				'orm_default' =>[
-					'drivers' => [
+							'drivers' => [
 						__NAMESPACE__.'\Model' => __NAMESPACE__.'_driver'
 					]
 				]
 		]
-	]
+	],
+
+
 ];

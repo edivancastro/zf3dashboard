@@ -4,6 +4,13 @@ $this->headScript()->appendFile($this->basePath('js/functions.js'));
 <div class="container-fluid module-head">
 	<h3><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Perfil de acesso</h3>
 </div>
+<?php
+#exibe mensagens do método addErrorMessage();
+echo $this->flashMessenger()->render('error',   array('alert', 'alert-dismissible', 'alert-danger'));
+
+#exibe mensagens do método addSucessMessage();
+echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissible', 'alert-success'));
+?>
 <div class="container-fluid module-body">
 	<button <?php if(!$this->permitido($this->url('role',['action'=>'cadastrar']))):?>disabled="disabled"<?php endif;?> id="btn-new" type="button" class="btn btn-primary">Novo</button>
 	<table id="Tfuncao" class="table table-striped table-hover">
