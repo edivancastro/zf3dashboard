@@ -56,14 +56,26 @@ class Usuario implements \JsonSerializable{
 	protected $mensagensenviadas;
 
 	/**
-	* @ORM\OneToMany(targetEntity="Admin\Model\DestinatarioMensagem", mappedBy="destinatario")
+	* @ORM\OneToMany(targetEntity="Admin\Model\DestinatarioMensagem", mappedBy="destinatario", cascade="all")
 	*/
 	protected $mensagensrecebidas;
+	
+	/**
+	 * @ORM\OneToMany(targetEntity="Admin\Model\Artigo", mappedBy="autor", cascade="all")
+	 */
+	protected $artigoscriados;
+	
+	/**
+	 * @ORM\OneToMany(targetEntity="Admin\Model\Artigo", mappedBy="editor", cascade="all")
+	 */
+	protected $artigoseditados;
 
 	
 	public function __construct(){
 		$this->mensagensenviadas = new ArrayCollection();
 		$this->mensagensrecebidas = new ArrayCollection();
+		$this->artigoscriados = new ArrayCollection();
+		$this->artigoseditados = new ArrayCollection();
 	}
 	
 
@@ -106,9 +118,16 @@ class Usuario implements \JsonSerializable{
 		$this->mensagensenviadas[] = $mensagem;	
 	}
 
-
 	public function addMensagemRecebida(Mensagem $mensagem){
 		$this->mensagensrecebidas[] = $mensagem;	
+	}
+	
+	public function addArtigoCriado(Artigo $artigo){
+	    $this->artigoscriados[] = $artigo;
+	}
+	
+	public function addArtigoEditado(Artigo $artigo){
+	    $this->artigoseditados[] = $artigo;
 	}
 
 	public function getId(){
@@ -145,6 +164,14 @@ class Usuario implements \JsonSerializable{
 	
 	public function getRole(){
 		return $this->role;
+	}
+	
+	public function getArtigosCriados(){
+	    return $this->artigoscriados;
+	}
+	
+	public function getArtigosEditados(){
+	    return $this->artigoseditados;
 	}
 
 	public function jsonSerialize(){

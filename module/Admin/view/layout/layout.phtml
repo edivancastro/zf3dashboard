@@ -29,7 +29,7 @@
     <body>
         <!-- INICIO TOP NAV BAR -->
         <nav id="navbartop" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="navbar-header">
                     <a href="<?= $this->url('home') ?>" class="navbar-brand">
                         <img src="<?= $this->basePath('img/zf-logo-mark.svg') ?>" height="28" alt="Painel de controle"/>
@@ -68,7 +68,7 @@
         <!-- INICIO BODY -->
         <div id="body" class="container-fluid">
             <!-- INICIO WRAPPER BODY -->
-            <div class="container wrapper">
+            <div class="container-fluid wrapper">
                 <?php if($this->usuario()):?>
                 <div class="row">
                     <!-- INICIO WRAPPER MENU ESQUERDO -->
@@ -79,13 +79,13 @@
                             ['id'=>'home',
                             'active'=>['home'],
                             'label'=> 'Home',
-                            'icone'=>'glyphicon-home',
+                            'icone'=>'glyphicon glyphicon-home',
                             'link' => $this->url('home')],
 
                             ['id'=>'msg',
                             'active'=>['msg'],
                             'label'=>'Mensagens',
-                            'icone'=>'glyphicon-envelope',
+                            'icone'=>'glyphicon glyphicon-envelope',
                             'count'=> $this->msg()->countNews(),
                             'countClass'=>'green',
                             'link'=>$this->url('msg'),
@@ -98,10 +98,21 @@
                         <!-- INICIO MENU WIDGET -->
                         <?php echo $this->menu()
                         ->setItens([
+                            ['id'=>'conteudo',
+                             'active'=>['artigo','categoriaartigo'],
+                             'label'=>'Conteúdo',
+                             'icone' =>'far fa-newspaper',
+                              'submenu' => [
+                                  ['id'=>'artigos',
+                                   'label'=>'Artigos',
+                                   'link'=>$this->url('artigo'),
+                                  ]
+                              ]
+                            ],
                             ['id'=> 'usuario',
                             'active'=>['usuario','role'],
                             'label'=> 'Usuários',
-                            'icone'=>'glyphicon-user',
+                            'icone'=>'glyphicon glyphicon-user',
                             'submenu'=>[
                                 ['id'=>'usr-det',
                                 'label'=>'Meu cadastro',
@@ -114,14 +125,14 @@
                                 ['id'=>'role',
                                 'label'=>'Perfil de acesso',
                                 'link'=>$this->url('role')]
-                            ]
-                        ],
+                             ]
+                            ],
 
                         ['id'=> 'config',
                         'active'=>['config'],
                         'label'=>'Configurações',
                         'link'=>$this->url('config'),
-                        'icone'=>'glyphicon-cog']
+                        'icone'=>'glyphicon glyphicon-cog']
 
                 ])
                         ->setRouteName($this->CURRENT_ROUTE_NAME)

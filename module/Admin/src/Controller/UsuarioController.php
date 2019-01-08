@@ -43,7 +43,7 @@ class UsuarioController extends ControllerAbstract{
 			
 			$usuario->setRole($role);
 				
-			$usrService->cadastrar($usuario);
+			$usrService->salvar($usuario);
 			$this->flashMessenger()->addSuccessMessage("Registro salvo!");
 			$this->log->info("Usuario cadastrado");
 			$this->redirect()->toRoute("usuario");
@@ -98,7 +98,7 @@ class UsuarioController extends ControllerAbstract{
 
 			$usuario->setRole($role);
 		
-			$usrService->cadastrar($usuario);
+			$usrService->salvar($usuario);
 			$this->flashMessenger()->addSuccessMessage("Registro salvo!");
 			$this->log->info("Cadastro de usuario alterada");
 			$this->redirect()->toRoute("usuario");

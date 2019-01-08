@@ -9,7 +9,7 @@ use Zend\Paginator\Paginator;
 
 class UsuarioService extends ServiceAbstract{
 	
-	public function cadastrar($usuario){
+	public function salvar($usuario){
 		$usuario->setStatus(Usuario::STATUS_ATIVO);
 		
 		if(empty($usuario->getRole())){
@@ -21,16 +21,7 @@ class UsuarioService extends ServiceAbstract{
 		return $this;
 	}
 	
-	public function editar($usuario){	    
-		if(empty($usuario->getRole())){
-			throw new \Exception("É necessario informar uma função!");
-		}
-		
-		$this->entityManager->persist($usuario);
-		
-		$this->entityManager->flush();
-		return $this;
-	}
+	
 	
 	public function remover($id){
 		$usuario = $this->entityManager->getRepository(Usuario::class)->find($id);

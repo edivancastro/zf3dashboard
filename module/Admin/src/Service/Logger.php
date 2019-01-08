@@ -1,13 +1,14 @@
 <?php
 namespace Admin\Service;
 use Zend\Session\Container;
+use Zend\Http\Request;
 
 class Logger{
 	protected $logger; 
 	protected $request;
 	protected $usuario;
 
-	public function __construct($logger, $request){
+	public function __construct($logger, Request $request){
 		$this->logger = $logger;
 		$this->request = $request;
 	}
@@ -17,12 +18,12 @@ class Logger{
 		return $this->logger->warn($message, $this->getExtra());
 	}
 
-	//atenÃ§Ã£o
+	//atenção
 	public function alert($message){
 		return $this->logger->alert($message, $this->getExtra());
 	}
 
-	//informaÃ§Ã£o
+	//informação
 	public function info($message){
 		return $this->logger->info($message, $this->getExtra());
 	}
@@ -42,10 +43,9 @@ class Logger{
                 if(strpos($post[$i],'senha=')>-1){
                     unset($post[$i]);
                 }
-            }          
+            }
+            $extra['post'] = implode('&',$post);          
         }
-
-        $extra['post'] = implode('&',$post);
 
         $usuario = $session->usuario;
         

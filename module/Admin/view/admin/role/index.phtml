@@ -18,21 +18,19 @@ echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissibl
 			<tr>
 				<th>#</th>
 				<th>Perfil</th>
-				<th width="50px"></th>
+				<th width="70px">Usuários</th>
 			</tr>
 		</thead>
 		<tbody>
 			<?php if(empty($funcoes)):?>
 				<tr class="empty">
-					<td colspan="5">Nenhum registro</td>
+					<td colspan="3">Nenhum registro</td>
 				</tr>
 			<?php else:foreach($funcoes as $funcao):?>
 			<tr>
 				<td><?=$funcao->getId();?></td>
-				<td><?=$funcao->getDescricao();?></td>
-				<td align="center">
-					<button value="<?=$funcao->getId();?>" name="permissao-detalhar" class="btn-icon"><img class="icon" src="<?= $this->basepath().'/img/detail.png';?>" /></button>
-				</td>
+				<td><a href="<?= $this->url('role',['action'=>'detalhar','id'=>$funcao->getId()]);?>"><?=$funcao->getDescricao();?></a></td>		
+				<td><a href="<?= $this->url('role',['action'=>'detalhar','id'=>$funcao->getId()]);?>"><?=$funcao->getUsuariosAtivos()->count(); ?></a></td>
 			</tr>
 			<?php endforeach;endif;?>
 		</tbody>
@@ -40,10 +38,6 @@ echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissibl
 </div>
 <script>
 $().ready(function(){
-
-	$('button[name="permissao-detalhar"]').click(function(){
-		document.location.href = "<?php echo $this->url("role",["action"=>"detalhar"]);?>/id/"+$(this).val();
-	});
 
 	$("#btn-new:not(disabled)").click(function(){
 		document.location.href = "<?php echo $this->url("role",["action"=>"cadastrar"]);?>";

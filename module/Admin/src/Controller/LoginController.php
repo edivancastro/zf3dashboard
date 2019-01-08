@@ -33,9 +33,9 @@ class LoginController extends ControllerAbstract{
 	}
 
 	public function logoutAction(){
+		$this->log->info('Logout realizado');
 		$authService = $this->serviceManager->get(AuthService::class);
 		$authService->logout();
-		$this->log->info('Logout realizado');
 		$this->redirect()->toRoute('home');
 	}
 }

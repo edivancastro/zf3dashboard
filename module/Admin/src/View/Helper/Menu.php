@@ -43,7 +43,7 @@ class Menu extends AbstractHelper{
 			$icone='';
 
 			if(isset($item['icone'])){
-				$icone = "<i class=\"glyphicon {$item['icone']}\"></i>";
+				$icone = "<i class=\"{$item['icone']}\"></i>";
 			}
 
 			if(isset($item['active']) && in_array($this->route, $item['active'])){

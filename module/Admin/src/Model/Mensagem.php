@@ -25,7 +25,7 @@ class Mensagem implements \JsonSerializable{
 	private $assunto;
 
 	/**
-	* @ORM\Column(type="string")
+	* @ORM\Column(type="text")
 	*/
 	private $texto;
 

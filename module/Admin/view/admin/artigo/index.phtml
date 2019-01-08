@@ -1,0 +1,122 @@
+<?php $this->headStyle()->captureStart();?>
+.module-body .row > div{padding-left:20px;}
+.module-body .row .btn-group{margin-right:15px;}
+.module-body .row > div:first-child{margin-bottom:20px;}
+.module-body .row:first-child{margin-bottom:20px;}
+<?php $this->headStyle()->captureEnd();?>
+<div class="container-fluid module-head">
+	<h3><i class="far fa-newspaper"></i> Artigos</h3>
+</div>
+<?php
+#exibe mensagens do metodo addErrorMessage();
+echo $this->flashMessenger()->render('error',   array('alert', 'alert-dismissible', 'alert-danger'));
+
+#exibe mensagens do metodo addSucessMessage();
+echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissible', 'alert-success'));
+?>
+<div class="module-body">
+	<div class="row">
+		<div class="col-sm-6 col-md-7">
+			<?php if($this->permitido($this->url('artigo',['action'=>'del']))):?>
+			<div class="btn-actions btn-group" role="group">
+				<button disabled type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<span class="glyphicon glyphicon-th" aria-hidden="true"></span>&nbsp;&nbsp;Ação
+					<span class="caret"></span>
+					</button>
+				<ul class="dropdown-menu">
+					<li><a href="#>">Excluir</a></li>		
+				</ul>
+			</div>
+			<?php endif;?>
+			<button <?php if(!$this->permitido($this->url('artigo',['action'=>'cadastrar']))):?>disabled="disabled"<?php endif;?> id="btn-new" type="button" class="btn btn-primary">Novo</button>		
+		</div>
+		<div class="col-sm-6 col-md-5">
+			<div class="input-group">
+				<div class="input-group-addon">Categoria</div>
+				<select  style="max-width:200px;" class="form-control fa" name="order">
+					<option value="">Todas</option>
+					<?php foreach($this->categorias as $categoria):?>
+					<option value="<?= $categoria->getId();?>"><?= $categoria->getDescricao(); ?></option>
+					<?php endforeach;?>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-push-6 col-sm-6 col-md-push-7 col-md-5">
+			<form method="get">
+				<div class="input-group">
+					<input class="form-control" placeholder="Pesquisar" value="<?=$this->busca;?>" type="text" name="busca" />
+					<div class="input-group-btn">
+						<button style="margin-left: 10px;" class="btn" type="submit">Ok</button>
+						<button style="margin-left: 10px;" class="btn" type="reset">limpar</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-sm-pull-6 col-sm-6 col-md-pull-5 col-md-7">
+			<div class="input-group">
+				<div class="input-group-addon">Ordem</div>
+				<select  style="max-width:200px;" class="form-control fa" name="order">
+					<option value="1">Data - Decrescente</option>
+					<option>Data - Crescente</option>
+					<option>Autor - A-Z</option>
+					<option>Autor - Z-A</option>
+					<option>Titulo - A-Z</option>
+					<option>Titulo - Z-A</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<?php if($this->busca <>''):?>
+		<p>Resultado da pesquisa por "<?=$this->busca;?>":</p>
+	<?php endif;?>
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th title="Selecionar tudo" width="10px"><input name="selecionador" type="checkbox" /></th>
+				<th>Titulo</th>
+				<th width="200px" class="hidden-xs">Autor</th>
+				<th title="Data de criação" width="100px" class="hidden-xs">Data</th>
+				<th width="80px" class="hidden-xs">Acessos</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php if(empty($this->artigos)):foreach($this->artigos as $artigo):?>
+			<tr>
+				<td></td>
+				<td>
+					<div class="btn-group">
+					
+					</div>
+				</td>
+				<td></td>
+				<td class="hidden-xs"></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<?php endforeach;else:?>
+			<tr class="empty">
+				<td colspan="6">Nenhum artigo</td>
+			</tr>
+			<?php endif;?>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td align="right" colspan="6">
+					<?= $this->paginationControl($artigos,'Sliding','admin/artigo/paginator.phtml',['route'=>'artigo','busca'=>$this->busca]); ?>	
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+</div>
+<?php 
+$script = <<<JS
+$().ready(function(){
+    $('button[type=reset]').click(function(){
+        document.location.href="{$this->url('artigo')}";
+    });
+});
+JS;
+$this->inlineScript()->appendScript($script);
+?>

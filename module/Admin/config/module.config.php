@@ -82,6 +82,16 @@ return [
 		            ]
 		        ]
 		    ],
+		    'artigo' => [
+		        'type' => Segment::class,
+		        'options' => [
+		            'route' => '/artigo[/:action[/:id]]',
+		            'defaults' => [
+		                'controller' => Controller\ArtigoController::class,
+		                'action' => 'index'
+		            ]
+		        ]
+		    ],
 		   
 		]
 	],
@@ -100,6 +110,8 @@ return [
 			        Service\RbacService::class => Service\Factory\RbacServiceFactory::class,
 			        'Db\Adapter\Log' => Zend\Db\Adapter\AdapterAbstractServiceFactory::class,
 			        Service\Logger::class => Service\Factory\LoggerServiceFactory::class,
+			        Service\ArtigoService::class => Service\Factory\ServiceFactory::class,
+			        Service\CategoriaArtigoService::class => Service\Factory\ServiceFactory::class,
 			],
 			
 	],
@@ -114,8 +126,8 @@ return [
 			Controller\UsuarioController::class => Controller\Factory\ControllerAbstractFactory::class,
 			Controller\RoleController::class => Controller\Factory\ControllerAbstractFactory::class,
 			Controller\ConfigController::class => Controller\Factory\ControllerAbstractFactory::class,
-			Controller\MensagemController::class => Controller\Factory\ControllerAbstractFactory::class,
-
+		    Controller\MensagemController::class => Controller\Factory\ControllerAbstractFactory::class,
+		    Controller\ArtigoController::class => Controller\Factory\ControllerAbstractFactory::class,
 		]
 	],
 
@@ -158,7 +170,10 @@ return [
     	    Controller\ConfigController::class => [
     	        ['actions'=>['index'],'allow'=>'+config.manager']
     	    ],
-    	    
+    	    Controller\ArtigoController::class => [
+    	        ['actions'=>['index','cadastrar','editar','del'],'allow'=>'+conteudo.manager'],
+    	        ['actions'=>['index','cadastrar','editar','del'],'allow'=>'+artigo.manager'],
+    	    ],
     	],
     ],
 		
