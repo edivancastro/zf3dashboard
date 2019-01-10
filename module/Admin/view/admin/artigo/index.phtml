@@ -24,19 +24,19 @@ echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissibl
 					<span class="caret"></span>
 					</button>
 				<ul class="dropdown-menu">
-					<li><a href="#>">Excluir</a></li>		
+					<li><a href="#>">Excluir selecionados</a></li>		
 				</ul>
 			</div>
 			<?php endif;?>
-			<button <?php if(!$this->permitido($this->url('artigo',['action'=>'cadastrar']))):?>disabled="disabled"<?php endif;?> id="btn-new" type="button" class="btn btn-primary">Novo</button>		
+			<button <?php if(!$this->permitido($this->url('artigo',['action'=>'cadastrar']))):?>disabled="disabled"<?php endif;?> id="btn-new" type="button" class="btn btn-primary">Novo artigo</button>		
 		</div>
 		<div class="col-sm-6 col-md-5">
-			<div class="input-group">
+			<div class="input-group has-success">
 				<div class="input-group-addon">Categoria</div>
-				<select  style="max-width:200px;" class="form-control fa" name="order">
+				<select  style="max-width:200px;" class="form-control fa" name="cat">
 					<option value="">Todas</option>
 					<?php foreach($this->categorias as $categoria):?>
-					<option value="<?= $categoria->getId();?>"><?= $categoria->getDescricao(); ?></option>
+					<option <?php if($this->categoria==$categoria->getId()):?>selected<?php endif;?> value="<?= $categoria->getId();?>"><?= $categoria->getDescricao(); ?></option>
 					<?php endforeach;?>
 				</select>
 			</div>
@@ -48,8 +48,8 @@ echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissibl
 				<div class="input-group">
 					<input class="form-control" placeholder="Pesquisar" value="<?=$this->busca;?>" type="text" name="busca" />
 					<div class="input-group-btn">
-						<button style="margin-left: 10px;" class="btn" type="submit">Ok</button>
-						<button style="margin-left: 10px;" class="btn" type="reset">limpar</button>
+						<button style="margin-left: 10px;" class="btn btn-default" type="submit">Ok</button>
+						<button style="margin-left: 10px;" class="btn btn-default" type="reset">limpar</button>
 					</div>
 				</div>
 			</form>
@@ -57,13 +57,13 @@ echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissibl
 		<div class="col-sm-pull-6 col-sm-6 col-md-pull-5 col-md-7">
 			<div class="input-group">
 				<div class="input-group-addon">Ordem</div>
-				<select  style="max-width:200px;" class="form-control fa" name="order">
-					<option value="1">Data - Decrescente</option>
-					<option>Data - Crescente</option>
-					<option>Autor - A-Z</option>
-					<option>Autor - Z-A</option>
-					<option>Titulo - A-Z</option>
-					<option>Titulo - Z-A</option>
+				<select  style="max-width:200px;" class="form-control fa" name="ordem">
+					<option <?php if($this->ordem==1):?>selected<?php endif;?> value="1">Data - Decrescente</option>
+					<option <?php if($this->ordem==2):?>selected<?php endif;?> value="2">Data - Crescente</option>
+					<option <?php if($this->ordem==3):?>selected<?php endif;?> value="3">Titulo - A-Z</option>
+					<option <?php if($this->ordem==4):?>selected<?php endif;?> value="4">Titulo - Z-A</option>
+					<option <?php if($this->ordem==5):?>selected<?php endif;?> value="5">Autor - A-Z</option>
+					<option <?php if($this->ordem==6):?>selected<?php endif;?> value="6">Autor - Z-A</option>
 				</select>
 			</div>
 		</div>
@@ -82,17 +82,12 @@ echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissibl
 			</tr>
 		</thead>
 		<tbody>
-			<?php if(empty($this->artigos)):foreach($this->artigos as $artigo):?>
+			<?php if($this->artigos->getCurrentItemCount()>0):foreach($this->artigos as $artigo):?>
 			<tr>
+				<td><input type="checkbox" name="art[]" /></td>
 				<td></td>
-				<td>
-					<div class="btn-group">
-					
-					</div>
-				</td>
 				<td></td>
 				<td class="hidden-xs"></td>
-				<td></td>
 				<td></td>
 			</tr>
 			<?php endforeach;else:?>
@@ -104,7 +99,7 @@ echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissibl
 		<tfoot>
 			<tr>
 				<td align="right" colspan="6">
-					<?= $this->paginationControl($artigos,'Sliding','admin/artigo/paginator.phtml',['route'=>'artigo','busca'=>$this->busca]); ?>	
+					<?= $this->paginationControl($artigos,'Sliding','admin/artigo/paginator.phtml',['route'=>'artigo', 'categoria'=>$this->categoria, 'ordem'=>$this->ordem, 'busca'=>$this->busca]); ?>	
 				</td>
 			</tr>
 		</tfoot>
@@ -113,9 +108,105 @@ echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissibl
 <?php 
 $script = <<<JS
 $().ready(function(){
-    $('button[type=reset]').click(function(){
-        document.location.href="{$this->url('artigo')}";
+    var ordem = "{$this->ordem}";
+    var busca = "{$this->busca}";
+    var page = "{$this->page}";
+    var cat = "{$this->categoria}";
+    
+    var query = function(){
+        var url = '?';
+        if(ordem != ''){
+           url += 'ordem='+ordem;
+        }
+
+        if(page != ''){
+            if(url.length > 1){
+                url += '&';
+            }
+            url += 'page='+page;
+        }
+
+        if(cat != ''){
+            if(url.length > 1){
+                url += '&';
+            }
+            url += 'cat='+cat;
+        }
+
+        if(busca != ''){
+            if(url.length > 1){
+                url += '&';
+            }
+            url += 'busca='+busca;
+        }
+        
+        document.location.href = "{$this->url('artigo')}"+url;  
+    };
+
+    if($('.module-body .table input[name^=art]:checked').length == 0){
+       $('.module-body button[name=acao]').attr('disabled',true);
+    }
+
+     $('.module-body button[type=submit]').click(function(event){
+        event.preventDefault();
+        busca = $('.module-body input[name=busca]').val();
+        query();    
     });
+
+    $('.module-body select[name=ordem]').change(function(){
+        ordem = $(this).val();
+        query();
+    });
+
+    $('.module-body select[name=cat]').change(function(){
+        cat = $(this).val();
+        query();
+    });
+
+    $('.module-body button[type=reset]').click(function(){
+        busca='';
+        query();
+    });
+
+    $('#btn-new').click(function(){
+        document.location.href="{$this->url('artigo',['action'=>'cadastrar'])}";
+    });
+
+    $('.module-body input[name^=art]').click(function(){
+        if($(this).is(':checked')){
+            $('.module-body button[name=acao]').attr('disabled',false);
+        }else{
+            if($('.module-body input[name^=art]:checked').length == 0){
+                 $('.module-body button[name=acao]').attr('disabled',true);
+            }
+        }
+    });
+
+    $('.module-body input[name=selecionador]').click(function(){
+        if($(this).is(':checked')){
+            $('.module-body input[name^=art]').prop('checked',true);
+            $('.module-body button[name=acao]').attr('disabled',false);
+        }else{
+            $('.module-body input[name^=art]').prop('checked',false);
+            $('.module-body button[name=acao]').attr('disabled',true);
+        }
+    });
+
+    $('#excluir').click(function(event){
+        event.preventDefault();
+
+        selected = $('.module-body input[name^=art]:checked');
+
+        var ids = '';
+        for(var i=0; i < selected.length;i++){
+           ids += $(selected[i]).val();
+           if(i != (selected.length -1)){
+              ids += ',';  
+           } 
+        }
+        document.location.href="{$this->url('artigo',['action'=>'del'])}/"+ids;
+    });
+    
 });
 JS;
 $this->inlineScript()->appendScript($script);

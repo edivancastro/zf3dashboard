@@ -50,7 +50,7 @@ class Artigo{
     *@var boolean
     *@ORM\column(type="boolean")
     */
-    protected $excluido;
+    protected $excluido = false;
     
     /**
      * 
@@ -70,8 +70,8 @@ class Artigo{
     
     /**
      *
-     * @var CategoriaArtigo
-     * @ORM\ManyToOne(targetEntity="Admin\Model\CategoriaArtigo", inversedBy="artigos");
+     * @var Categoria
+     * @ORM\ManyToOne(targetEntity="Admin\Model\Categoria");
      * @ORM\JoinColumn(name="Categoria_id", referencedColumnName="id")
      */
     protected $categoria;
@@ -116,7 +116,7 @@ class Artigo{
         return $this;
     }
     
-    public function setCategoria(CategoriaArtigo $categoria){
+    public function setCategoria(Categoria $categoria){
         $this->categoria = $categoria;
         return $this;
     }

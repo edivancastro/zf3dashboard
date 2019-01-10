@@ -3,13 +3,14 @@ namespace Admin\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
 
 /**
  * 
  * @author Edivan carneiro
  * @ORM\Entity
  */
-class CategoriaArtigo{
+class Categoria{
     /**
      * 
      * @var Integer
@@ -30,7 +31,7 @@ class CategoriaArtigo{
      * @var boolean
      * @ORM\Column(type="boolean")
      */
-    protected $excluido;
+    protected $excluido = false;
     
     /**
      * 
@@ -78,7 +79,9 @@ class CategoriaArtigo{
     }
     
     public function getArtigos(){
-        return $this->artigos;
+        $notexcluido = Criteria::expr()->eq('excluido',false);
+        $criteria = Criteria::create()->where($notexcluido);
+        return $this->artigos->matching($criteria);
     }
     
     public function isExcluido(){

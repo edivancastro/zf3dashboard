@@ -8,16 +8,17 @@ echo $this->flashMessenger()->render('error',   array('alert', 'alert-dismissibl
 #exibe mensagens do método addSucessMessage();
 echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissible', 'alert-success'));
 ?>
-<div style="margin-top:20px;" class="container-fluid">
+<div style="margin-top:20px;" class="module-body container-fluid">
 	<button <?php if(!$this->permitido($this->url('usuario',['action'=>'cadastrar']))):?>disabled="disabled"<?php endif;?> id="btn-new" type="button" class="btn btn-primary">Novo</button>
 	<div class="row" style="margin:15px 0;">
-		<div class="hidden-xs col-sm-6 col-md-8"></div>
-		<div class="col-xs-12 col-sm-6 col-md-4">
+		<div class="hidden-xs col-sm-6 col-md-7"></div>
+		<div class="col-xs-12 col-sm-6 col-md-5">
 			<form class="" method="get">
 				<div class="input-group">
 					<input class="form-control" placeholder="Pesquisar" value="<?=$this->busca?>" type="text" name="busca" />
 					<div class="input-group-btn">
-						<button style="margin-left: 10px;" class="btn" type="submit">Ok</button>
+						<button style="margin-left: 10px;" class="btn btn-default" type="submit">Ok</button>
+						<button style="margin-left: 10px;" class="btn btn-default" type="reset">limpar</button>
 					</div>
 				</div>
 			</form>
@@ -36,11 +37,11 @@ echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissibl
 			</tr>
 		</thead>
 		<tbody>
-			<?php if(empty($usuarios)):?>
+			<?php if($this->usuarios->getCurrentItemCount()==0):?>
 				<tr class="empty">
 					<td colspan="4">Nenhum registro</td>
 				</tr>
-			<?php else:foreach($usuarios as $usuario):?>
+			<?php else:foreach($this->usuarios as $usuario):?>
 			<tr>
 				<td width="50px"><?=$usuario->getId();?></td>
 				<td><a href="<?= $this->url('usuario',['action'=>'detalhar','id'=>$usuario->getId()]);?>"><?=$usuario->getNome();?></a></td>
@@ -51,7 +52,7 @@ echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissibl
 		</tbody>
 		<tfoot>
 			<tr>
-				<td align="right" colspan="4"><?= $this->paginationControl($usuarios,'Sliding','admin/usuario/paginator.phtml',['route'=>'usuario','busca'=>$this->busca]); ?></td>
+				<td align="right" colspan="4"><?= $this->paginationControl($this->usuarios,'Sliding','admin/usuario/paginator.phtml',['route'=>'usuario','busca'=>$this->busca]); ?></td>
 			</tr>
 		</tfoot>
 	</table>
@@ -63,6 +64,8 @@ $().ready(function(){
 		document.location.href = "<?php echo $this->url("usuario",["action"=>"cadastrar"]);?>";
 	});
 
-	
+	$('.module-body button[type=reset]').click(function(){
+		document.location.href="<?= $this->url('usuario');?>";
+	});
 });
 </script>

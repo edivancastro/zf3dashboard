@@ -7,7 +7,7 @@ body {padding-top: 60px;padding-bottom: 40px;font-size: 13px}
 
 
 .alert-container{padding:10px 10px 0 10px;}
-.alert *{font-size:15px!important;font-weight:bold;}
+.alert *{font-size:15px!important;}
 
 .btn{font-size:13px; padding:5px 10px;}
 .btn-submit{background:#ddd;border:1px solid #bbb;}
@@ -35,7 +35,7 @@ footer{margin-top:20px;}
 .menu{background: #333; margin-bottom:20px;}
 .menu > li > a{background:inherit !important;color:#bbb;border:0; border-bottom:1px solid #ccc;}
 .menu > li > a:hover, .menu > li > a.active, .menu > li > a[aria-expanded="true"]{background: black!important;color:white;border:0;border-bottom:1px solid #ccc;}
-.menu > li > a .glyphicon{margin-right:10px;}
+.menu > li > a .icon{margin-right:10px;}
 .menu a[aria-expanded="true"] i.glyphicon-menu-down{ display: none; }
 .menu a[aria-expanded="false"] i.glyphicon-menu-down{ display: all; }
 .menu a[aria-expanded="true"] i.glyphicon-menu-up{ display: all; }
@@ -57,6 +57,7 @@ footer{margin-top:20px;}
 .table tbody tr td{ border-right:1px solid #ccc;border-bottom: 1px solid #ccc; }
 .table.table-hover tbody tr:hover td{ background: #ddd;border-right:1px solid #999;border-bottom:1px solid #999;border-top:1px solid #999;}
 .table tfoot td{border-right:1px solid #ccc; height: 30px;}
+.table tfoot .pagination{margin:0}
 
 .btn-actions > .btn{background: #ddd;border:1px solid #999;}
 .btn-actions > .btn:hover{background: #ccc;}
@@ -66,6 +67,8 @@ footer{margin-top:20px;}
 
 .icon{width:17px;}
 .content{min-height: 100px;}
+
+.form-control, .input-group-addon, .input-group button{font-size:13px !important; height:28px;}
 
 
 .btn-icon{
@@ -123,6 +126,15 @@ form input, form label{
 	height: 20px;
 	margin: 0
 }
+
+.module-head h4{
+	font-size: 14px;
+	font-weight:normal;
+	line-height: 16px;
+	height: 16px;
+	margin: 0
+}
+
 .module-option {
 	border-bottom: 1px solid #e5e5e5;
 	padding: 15px 0;

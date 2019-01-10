@@ -25,8 +25,10 @@ class Permissao extends AbstractHelper{
             $action = $params['action'];
             unset($params['controller']);
             unset($params['action']);
-            
+
             return $this->serviceManager->get(AuthService::class)->filtrar($controller, $action, $params);
         }
     }
+
+
 }

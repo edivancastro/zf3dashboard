@@ -14,6 +14,7 @@ insert into permissao(id, nome, descricao, Recurso_id) values(4,'msg.own.manager
 insert into permissao(id, nome, descricao, Recurso_id) values(5,'config.manager','Gerenciar configuração do sistema',4);
 insert into permissao(id, nome, descricao, Recurso_id) values(6,'conteudo.manager','Gerenciar conteudo (artigos, midias, menu, etc)',5);
 insert into permissao(id, nome, descricao, Recurso_id) values(7,'artigo.manager','Publicar artigos',5);
+insert into permissao(id, nome, descricao, Recurso_id) values(8,'artigo.categoria.manager','Gerenciar categorias de artigos',5);
 
 insert into role_permissao(Role_id, Permissao_id) values(2,1);
 insert into role_permissao(Role_id, Permissao_id) values(2,2);

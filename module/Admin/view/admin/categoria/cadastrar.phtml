@@ -1,0 +1,25 @@
+<div class="container-fluid module-head">
+	<h3><i class="far fa-list-alt"></i> Cadastrar categoria</h3>
+</div>
+
+<div class="module-body module-cadastro clearfix">
+	<form autocomplete="off" method="post">
+		<div class="form-group form-group-sm">
+			<label>Nome</label>
+			<input class="form-control" type="text" name="descricao" />
+		</div>
+		<hr/>
+		<div class="pull-right">
+			<button name="cancelar" onclick="window.history.go(-1);" type="reset" class="btn btn-danger">Cancelar</button>&nbsp;&nbsp;&nbsp;
+			<button type="submit" class="btn btn-success">Cadastrar</button>
+		</div>
+	</form>
+</div>
+<?php 
+$script = <<<JS
+$().ready(function(){
+    
+});
+JS;
+$this->inlineScript()->appendScript($script);
+?>

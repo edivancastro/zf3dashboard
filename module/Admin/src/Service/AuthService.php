@@ -59,8 +59,11 @@ class AuthService extends ServiceAbstract{
 	    if ($modo !='restritivo' && $modo!='permissivo'){
 	        throw new \Exception('Invalid access filter mode (expected either restrictive or permissive mode');
 	    }
+
+
 	    
 	    if (isset($this->config['controllers'][$controllerName])) {
+
 	        
 	        $items = $this->config['controllers'][$controllerName];
 	        
@@ -69,6 +72,7 @@ class AuthService extends ServiceAbstract{
                 $allow = $item['allow'];
                 
                 if((is_array($actionList) & in_array($actionName,$actionList)) or $actionName=='*'){
+
                     if ($allow=='*'){
                         return self::ACESSO_PERMITIDO;
                     }else if (!is_object($this->session->usuario)) {
@@ -85,11 +89,10 @@ class AuthService extends ServiceAbstract{
                         
                         // Only the user with this permission is allowed to see the page.
                         $permission = substr($allow, 1);
-              
+              			
+              			
                         if ($this->rbacService->isGranted(null, $permission, $params)){
                             return self::ACESSO_PERMITIDO;
-                        }else{
-                            return self::ACESSO_NEGADO;
                         }
                         
                     } else {

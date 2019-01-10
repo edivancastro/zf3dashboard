@@ -1,0 +1,59 @@
+<div class="container-fluid module-head">
+	<h3><i class="far fa-list-alt"></i> Categoria</h3>
+</div>
+<div class="module-body">
+	<?php if($this->permitido($this->url('categoria',['action'=>'editar','id'=>$this->categoria->getId()]))):?>
+	<div class="btn-actions btn-group pull-right" role="group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<span class="glyphicon glyphicon-th" aria-hidden="true"></span>&nbsp;&nbsp;Ação
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+			<li><a href="<?=$this->url('categoria',['action'=>'editar','id'=>$this->categoria->getId()]);?>">Alterar</a></li>
+			<?php if($this->permitido($this->url('role',['action'=>'del','id'=>$this->categoria->getId()]))):?>
+			<li><a href="<?=$this->url('categoria',['action'=>'del','id'=>$this->categoria->getId()]);?>">Excluir categoria</a></li>
+			<?php endif;?>
+		</ul>
+	</div>
+	<?php endif;?>
+	<div class="form-group">
+		<label class="control-label">Nome</label>
+		<p class="form-control-static"><?=$this->categoria->getDescricao();?></p>
+	</div>
+	<br/>
+	<div class="container-fluid module-head">
+	<h4><?= $this->artigos->getTotalItemCount(); ?> artigos nesta categoria</h4>
+	</div>
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th width="30">#</th>
+				<th>Titulo</th>
+				<th width="200">Autor</th>
+				<th width="100">Data</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php if($this->artigos->count()>0):foreach($this->artigos as $artigo):?>
+			<tr>
+				<td><?= $artigo->getId();?></td>
+				<td><a href="<?=$this->url('artigo',['action'=>'detalhar','id'=>$artigo->getId()]) ?>"><?= $artigo->getTitulo();?></a></td>
+				<td><?= $artigo->getAutor()->getNome();?></td>
+				<td><?= $artigo->getDatacriacao()->format('d/m/Y');?></td>
+			</tr>
+			<?php endforeach;else:?>
+			<tr class="empty">
+				<td colspan="5">Nenhum registro</td>
+			</tr>
+			<?php endif;?>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td align="right" colspan="6">
+					<?= $this->paginationControl($this->artigos,'Sliding','admin/categoria/paginator.phtml',['route'=>'categoria','action'=>'detalhar','id'=>$this->categoria->getId(),'busca'=>$this->busca]); ?>	
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+	<button name="cancelar" onclick="window.history.go(-1);" type="button" class="btn btn-link">Voltar</button>
+</div>

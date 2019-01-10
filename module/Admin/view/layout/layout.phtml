@@ -2,7 +2,7 @@
 <?= $this->doctype(); ?>
 <html lang="pt-br">
     <head>
-        <meta charset="UTF-8" />
+        <meta charset="ISO-8859-1" />
         
         <?= $this->headTitle('Painel de controle')->setSeparator(' - ')->setAutoEscape(false) ?>
 
@@ -99,10 +99,14 @@
                         <?php echo $this->menu()
                         ->setItens([
                             ['id'=>'conteudo',
-                             'active'=>['artigo','categoriaartigo'],
+                             'active'=>['artigo','categoria'],
                              'label'=>'Conteúdo',
                              'icone' =>'far fa-newspaper',
                               'submenu' => [
+                                  ['id'=>'categoria',
+                                    'label'=>'Categorias',
+                                    'link'=>$this->url('categoria')
+                                  ],
                                   ['id'=>'artigos',
                                    'label'=>'Artigos',
                                    'link'=>$this->url('artigo'),

@@ -43,7 +43,7 @@ class Menu extends AbstractHelper{
 			$icone='';
 
 			if(isset($item['icone'])){
-				$icone = "<i class=\"{$item['icone']}\"></i>";
+				$icone = "<i class=\"icon {$item['icone']}\"></i>";
 			}
 
 			if(isset($item['active']) && in_array($this->route, $item['active'])){
@@ -59,6 +59,16 @@ class Menu extends AbstractHelper{
 			}
 
 			if(isset($item['submenu'])){
+				$permitido = false;
+				foreach($item['submenu'] as $subitem){
+					if($this->view->permitido($subitem['link'])){
+						$permitido = true;
+						break;
+					}
+				}
+
+				if(!$permitido){continue;}
+
 				$this->html .= "<li class=\"dropdown\">";
 				$this->html .= "<a class=\"$active\" data-toggle=\"collapse\" href=\"#{$item['id']}\" aria-expanded=\"$expand\">";
 				$this->html .= "<i class=\"glyphicon glyphicon-menu-down pull-right\"></i>";

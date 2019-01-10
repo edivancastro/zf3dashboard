@@ -92,6 +92,16 @@ return [
 		            ]
 		        ]
 		    ],
+		    'categoria' => [
+		        'type' => Segment::class,
+		        'options' => [
+		            'route' => '/categoria[/:action[/:id]]',
+		            'defaults' => [
+		                'controller' => Controller\CategoriaController::class,
+		                'action' => 'index'
+		            ]
+		        ]
+		    ],
 		   
 		]
 	],
@@ -111,7 +121,7 @@ return [
 			        'Db\Adapter\Log' => Zend\Db\Adapter\AdapterAbstractServiceFactory::class,
 			        Service\Logger::class => Service\Factory\LoggerServiceFactory::class,
 			        Service\ArtigoService::class => Service\Factory\ServiceFactory::class,
-			        Service\CategoriaArtigoService::class => Service\Factory\ServiceFactory::class,
+			        Service\CategoriaService::class => Service\Factory\ServiceFactory::class,
 			],
 			
 	],
@@ -128,6 +138,7 @@ return [
 			Controller\ConfigController::class => Controller\Factory\ControllerAbstractFactory::class,
 		    Controller\MensagemController::class => Controller\Factory\ControllerAbstractFactory::class,
 		    Controller\ArtigoController::class => Controller\Factory\ControllerAbstractFactory::class,
+		    Controller\CategoriaController::class => Controller\Factory\ControllerAbstractFactory::class,
 		]
 	],
 
@@ -171,8 +182,12 @@ return [
     	        ['actions'=>['index'],'allow'=>'+config.manager']
     	    ],
     	    Controller\ArtigoController::class => [
-    	        ['actions'=>['index','cadastrar','editar','del'],'allow'=>'+conteudo.manager'],
-    	        ['actions'=>['index','cadastrar','editar','del'],'allow'=>'+artigo.manager'],
+    	        ['actions'=>['index','cadastrar','detalhar','editar','del'],'allow'=>'+conteudo.manager'],
+    	        ['actions'=>['index','cadastrar','detalhar','editar','del'],'allow'=>'+artigo.manager'],
+    	    ],
+    	    Controller\CategoriaController::class => [
+    	        ['actions'=>['index','cadastrar','detalhar','editar','del'],'allow'=>'+conteudo.manager'],
+    	        ['actions'=>['index','cadastrar','detalhar','editar','del'],'allow'=>'+categoria.manager'],
     	    ],
     	],
     ],
