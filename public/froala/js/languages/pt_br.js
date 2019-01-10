@@ -41,7 +41,7 @@ $.FE.LANGUAGE['pt_br'] = {
 
     // Basic formatting
     "Bold": "Negrito",
-    "Italic": "Itálito",
+    "Italic": "It&#225;lito",
     "Underline": "Sublinhar",
     "Strikethrough": "Tachado",
 
@@ -69,27 +69,27 @@ $.FE.LANGUAGE['pt_br'] = {
     // Paragraphs
     "Paragraph Format": "Formatos",
     "Normal": "Normal",
-    "Code": "Código",
-    "Heading 1": "Cabeçalho 1",
-    "Heading 2": "Cabeçalho 2",
-    "Heading 3": "Cabeçalho 3",
-    "Heading 4": "Cabeçalho 4",
+    "Code": "C&#243;digo",
+    "Heading 1": "Cabe&#231;alho 1",
+    "Heading 2": "Cabe&#231;alho 2",
+    "Heading 3": "Cabe&#231;alho 3",
+    "Heading 4": "Cabe&#231;alho 4",
 
     // Style
-    "Paragraph Style": "Estilo de parágrafo",
+    "Paragraph Style": "Estilo de par&#225;grafo",
     "Inline Style": "Estilo embutido",
 
     // Alignment
     "Align": "Alinhar",
-    "Align Left": "Alinhar à esquerda",
+    "Align Left": "Alinhar &#224; esquerda",
     "Align Center": "Centralizar",
-    "Align Right": "Alinhar à direita",
+    "Align Right": "Alinhar &#224; direita",
     "Align Justify": "Justificar",
     "None": "Nenhum",
 
     // Lists
     "Ordered List": "Lista ordenada",
-    "Unordered List": "Lista não ordenada",
+    "Unordered List": "Lista n&#227;o ordenada",
 
     // Indent
     "Decrease Indent": "Diminuir recuo",
@@ -106,7 +106,7 @@ $.FE.LANGUAGE['pt_br'] = {
     // Images
     "Insert Image": "Inserir imagem",
     "Upload Image": "Carregar imagem",
-    "By URL": "Por um endereço URL",
+    "By URL": "Por um endere&#231;o URL",
     "Browse": "Procurar",
     "Drop image": "Arraste sua imagem aqui",
     "or click": "ou clique aqui",
@@ -114,9 +114,9 @@ $.FE.LANGUAGE['pt_br'] = {
     "Loading": "Carregando",
     "Deleting": "Excluindo",
     "Tags": "Etiquetas",
-    "Are you sure? Image will be deleted.": "Você tem certeza? A imagem será apagada.",
+    "Are you sure? Image will be deleted.": "Voce tem certeza? A imagem sera apagada.",
     "Replace": "Substituir",
-    "Uploading": "Carregando imagem",
+    "Uploading": "Carregando",
     "Loading image": "Carregando imagem",
     "Display": "Exibir",
     "Inline": "Em linha",
@@ -127,19 +127,19 @@ $.FE.LANGUAGE['pt_br'] = {
     "Height": "Altura",
     "Something went wrong. Please try again.": "Algo deu errado. Por favor, tente novamente.",
     "Image Caption": "Legenda da imagem",
-    "Advanced Edit": "Edição avançada",
+    "Advanced Edit": "Edi&#231;&#227;o avan&#231;ada",
 
     // Video
-    "Insert Video": "Inserir vídeo",
-    "Embedded Code": "Código embutido",
-    "Paste in a video URL": "Colar um endereço de vídeo",
-    "Drop video": "Solte o vídeo",
-    "Your browser does not support HTML5 vídeo.": "Seu navegador não suporta vídeo em HTML5.",
-    "Upload Video": "Carregar vídeo",
+    "Insert Video": "Inserir v&#237;deo",
+    "Embedded Code": "C&#243;digo embutido",
+    "Paste in a video URL": "Colar um endere&#231;o de v&#237;deo",
+    "Drop video": "Solte o v&#237;deo",
+    "Your browser does not support HTML5 v&#237;deo.": "Seu navegador n&#227;o suporta v&#237;deo em HTML5.",
+    "Upload Video": "Carregar v&#237;deo",
 
     // Tables
     "Insert Table": "Inserir tabela",
-    "Table Header": "Cabeçalho da tabela",
+    "Table Header": "Cabe&#231;alho da tabela",
     "Remove Table": "Remover tabela",
     "Table Style": "Estilo de tabela",
     "Horizontal Align": "Alinhamento horizontal",
@@ -151,11 +151,11 @@ $.FE.LANGUAGE['pt_br'] = {
     "Insert column before": "Inserir coluna antes",
     "Insert column after": "Inserir coluna depois",
     "Delete column": "Excluir coluna",
-    "Cell": "Célula",
-    "Merge cells": "Agrupar células",
-    "Horizontal split": "Divisão horizontal",
-    "Vertical split": "Divisão vertical",
-    "Cell Background": "Fundo da célula",
+    "Cell": "C&#233;lula",
+    "Merge cells": "Agrupar c&#233;lulas",
+    "Horizontal split": "Divis&#227;o horizontal",
+    "Vertical split": "Divis&#227;o vertical",
+    "Cell Background": "Fundo da c&#233;lula",
     "Vertical Align": "Alinhamento vertical",
     "Top": "Topo",
     "Middle": "Meio",
@@ -163,7 +163,7 @@ $.FE.LANGUAGE['pt_br'] = {
     "Align Top": "Alinhar topo",
     "Align Middle": "Alinhar meio",
     "Align Bottom": "Alinhar fundo",
-    "Cell Style": "Estilo de célula",
+    "Cell Style": "Estilo de c&#233;lula",
 
     // Files
     "Upload File": "Carregar arquivo",
@@ -173,34 +173,34 @@ $.FE.LANGUAGE['pt_br'] = {
     "Emoticons": "Emoticons",
     "Grinning face": "Rosto sorrindo",
     "Grinning face with smiling eyes": "Rosto sorrindo rosto com olhos sorridentes",
-    "Face with tears of joy": "Rosto com lágrimas de alegria",
+    "Face with tears of joy": "Rosto com l&#225;grimas de alegria",
     "Smiling face with open mouth": "Rosto sorrindo com a boca aberta",
     "Smiling face with open mouth and smiling eyes": "Rosto sorrindo com a boca aberta e olhos sorridentes",
     "Smiling face with open mouth and cold sweat": "Rosto sorrindo com a boca aberta e suor frio",
     "Smiling face with open mouth and tightly-closed eyes": "Rosto sorrindo com a boca aberta e os olhos bem fechados",
-    "Smiling face with halo": "Rosto sorrindo com aréola",
+    "Smiling face with halo": "Rosto sorrindo com ar&#233;ola",
     "Smiling face with horns": "Rosto sorrindo com chifres",
     "Winking face": "Rosto piscando",
     "Smiling face with smiling eyes": "Rosto sorrindo com olhos sorridentes",
     "Face savoring delicious food": "Rosto saboreando uma deliciosa comida",
     "Relieved face": "Rosto aliviado",
-    "Smiling face with heart-shaped eyes": "Rosto sorrindo com os olhos em forma de coração",
-    "Smiling face with sunglasses": "Rosto sorrindo com óculos de sol",
+    "Smiling face with heart-shaped eyes": "Rosto sorrindo com os olhos em forma de cora&#231;&#227;o",
+    "Smiling face with sunglasses": "Rosto sorrindo com &#243;culos de sol",
     "Smirking face": "Rosto sorridente",
     "Neutral face": "Rosto neutro",
     "Expressionless face": "Rosto inexpressivo",
-    "Unamused face": "Rosto sem expressão",
+    "Unamused face": "Rosto sem express&#227;o",
     "Face with cold sweat": "Rosto com suor frio",
     "Pensive face": "Rosto pensativo",
     "Confused face": "Rosto confuso",
-    "Confounded face": "Rosto atônito",
+    "Confounded face": "Rosto at&#244;nito",
     "Kissing face": "Rosto beijando",
     "Face throwing a kiss": "Rosto jogando um beijo",
     "Kissing face with smiling eyes": "Rosto beijando com olhos sorridentes",
     "Kissing face with closed eyes": "Rosto beijando com os olhos fechados",
-    "Face with stuck out tongue": "Rosto com a língua para fora",
-    "Face with stuck out tongue and winking eye": "Rosto com a língua para fora e um olho piscando",
-    "Face with stuck out tongue and tightly-closed eyes": "Rosto com a língua para fora e os olhos bem fechados",
+    "Face with stuck out tongue": "Rosto com a l&#237;ngua para fora",
+    "Face with stuck out tongue and winking eye": "Rosto com a l&#237;ngua para fora e um olho piscando",
+    "Face with stuck out tongue and tightly-closed eyes": "Rosto com a l&#237;ngua para fora e os olhos bem fechados",
     "Disappointed face": "Rosto decepcionado",
     "Worried face": "Rosto preocupado",
     "Angry face": "Rosto irritado",
@@ -226,7 +226,7 @@ $.FE.LANGUAGE['pt_br'] = {
     "Sleeping face": "Rosto dormindo",
     "Dizzy face": "Rosto tonto",
     "Face without mouth": "Rosto sem boca",
-    "Face with medical mask": "Rosto com máscara médica",
+    "Face with medical mask": "Rosto com m&#225;scara m&#233;dica",
 
     // Line breaker
     "Break": "Quebrar linha",
@@ -242,7 +242,7 @@ $.FE.LANGUAGE['pt_br'] = {
     "Insert Horizontal Line": "Inserir linha horizontal",
 
     // Clear formatting
-    "Clear Formatting": "Remover formatação",
+    "Clear Formatting": "Remover formata&#231;&#227;o",
 
     // Save
     "Save": "\u0053\u0061\u006c\u0076\u0065",
@@ -255,62 +255,62 @@ $.FE.LANGUAGE['pt_br'] = {
     "Select All": "Selecionar tudo",
 
     // Code view
-    "Code View": "Exibir de código",
+    "Code View": "Exibir de c&#243;digo",
 
     // Quote
-    "Quote": "Citação",
+    "Quote": "Cita&#231;&#227;o",
     "Increase": "Aumentar",
     "Decrease": "Diminuir",
 
     // Quick Insert
-    "Quick Insert": "Inserção rápida",
+    "Quick Insert": "Inser&#231;&#227;o r&#225;pida",
 
     // Spcial Characters
     "Special Characters": "Caracteres especiais",
     "Latin": "Latino",
     "Greek": "Grego",
-    "Cyrillic": "Cirílico",
-    "Punctuation": "Pontuação",
+    "Cyrillic": "Cir&#237;lico",
+    "Punctuation": "Pontua&#231;&#227;o",
     "Currency": "Moeda",
     "Arrows": "Setas",
-    "Math": "Matemática",
+    "Math": "Matem&#225;tica",
     "Misc": "Misc",
 
     // Print.
-    "Print": "Impressão",
+    "Print": "Impress&#227;o",
 
     // Spell Checker.
-    "Spell Checker": "Corretor ortográfico",
+    "Spell Checker": "Corretor ortogr&#225;fico",
 
     // Help
     "Help": "Ajuda",
     "Shortcuts": "Atalhos",
     "Inline Editor": "Editor em linha",
     "Show the editor": "Mostre o editor",
-    "Common actions": "Ações comuns",
-    "Copy": "Cópia de",
+    "Common actions": "A&#231;&#245;es comuns",
+    "Copy": "C&#243;pia de",
     "Cut": "Cortar",
     "Paste": "Colar",
-    "Basic Formatting": "Formatação básica",
-    "Increase quote level": "Aumentar o nível de cotação",
-    "Decrease quote level": "Diminuir o nível de cotação",
-    "Image / Video": "Imagem / Vídeo",
+    "Basic Formatting": "Formata&#231;&#227;o b&#225;sica",
+    "Increase quote level": "Aumentar o n&#237;vel de cota&#231;&#227;o",
+    "Decrease quote level": "Diminuir o n&#237;vel de cota&#231;&#227;o",
+    "Image / Video": "Imagem / V&#237;deo",
     "Resize larger": "Redimensionar maior",
     "Resize smaller": "Redimensionar menor",
     "Table": "Tabela",
-    "Select table cell": "Selecione a célula da tabela",
-    "Extend selection one cell": "Ampliar a seleção de uma célula",
-    "Extend selection one row": "Ampliar a seleção de uma linha",
-    "Navigation": "Navegação",
+    "Select table cell": "Selecione a c&#233;lula da tabela",
+    "Extend selection one cell": "Ampliar a sele&#231;&#227;o de uma c&#233;lula",
+    "Extend selection one row": "Ampliar a sele&#231;&#227;o de uma linha",
+    "Navigation": "Navega&#231;&#227;o",
     "Focus popup / toolbar": "Pop-up de foco / Barra de ferramentas",
-    "Return focus to previous position": "Retornar o foco para a posição anterior",
+    "Return focus to previous position": "Retornar o foco para a posi&#231;&#227;o anterior",
 
     // Embed.ly
-    "Embed URL": "URL de inserção",
-    "Paste in a URL to embed": "Colar um endereço URL para incorporar",
+    "Embed URL": "URL de inser&#231;&#227;o",
+    "Paste in a URL to embed": "Colar um endere&#231;o URL para incorporar",
 
     // Word Paste.
-    "The pasted content is coming from a Microsoft Word document. Do you want to keep the format or clean it up?": "O conteúdo colado vem de um documento Microsoft Word. Você quer manter o formato ou limpá-lo?",
+    "The pasted content is coming from a Microsoft Word document. Do you want to keep the format or clean it up?": "O conte&#250;do colado vem de um documento Microsoft Word. Voc&#234; quer manter o formato ou limp&#225;-lo?",
     "Keep": "Manter",
     "Clean": "Limpar",
     "Word Paste Detected": "Colar do Word detectado"

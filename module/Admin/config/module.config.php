@@ -102,7 +102,16 @@ return [
 		            ]
 		        ]
 		    ],
-		   
+		    'upload' => [
+		        'type' => Segment::class,
+		        'options' => [
+		            'route' => '/upload[/:action]',
+		            'defaults' => [
+		                'controller' => Controller\UploadController::class,
+		                'action' => 'index'
+		            ]
+		        ]
+		    ],
 		]
 	],
 	
@@ -139,6 +148,7 @@ return [
 		    Controller\MensagemController::class => Controller\Factory\ControllerAbstractFactory::class,
 		    Controller\ArtigoController::class => Controller\Factory\ControllerAbstractFactory::class,
 		    Controller\CategoriaController::class => Controller\Factory\ControllerAbstractFactory::class,
+		    Controller\UploadController::class => Controller\Factory\ControllerAbstractFactory::class,
 		]
 	],
 
@@ -188,6 +198,9 @@ return [
     	    Controller\CategoriaController::class => [
     	        ['actions'=>['index','cadastrar','detalhar','editar','del'],'allow'=>'+conteudo.manager'],
     	        ['actions'=>['index','cadastrar','detalhar','editar','del'],'allow'=>'+categoria.manager'],
+    	    ],
+    	    Controller\UploadController::class => [
+    	        ['actions'=>['imagem','delimagem','arquivo'],'allow'=>'@'],
     	    ],
     	],
     ],

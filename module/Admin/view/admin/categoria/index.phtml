@@ -1,4 +1,6 @@
-<?php $this->headStyle()->captureStart();?>
+
+<?php 
+$this->headStyle()->captureStart();?>
 .module-body .row > div{padding-left:20px;}
 .module-body .row .btn-group{margin-right:15px;}
 .module-body .row > div:first-child{margin-bottom:20px;}
@@ -49,7 +51,7 @@ echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissibl
 		<div class="col-sm-pull-6 col-sm-6 col-md-pull-5 col-md-7">
 			<div class="input-group">
 				<div class="input-group-addon">Ordem</div>
-				<select  style="max-width:200px;" class="form-control fa" name="ordem">
+				<select  style="max-width:200px;" class="form-control" name="ordem">
 					<option <?php if($this->ordem==1):?>selected<?php endif;?> value="1">Nome - A-Z</option>
 					<option <?php if($this->ordem==2):?>selected<?php endif;?> value="2">Nome - Z-A</option>
 				</select>

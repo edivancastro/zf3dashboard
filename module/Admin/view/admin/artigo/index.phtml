@@ -1,4 +1,8 @@
-<?php $this->headStyle()->captureStart();?>
+<?php 
+$this->headLink()->appendStylesheet($this->basePath('/css/bootstrap-select.min.css'));
+$this->inlineScript()->appendFile($this->basePath('/js/bootstrap-select.min.js'));
+
+$this->headStyle()->captureStart();?>
 .module-body .row > div{padding-left:20px;}
 .module-body .row .btn-group{margin-right:15px;}
 .module-body .row > div:first-child{margin-bottom:20px;}
@@ -31,9 +35,9 @@ echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissibl
 			<button <?php if(!$this->permitido($this->url('artigo',['action'=>'cadastrar']))):?>disabled="disabled"<?php endif;?> id="btn-new" type="button" class="btn btn-primary">Novo artigo</button>		
 		</div>
 		<div class="col-sm-6 col-md-5">
-			<div class="input-group has-success">
+			<div class="input-group">
 				<div class="input-group-addon">Categoria</div>
-				<select  style="max-width:200px;" class="form-control fa" name="cat">
+				<select data-live-search="true" class="form-control selectpicker" name="cat">
 					<option value="">Todas</option>
 					<?php foreach($this->categorias as $categoria):?>
 					<option <?php if($this->categoria==$categoria->getId()):?>selected<?php endif;?> value="<?= $categoria->getId();?>"><?= $categoria->getDescricao(); ?></option>
@@ -142,6 +146,7 @@ $().ready(function(){
         
         document.location.href = "{$this->url('artigo')}"+url;  
     };
+
 
     if($('.module-body .table input[name^=art]:checked').length == 0){
        $('.module-body button[name=acao]').attr('disabled',true);

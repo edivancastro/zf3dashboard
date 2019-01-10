@@ -8,3 +8,5 @@ phpunit.xml
 *.mwb.bak
 /.buildpath
 public/temp/captcha/*
+public/files/img/*
+public/files/file/*

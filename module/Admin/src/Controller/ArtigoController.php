@@ -8,8 +8,7 @@ use Zend\Captcha\Image as Captcha;
 
 class ArtigoController extends ControllerAbstract{
     
-    public function indexAction(){
-        
+    public function indexAction(){  
         $artigos = $this->serviceManager->get(ArtigoService::class)->find($this->request->getPost('busca',null));
         $artigos->setCurrentPageNumber($this->request->getQuery('page',null));
         
@@ -37,6 +36,10 @@ class ArtigoController extends ControllerAbstract{
             
             $this->redirect()->toRoute("artigo");
         }
+        
+        return[
+            'categorias' => $this->serviceManager->get(CategoriaService::class)->find(),
+        ];
     }
     
     public function editarAction(){

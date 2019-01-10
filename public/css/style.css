@@ -4,7 +4,7 @@
 body {padding-top: 60px;padding-bottom: 40px;font-size: 13px}
 
 .fr-wrapper > div:first-child:not(.fr-view){display:none!important;}
-
+#imageManager-1,#videoUpload-1{display:none;}
 
 .alert-container{padding:10px 10px 0 10px;}
 .alert *{font-size:15px!important;}
@@ -70,6 +70,9 @@ footer{margin-top:20px;}
 
 .form-control, .input-group-addon, .input-group button{font-size:13px !important; height:28px;}
 
+.input-group .bootstrap-select.form-control {
+  z-index: inherit;
+}
 
 .btn-icon{
 	padding:2px 3px;
@@ -178,7 +181,7 @@ form input, form label{
 #msg-head .input-group input, #msg-head .input-group-addon{font-size:12px;height: 30px;}
 #msg-head .input-group .input{background:#fff;border:1px solid #ccc; width:100%;border-radius:3px;min-height: 30px;min-width: 100px;cursor:text;padding:0 30px 0 5px;}
 #msg-head .input .widget{display:inline-block;margin:3px 0 3px 5px;border-radius:3px;border:1px solid #bbb;background:#EFF8FB;padding:0 5px;cursor:pointer;}
-#msg-head .input .widget button.close{margin-left: 5px;font-size:18px;color:red; opacity: .5;display:inline;}
+#msg-head .input .widget button.close{margin-left: 5px;margin-top:2px;font-size:18px;color:red; opacity: .5;display:inline;height: inherit;}
 #msg-head .input .widget a{text-decoration: none;display: inline;}
 #msg-head .input .widget.hide{display: none;}
 

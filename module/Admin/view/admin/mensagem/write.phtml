@@ -1,13 +1,9 @@
 <?php
- 	$this->inlineScript()->appendFile($this->basePath('/froala/js/froala_editor.min.js'));
- 	$this->inlineScript()->appendFile($this->basePath('/froala/js/plugins/image.min.js'));
- 	$this->inlineScript()->appendFile($this->basePath('/froala/js/plugins/align.min.js'));
+ 	$this->inlineScript()->appendFile($this->basePath('/froala/js/froala_editor.pkgd.min.js'));
  	$this->inlineScript()->appendFile($this->basePath('/froala/js/languages/pt_br.js'));
  	$this->inlineScript()->appendFile($this->basePath('/js/functions.js'));
 
- 	$this->headLink()->prependStylesheet($this->basePath('/froala/css/froala_editor.min.css'));
- 	$this->headLink()->appendStylesheet($this->basePath('/froala/css/froala_style.min.css'));
- 	$this->headLink()->prependStylesheet($this->basePath('/froala/css/plugins/image.min.css'));
+ 	$this->headLink()->prependStylesheet($this->basePath('/froala/css/froala_editor.pkgd.min.css'));
  	$this->headLink()->appendStylesheet('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css');
 ?>
 <div class="module-head">
@@ -177,7 +173,25 @@ $script = <<<Script
   });
 
     
- $('#texto').froalaEditor({language:'pt_br',heightMin:200, toolbarButtons: ['bold', 'italic', 'underline','align','insertImage','insertHR','undo', 'redo']});
+ $('#texto').froalaEditor({
+            language:'pt_br',
+            heightMin:200, 
+            toolbarButtons: ['bold', 'italic', 'underline','align','insertImage','insertHR','undo', 'redo'],
+            imageUploadParam: 'imagem',
+            imageUploadURL: "{$this->url('upload',['action'=>'imagem'])}",
+            imageMaxSize: 2 * 1024 * 1024,
+            imageAllowedTypes: ['jpeg', 'jpg', 'png'],
+            
+          })
+          .on('froalaEditor.image.removed', function (e, editor, img) {
+              $.ajax({
+                     method: "POST",
+                     url: "{$this->url('upload',['action'=>'delimagem'])}",
+                     data: {
+                          imagem: $(img).attr('src')
+                     }
+              });
+           });
  });
 
 

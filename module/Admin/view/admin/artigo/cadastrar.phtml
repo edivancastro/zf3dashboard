@@ -1,0 +1,83 @@
+<?php 
+$this->headLink()->appendStylesheet($this->basePath('/css/bootstrap-select.min.css'));
+$this->headLink()->appendStylesheet($this->basePath('/froala/css/froala_editor.pkgd.min.css'));
+
+$this->inlineScript()->appendFile($this->basePath('/js/bootstrap-select.min.js'));
+$this->inlineScript()->appendFile($this->basePath('/froala/js/froala_editor.pkgd.min.js'));
+$this->inlineScript()->appendFile($this->basePath('/froala/js/languages/pt_br.js'));
+
+$this->headStyle()->captureStart();?>
+.module-body .row > div{padding-left:20px;}
+.module-body .row .btn-group{margin-right:15px;}
+.module-body .row > div:first-child{margin-bottom:20px;}
+.module-body .row:first-child{margin-bottom:20px;}
+
+<?php $this->headStyle()->captureEnd();?>
+<div class="container-fluid module-head">
+	<h3><i class="far fa-newspaper"></i> Novo artigo</h3>
+</div>
+<?php
+#exibe mensagens do metodo addErrorMessage();
+echo $this->flashMessenger()->render('error',   array('alert', 'alert-dismissible', 'alert-danger'));
+
+#exibe mensagens do metodo addSucessMessage();
+echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissible', 'alert-success'));
+?>
+<div class="module-body clearfix">
+	<form>
+		<div class="form-group">
+    		<div style="min-width:200px; max-width: 300px" class="input-group">
+    			<label>Categoria</label>
+    			<select data-live-search="true" class="form-control selectpicker" name="categoria">
+    				<option></option>
+    				<?php foreach($this->categorias as $categoria): ?>
+    				<option value="<?= $categoria->getId(); ?>"><?= $categoria->getDescricao();?></option>
+    				<?php endforeach;?>
+    			</select>
+    		</div>
+		</div>
+		<div class="form-group">
+			<label>Titulo</label>
+			<input type="text" name="titulo" class="form-control" />
+		</div>
+		<div class="form-group">
+			<label>Conteúdo</label>
+			<textarea class="form-control" name="conteudo"></textarea>
+		</div>
+		<br/>
+		<div class="pull-right">
+			<button name="cancelar" onclick="window.history.go(-1);" type="reset" class="btn btn-danger">Cancelar</button>&nbsp;&nbsp;&nbsp;
+			<button type="submit" class="btn btn-success">Publicar</button>
+		</div>
+	</form>
+</div>
+<?php 
+$script = <<<JS
+$().ready(function(){
+    $.FroalaEditor.ICON_DEFAULT_TEMPLATE = 'font_awesome_5';
+    $('textarea[name=conteudo]').froalaEditor({language:'pt_br',
+                                                heightMin:200, 
+                                                toolbarButtons: ['bold', 'italic', 'underline','align','insertLink','insertImage','insertVideo','insertFile','insertHR','undo', 'redo','html'],                                                
+                                                imageUploadParam: 'imagem',
+                                                imageUploadURL: "{$this->url('upload',['action'=>'imagem'])}",
+                                                imageMaxSize: 5 * 1024 * 1024,
+                                                imageAllowedTypes: ['jpeg', 'jpg', 'png'],
+                                                fileUploadParam: 'arquivo',
+                                                fileUploadURL: "{$this->url('upload',['action'=>'arquivo'])}",
+                                                fileUploadMethod: 'POST',
+                                                fileMaxSize: 5 * 1024 * 1024,
+                                                fileAllowedTypes: ['*']
+                                             })
+                                              .on('froalaEditor.image.removed', function (e, editor, img) {
+                                                  $.ajax({
+                                                       method: "POST",
+                                                       url: "{$this->url('upload',['action'=>'delimagem'])}",
+                                                       data: {
+                                                           imagem: $(img).attr('src')
+                                                        }
+                                                   });
+                                               });
+});
+JS;
+$this->inlineScript()->appendScript($script);
+?>
