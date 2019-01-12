@@ -13,7 +13,7 @@ class UsuarioService extends ServiceAbstract{
 		$usuario->setStatus(Usuario::STATUS_ATIVO);
 		
 		if(empty($usuario->getRole())){
-			throw new \Exception("É necessario informar uma funcão!");
+			throw new \Exception("ï¿½ necessario informar uma funcï¿½o!");
 		}
 		
 		$this->entityManager->persist($usuario);
@@ -59,6 +59,7 @@ class UsuarioService extends ServiceAbstract{
 
 		$adapter = new Adapter(new DoctrinePaginator($query->getQuery(),false));
     	$paginator = new Paginator($adapter);
+    	$paginator->setItemCountPerPage(15);
 
 		return $paginator;
 	}

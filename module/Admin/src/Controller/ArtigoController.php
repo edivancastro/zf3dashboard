@@ -6,6 +6,8 @@ use Admin\Service\CategoriaService;
 use Admin\Model\Artigo;
 use Zend\Captcha\Image as Captcha;
 use Admin\Service\UsuarioService;
+use Zend\View\Model\ViewModel;
+use Zend\View\Model\JsonModel;
 
 class ArtigoController extends ControllerAbstract{
     
@@ -58,7 +60,7 @@ class ArtigoController extends ControllerAbstract{
             $artigo->setTitulo($this->request->getPost('titulo'))
                    ->setSubTitulo($this->request->getPost('subtitulo'))
                    ->setConteudo($this->request->getPost('conteudo'))
-                   ->setDatapublicacao()
+                   ->setDatapublicacao(\DateTime::createFromFormat('d/m/Y H:i', $this->request->getPost('datapublicacao')))
                    ->setAutor($this->serviceManager->get(UsuarioService::class)->get($this->request->getPost('idautor')))
                    ->setCategoria($this->serviceManager->get(CategoriaService::class)->get($this->request->getPost('categoria')));
             $this->serviceManager->get(ArtigoService::class)->salvar($artigo);
@@ -82,10 +84,10 @@ class ArtigoController extends ControllerAbstract{
             $artigo->setTitulo($this->request->getPost('titulo'))
             ->setSubTitulo($this->request->getPost('subtitulo'))
             ->setConteudo($this->request->getPost('conteudo'))
-            ->setDatapublicacao()
-            ->setDataedicao()
-            ->setAutor($this->serviceManager->get(UsuarioService::class)->get($this->request->getPost('idautor')))
+            ->setDatapublicacao(\DateTime::createFromFormat('d/m/Y H:i', $this->request->getPost('datapublicacao')))
+            ->setDataedicao(\DateTime::createFromFormat('d/m/Y H:i', $this->request->getPost('dataedicao')))
             ->setEditor($this->serviceManager->get(UsuarioService::class)->get($this->request->getPost('ideditor')))
+            ->setAutor($this->serviceManager->get(UsuarioService::class)->get($this->request->getPost('idautor')))
             ->setCategoria($this->serviceManager->get(CategoriaService::class)->get($this->request->getPost('categoria')));
             $this->serviceManager->salvar($artigo);
             $this->flashMessenger()->addSuccessMessage("Registro salvo");
@@ -96,7 +98,7 @@ class ArtigoController extends ControllerAbstract{
         
         return[
             'artigo' => $artigo,
-            'editor' => $artigo->getEditor()==null ? $this->session->usuario : $this->$artigo->getEditor()
+            'editor' => $artigo->getEditor()==null ? $this->session->usuario : $artigo->getEditor()
         ];
     }
     
@@ -134,6 +136,25 @@ class ArtigoController extends ControllerAbstract{
         return ['captcha'=>$id,
             'artigos'=> $artigos
         ];
+    }
+    
+    public function listausuariosAction(){
+        //if(!$this->request->isXmlhttpRequest()){$this->redirect()->toRoute('artigo');}
+        
+        $usuarios = $this->serviceManager->get(UsuarioService::class)->find($this->request->getQuery('busca'));
+        $usuarios->setCurrentPageNumber($this->request->getQuery('page'));
+        
+        if($this->request->isPost()){
+            $view = new JsonModel();
+            $view->busca = $this->request->getQuery('busca');
+            $view->paginator = $usuarios->getPages();
+        }else{
+            $view = new ViewModel();
+            $view->setTerminal(true);
+        }
+        
+        $view->usuarios = $usuarios; 
+        return $view;
     }
     
 }

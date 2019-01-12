@@ -1,11 +1,15 @@
 <?php
 $this->headLink()->appendStylesheet($this->basePath('/css/jquery.datetimepicker.min.css'));
 $this->headLink()->appendStylesheet($this->basePath('/css/bootstrap-select.min.css'));
+$this->headLink()->appendStylesheet($this->basePath('/css/jquery-ui.min.css'));
 $this->headLink()->appendStylesheet($this->basePath('/froala/css/froala_editor.pkgd.min.css'));
 $this->headLink()->appendStylesheet($this->basePath('/froala/css/froala_style.min.css'));
 
 $this->inlineScript()->appendFile($this->basePath('/js/jquery.datetimepicker.full.min.js'));
+$this->inlineScript()->appendFile($this->basePath('/js/functions.js'));
+$this->inlineScript()->appendFile($this->basePath('/js/moment.min.js'));
 $this->inlineScript()->appendFile($this->basePath('/js/bootstrap-select.min.js'));
+$this->inlineScript()->appendFile($this->basePath('/js/jquery-ui.min.js'));
 $this->inlineScript()->appendFile($this->basePath('/froala/js/froala_editor.pkgd.min.js'));
 $this->inlineScript()->appendFile($this->basePath('/froala/js/languages/pt_br.js'));
 
@@ -50,11 +54,11 @@ echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissibl
 			</div>
 			<div class="form-group">
 				<label>Titulo</label>
-				<input autocomplete="off" type="text" name="titulo" class="form-control" />
+				<input maxlength="250" autocomplete="off" type="text" name="titulo" class="form-control" />
 			</div>
 			<div class="form-group">
 				<label>Sub-titulo</label>
-				<input autocomplete="off" type="text" name="subtitulo" class="form-control" />
+				<input maxlength="250" autocomplete="off" type="text" name="subtitulo" class="form-control" />
 			</div>
 			<div class="form-group">
 				<label>Conteúdo</label>
@@ -124,7 +128,36 @@ $().ready(function(){
     }); 
 
     $('.module-body input[name=autor]').click(function(){
-        
+        $('#content').append('<div id="dialog"></div>');
+        $('#dialog').load("{$this->url('artigo',['action'=>'listausuarios'])}").dialog({width: "auto",
+                                                                                    	position:{my:"center top", at:"center top+80", of: window},
+                                                                                   		title: 'Selecionar autor',
+                                                                               			width: dialogWidth,
+                                                                               			maxHeight: dialogHeight,
+                                                                               			modal: true,
+                                                                               			close: false,
+                                                                               			resizable: true,
+                                                                                        close: function(){ $('#dialog').remove(); },
+                                                                                        buttons: {
+                                                                                          Cancelar: function(){
+                                                                                             $(this).dialog('close');
+                                                                                          },
+                                                                                          Selecionar: function(){
+                                                                                             var row = $('#dialog .table tbody tr.selected');
+                                                                                             if($(row).find('input[name="idusuario"]').val() == null){
+                                                                                               return alert('Selecione um autor!');
+                                                                                             }
+
+                                                                                             $('.module-body form input[name="idautor"]').val($(row).find('input[name="idusuario"]').val());
+                                                                                             var nome = $(row).find('td:eq(1)').html();
+                                                                                             if(nome.split(' ').length > 1){
+                                                                                                nome = nome.split(' ').shift()+' '+nome.split(' ').pop();
+                                                                                             }
+                                                                                             $('.module-body form input[name="autor"]').val(nome);
+                                                                                             $(this).dialog('close');
+                                                                                          }
+                                                                                        } 
+                                                                                 });
     });
 
     jQuery.datetimepicker.setLocale('pt-BR');

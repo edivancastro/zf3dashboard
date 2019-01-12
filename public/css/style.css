@@ -57,6 +57,7 @@ footer{margin-top:20px;}
 .table.table-hover tbody tr:hover td{ background: #ddd;border-right:1px solid #999;border-bottom:1px solid #999;border-top:1px solid #999;}
 .table tfoot td{border-right:1px solid #ccc; height: 30px;}
 .table tfoot .pagination{margin:0}
+.table tbody tr.selected{ background: #48D1CC;}
 
 .btn-actions > .btn{background: #ddd;border:1px solid #999;}
 .btn-actions > .btn:hover{background: #ccc;}

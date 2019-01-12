@@ -195,8 +195,8 @@ return [
     	    ],
     	    Controller\ArtigoController::class => [
     	        ['actions'=>['preview'],'allow'=>'@'],
-    	        ['actions'=>['index','cadastrar','editar','del'],'allow'=>'+conteudo.manager'],
-    	        ['actions'=>['index','cadastrar','editar','del'],'allow'=>'+artigo.manager'],
+    	        ['actions'=>['index','cadastrar','editar','del','listausuarios'],'allow'=>'+conteudo.manager'],
+    	        ['actions'=>['index','cadastrar','editar','del','listausuarios'],'allow'=>'+artigo.manager'],
     	    ],
     	    Controller\CategoriaController::class => [
     	        ['actions'=>['index','cadastrar','detalhar','editar','del'],'allow'=>'+conteudo.manager'],

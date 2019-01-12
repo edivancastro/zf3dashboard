@@ -1,0 +1,68 @@
+<div style="margin-top:30px;" class="input-group">
+	<input autocomplete="off" placeholder="Pesquisar" type="text" class="form-control" name="busca" />
+	<div class="input-group-btn">
+		<button name="btn-pesquisar" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+	</div>
+</div>
+<table class="table table-stripped table-hover">
+	<thead>
+		<tr>
+			<th width="50">#</th>
+			<th>Nome</th>
+			<th width="180" class="hidden-xs">Perfil</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach($this->usuarios as $usuario):?>
+		<tr>
+			<td><input type="hidden" name="idusuario" value="<?= $usuario->getId();?>" /><?= $usuario->getId();?></td>
+			<td><?= $usuario->getNome();?></td>
+			<td class="hidden-xs"><?= $usuario->getRole()->getDescricao(); ?></td>
+		</tr>
+		<?php endforeach;?>
+	</tbody>
+	<tfoot>
+		<tr>
+			<td align="right" colspan="3"><?= $this->paginationControl($this->usuarios, 'Sliding','admin/artigo/paginator.phtml',['route'=>'artigo', 'action'=>'listausuarios']); ?></td>
+		</tr>
+	</tfoot>
+</table>
+<script>
+$().ready(function(){
+	$('#dialog button[name="btn-pesquisar"]').click(function(event){
+		event.preventDefault();
+		
+		var urlRequest = '<?= $this->url('artigo',['action'=>'listausuarios']);?>?busca='+$('#dialog input[name="busca"]').val();
+		$.post(urlRequest,function(data){
+
+			updateUsrList(data, '<?= $this->url('artigo');?>', 'listausuarios', $('#dialog .table'));
+			
+		});
+		
+	});
+
+	$('#dialog .table tfoot > tr > td').on('click','.pagination a',function(event){
+		event.preventDefault();
+		var urlRequest = $(this).attr('href');
+		$.post(urlRequest,function(data){
+
+			updateUsrList(data, '<?= $this->url('artigo');?>', 'listausuarios', $('#dialog .table'));
+			
+		});
+	});
+
+	$('#dialog input[name="busca"]').keypress(function(event){
+		event.stopPropagation();
+		var code = event.keyCode || event.which;
+		if(code==13){
+			var e = jQuery.Event( 'click', { which: $.ui.keyCode.ENTER } );
+			$('#dialog button[name="btn-pesquisar"]').trigger(e);
+		}
+	});
+
+	$('#dialog .table').on('click','tbody tr:not(.empty)', function(){
+		$(this).closest('tbody').find('tr.selected').removeClass('selected');
+		$(this).addClass('selected');
+	});
+});
+</script>

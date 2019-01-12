@@ -1,11 +1,21 @@
-<?php if ($this->pageCount): ?>
+<?php 
+$params=[];
+if($this->action<>null){$params['action'] = $this->action;}
+if($this->id<>null){$params['id'] = $this->id;}
+
+$query = [];
+if($this->busca <>null){$query['busca']=$this->busca;}
+if($this->ordem <>null){$query['ordem']=$this->ordem;}
+if($this->categoria <>null){$query['cat']=$this->categoria;}
+
+if ($this->pageCount): ?>
 <nav>
 <ul class="pagination">
 
 <!-- Previous page link -->
-<?php if (isset($this->previous)): ?>
+<?php if (isset($this->previous)): $q = ['query'=>['page'=>$this->previous]]; ?>
     <li>
-      <a href="<?= $this->url($this->route,$params, ['query'=>['page'=>$this->previous,'busca'=>$this->busca, 'ordem'=>$this->ordem, 'cat'=>$this->categoria]]); ?>" aria-label="Previous">
+      <a href="<?= $this->url($this->route,$params, $q); ?>" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>  
@@ -19,7 +29,7 @@
 <?php foreach ($this->pagesInRange as $page): ?>
   <?php if ($page != $this->current): ?>
     <li>
-        <a href="<?= $this->url($this->route,$params, ['query'=>['page'=>$page,'busca'=>$this->busca, 'ordem'=>$this->ordem, 'cat'=>$this->categoria]]); ?>"><?= $this->escapeHtml($page); ?></a>
+        <a href="<?= $this->url($this->route,$params, ['query'=>['page'=>$page]+$query]); ?>"><?= $this->escapeHtml($page); ?></a>
     </li>    
   <?php else: ?>
     <li>
@@ -32,7 +42,7 @@
 <?php if (isset($this->next)): ?>
     <li>
 
-      <a href="<?php echo $this->url($this->route,$params, ['query'=>['page'=>$this->next,'busca'=>$this->busca, 'ordem'=>$this->ordem, 'cat'=>$this->categoria]]); ?>" aria-label="Next">
+      <a href="<?php echo $this->url($this->route,$params, ['query'=>['page'=>$this->next]+$query]); ?>" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>  

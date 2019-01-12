@@ -6,7 +6,7 @@
 	<form autocomplete="off" method="post">
 		<div class="form-group form-group-sm">
 			<label>Nome</label>
-			<input value="<?= $this->categoria->getDescricao();?>" class="form-control" type="text" name="descricao" />
+			<input maxlength="30" value="<?= $this->categoria->getDescricao();?>" class="form-control" type="text" name="descricao" />
 		</div>
 		<hr/>
 		<div class="pull-right">

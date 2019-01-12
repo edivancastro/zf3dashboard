@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\Criteria;
 /**
  * @ORM\Entity
  */
-class Role{
+class Role implements \JsonSerializable{
 	/**
 	 * @ORM\Id
 	 * @ORM\GeneratedValue
@@ -125,5 +125,10 @@ class Role{
 	
 	public function isRoot(){
 	    return $this->root;
+	}
+	
+	public function jsonSerialize(){
+	    $vars = get_object_vars($this);
+	    return $vars;
 	}
 }
