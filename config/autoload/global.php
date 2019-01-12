@@ -45,7 +45,10 @@ return [
                         'host' => 'localhost',
                         'user' => 'root',
                         'password' => '1234',
-                        'dbname' => 'sistema'
+                        'dbname' => 'sistema',
+                        'driverOptions' => [
+                            1002 => 'SET NAMES utf8'
+                        ]
                     ]
                 ]
             ]   

@@ -5,7 +5,7 @@
 	<?php if($this->permitido($this->url('role',['action'=>'editar','id'=>$this->role->getId()]))):?>
 	<div class="btn-actions btn-group pull-right" role="group">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			<span class="glyphicon glyphicon-th" aria-hidden="true"></span>&nbsp;&nbsp;AÁ„o
+			<span class="glyphicon glyphicon-th" aria-hidden="true"></span>&nbsp;&nbsp;A√ß√£o
 			<span class="caret"></span>
 		</button>
 		<ul class="dropdown-menu">
@@ -17,12 +17,12 @@
 	</div>
 	<?php endif;?>
 	<div class="form-group">
-		<label class="control-label">DescriÁ„o</label>
+		<label class="control-label">Descri√ß√£o</label>
 		<p class="form-control-static"><?=$this->role->getDescricao();?></p>
 	</div>
 </div>
 <div class="container-fluid module-head">
-	<h3><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Permissıes de acesso</h3>
+	<h3><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Permiss√µes de acesso</h3>
 </div>
 <div class="module-body">
 	<?php foreach($this->recursos as $recurso):?>

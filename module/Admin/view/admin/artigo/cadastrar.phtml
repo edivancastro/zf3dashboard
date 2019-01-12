@@ -1,6 +1,7 @@
 <?php 
 $this->headLink()->appendStylesheet($this->basePath('/css/bootstrap-select.min.css'));
 $this->headLink()->appendStylesheet($this->basePath('/froala/css/froala_editor.pkgd.min.css'));
+$this->headLink()->appendStylesheet($this->basePath('/froala/css/froala_style.min.css'));
 
 $this->inlineScript()->appendFile($this->basePath('/js/bootstrap-select.min.js'));
 $this->inlineScript()->appendFile($this->basePath('/froala/js/froala_editor.pkgd.min.js'));
@@ -11,7 +12,10 @@ $this->headStyle()->captureStart();?>
 .module-body .row .btn-group{margin-right:15px;}
 .module-body .row > div:first-child{margin-bottom:20px;}
 .module-body .row:first-child{margin-bottom:20px;}
-
+.module-body .nav li.active a{background: #efefef;font-weight:bold;}
+.module-body .tab{display:none;}
+.module-body .tab.visible{display:block;}
+.module-body input{background-color:#fff !important;}
 <?php $this->headStyle()->captureEnd();?>
 <div class="container-fluid module-head">
 	<h3><i class="far fa-newspaper"></i> Novo artigo</h3>
@@ -24,30 +28,59 @@ echo $this->flashMessenger()->render('error',   array('alert', 'alert-dismissibl
 echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissible', 'alert-success'));
 ?>
 <div class="module-body clearfix">
-	<form>
-		<div class="form-group">
-    		<div style="min-width:200px; max-width: 300px" class="input-group">
-    			<label>Categoria</label>
-    			<select data-live-search="true" class="form-control selectpicker" name="categoria">
-    				<option></option>
-    				<?php foreach($this->categorias as $categoria): ?>
-    				<option value="<?= $categoria->getId(); ?>"><?= $categoria->getDescricao();?></option>
-    				<?php endforeach;?>
-    			</select>
-    		</div>
+	<ul	class="nav nav-tabs">
+		<li class="active"><a href="#conteudo">Conteúdo</a></li>
+		<li><a href="#publicacao">Publicação</a></li>
+	</ul>
+	<br/>
+	<form method="post">
+		<div id="conteudo" class="tab visible">
+			<div class="form-group">
+    			<div style="min-width:200px; max-width: 300px" class="input-group">
+    				<label>Categoria</label>
+    				<select data-live-search="true" class="form-control selectpicker" name="categoria">
+    					<option></option>
+    					<?php foreach($this->categorias as $categoria): ?>
+    					<option value="<?= $categoria->getId(); ?>"><?= $categoria->getDescricao();?></option>
+    					<?php endforeach;?>
+    				</select>
+    			</div>
+			</div>
+			<div class="form-group">
+				<label>Titulo</label>
+				<input autocomplete="off" type="text" name="titulo" class="form-control" />
+			</div>
+			<div class="form-group">
+				<label>Sub-titulo</label>
+				<input autocomplete="off" type="text" name="subtitulo" class="form-control" />
+			</div>
+			<div class="form-group">
+				<label>Conteúdo</label>
+				<textarea class="form-control" name="conteudo"></textarea>
+			</div>
 		</div>
-		<div class="form-group">
-			<label>Titulo</label>
-			<input type="text" name="titulo" class="form-control" />
-		</div>
-		<div class="form-group">
-			<label>Conte�do</label>
-			<textarea class="form-control" name="conteudo"></textarea>
+		<div id="publicacao" class="tab">
+			<div class="row">
+				<div class="col-sm-4">
+					<label>Autor</label>
+					<div class="input-group">
+						<div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
+						<input readonly class="form-control" name="autor" />
+					</div>
+				</div>
+				<div class="col-sm-4 col-sm-offset-1">
+					<label>Data de publicação</label>
+					<div class="input-group">
+						<div class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></div>
+						<input readonly class="form-control" name="datapublicacao" />
+					</div>
+				</div>
+			</div>
 		</div>
 		<br/>
 		<div class="pull-right">
 			<button name="cancelar" onclick="window.history.go(-1);" type="reset" class="btn btn-danger">Cancelar</button>&nbsp;&nbsp;&nbsp;
-			<button type="submit" class="btn btn-success">Publicar</button>
+			<button type="submit" class="btn btn-success">Salvar</button>
 		</div>
 	</form>
 </div>
@@ -77,6 +110,15 @@ $().ready(function(){
                                                         }
                                                    });
                                                });
+
+    $('.module-body .nav li').on('click', 'a', function(event){
+        event.preventDefault();
+        $('.module-body .nav li.active').removeClass('active');
+        $(this).closest('li').addClass('active');
+        id = $(this).attr('href');
+        $('.module-body .tab').removeClass('visible');
+        $('.module-body .tab'+id).addClass('visible');
+    }); 
 });
 JS;
 $this->inlineScript()->appendScript($script);

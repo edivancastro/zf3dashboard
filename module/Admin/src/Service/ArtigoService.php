@@ -14,7 +14,7 @@ class ArtigoService extends ServiceAbstract{
         if(is_array($id)){
             return new ArrayCollection($this->entityManager->getRepository(Artigo::class)->findBy(['id'=>$id]));
         }else{
-            return $this->entityManager->getRepository(Artigo::class)->finOnedBy(['id'=>$id]);
+            return $this->entityManager->getRepository(Artigo::class)->findOneBy(['id'=>$id]);
         }
     }
     
@@ -25,15 +25,17 @@ class ArtigoService extends ServiceAbstract{
     }
     
     public function remover($id){
-        $artigo = $this->entityManager->getRepository(Artigo::class)->find($id);
-        if(!is_object($artigo)){return false;}
-        $artigo->setExcluido(true);
-        $this->entityManager->persist($artigo);
-        $this->entityManager->flush();
+        $artigos = new ArrayCollection($this->entityManager->getRepository(Artigo::class)->findBy(['id'=>$id]));
+        
+        foreach($artigos as $artigo){
+            $artigo->setExcluido(true);
+            $this->entityManager->persist($artigo);
+            $this->entityManager->flush();
+        }
         return $this;
     }
     
-    public function find($query=null, Array $cols = null, Array $order=['artigo.datacriacao'=>'desc']){
+    public function find($busca=null, Array $cols = null, Array $order=['artigo.datacriacao'=>'desc']){
     	$q = $this->entityManager->createQueryBuilder()
     			  ->select('artigo')
     			  ->from('Admin\Model\Artigo','artigo')
@@ -42,29 +44,37 @@ class ArtigoService extends ServiceAbstract{
     			  ->leftjoin('artigo.editor','editor')
     			  ->where('artigo.excluido=false')
     	          ->andWhere('categoria.excluido=false');
+    	if($order){
+            $q->orderBy(key($order), $order[key($order)]);
+        }
+ 
+        if(is_array($busca)){
+            if(isset($busca['categoria'])){
+                $q->andWhere("categoria = :categoria");
+                $q->setParameter('categoria', $busca['categoria']);
+            }
+            
+            if(isset($busca['autor'])){
+                $q->andWhere("autor = :autor");
+                $q->setParameter('autor', $busca['autor']);
+            }
+            
+            if(isset($busca['editor'])){
+                $q->andWhere("editor = :editor");
+                $q->setParameter('editor', $busca['editor']);
+            }
+            
+            if(isset($busca['query'])){
+                $query = $busca['query'];
+            }else{
+                $query = null;
+            }
+            
+        }else{
+            $query = $busca;
+        }
     	
-       if($order){
-   	      $q->orderBy(key($order), $order[key($order)]);
-       }
-       
-       if(is_object($query)){
-           $where = '';
-           $i=0;
-           $len = sizeof($cols);
-           
-           foreach($cols as $col){
-               $where .= "$col = :query";
-               if($i < ($len-1)){
-                   $where .= ' or ';
-               }
-               $i++;
-           }
-          
-           $q->andWhere($where)
-             ->setParameter('query', $query);
-           
-       }
-       elseif($cols){
+    	if($cols){
            $where = '';
            $i=0;
            $len = sizeof($cols);
@@ -76,13 +86,13 @@ class ArtigoService extends ServiceAbstract{
                $i++;
            }
            
-           $q->andwhere($where)
-             ->setParameter('query',"%$query%");
+           $q->andwhere($where);
+             
        }else{		   
-    	   $q->andwhere('artigo.titulo like :query or categoria.descricao like :query')
-             ->setParameter('query',"%$query%");	 
+    	   $q->andwhere('artigo.titulo like :query or autor.nome like :query');    
        }
        
+    	$q->setParameter('query', "%$query%");
     	
     	$adapter = new Adapter(new DoctrinePaginator($q->getQuery()));
     	$paginator = new Paginator($adapter);

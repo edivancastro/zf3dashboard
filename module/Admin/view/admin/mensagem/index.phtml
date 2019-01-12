@@ -36,7 +36,7 @@ echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissibl
 						</tr>
 					</thead>
 					<tbody>
-						<?php if(count($this->mensagens)>0):foreach($this->mensagens as $msg):?>
+						<?php if($this->mensagens->getCurrentItemCount()>0):foreach($this->mensagens as $msg):?>
 						<tr <?php if($this->box==1 && !$msg->foiLida()): ?>class="new"<?php endif;?> >
 							<td><a href="<?=$this->url('msg',['action'=>'read','id'=>$msg->getMensagem()->getId()]) ?>"><?=$msg->getMensagem()->getAssunto();?></a></td>
 							<td class="hidden-xs"><a href="<?=$this->url('msg',['action'=>'read','id'=>$msg->getMensagem()->getId()]) ?>"><?=$this->resumeNome($msg->getMensagem()->getRemetente()->getNome());?></a></td>

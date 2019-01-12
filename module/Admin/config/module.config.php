@@ -5,6 +5,8 @@ use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use Admin\View\Renderer;
+use Zend\View\Strategy\PhpRendererStrategy;
 
 /*
  * Rotas
@@ -192,8 +194,9 @@ return [
     	        ['actions'=>['index'],'allow'=>'+config.manager']
     	    ],
     	    Controller\ArtigoController::class => [
-    	        ['actions'=>['index','cadastrar','detalhar','editar','del'],'allow'=>'+conteudo.manager'],
-    	        ['actions'=>['index','cadastrar','detalhar','editar','del'],'allow'=>'+artigo.manager'],
+    	        ['actions'=>['preview'],'allow'=>'@'],
+    	        ['actions'=>['index','cadastrar','editar','del'],'allow'=>'+conteudo.manager'],
+    	        ['actions'=>['index','cadastrar','editar','del'],'allow'=>'+artigo.manager'],
     	    ],
     	    Controller\CategoriaController::class => [
     	        ['actions'=>['index','cadastrar','detalhar','editar','del'],'allow'=>'+conteudo.manager'],
@@ -239,6 +242,7 @@ return [
 			View\Helper\Msg::class => View\Helper\Factory\Factory::class,
 			View\Helper\resumeNome::class => View\Helper\Factory\Factory::class,
 		    View\Helper\Permissao::class => View\Helper\Factory\Factory::class,
+		    View\Helper\Data::class => View\Helper\Factory\Factory::class,
 		],
 		'aliases' => [
 			'menu' =>	View\Helper\Menu::class,
@@ -246,6 +250,7 @@ return [
 			'msg' => View\Helper\Msg::class,
 			'resumeNome' => View\Helper\resumeNome::class,
 		    'permitido' => View\Helper\Permissao::class,
+		    'data' => View\Helper\Data::class
 		]
 	],
 

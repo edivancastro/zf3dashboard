@@ -2,6 +2,8 @@
 namespace Admin\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use Zend\Db\Sql\Ddl\Column\Integer;
+use Symfony\Component\Console\Input\StringInput;
 
 /**
  * 
@@ -24,6 +26,12 @@ class Artigo{
      * @ORM\Column(type="string")
      */
     protected $titulo;
+    
+    /**
+     * @var String
+     * @ORM\Column(type="string")
+     */
+    protected $subtitulo;
     
     /**
      * 
@@ -76,6 +84,13 @@ class Artigo{
      */
     protected $categoria;
     
+    /**
+     * 
+     * @var Integer
+     * @ORM\Column(type="integer")
+     */
+    protected $acessos=0;
+    
     public function setId($id){
         $this->id = $id;
         return $this;
@@ -83,6 +98,11 @@ class Artigo{
     
     public function setTitulo($titulo){
         $this->titulo = $titulo;
+        return $this;
+    }
+    
+    public function setSubTitulo($subtitulo){
+        $this->subtitulo = $subtitulo;
         return $this;
     }
     
@@ -121,12 +141,21 @@ class Artigo{
         return $this;
     }
     
+    public function addAcesso(){
+        $this->acesso++;
+        return $this;
+    }
+    
     public function getId(){
         return $this->id;
     }
     
     public function getTitulo(){
         return $this->titulo;
+    }
+    
+    public function getSubTitulo(){
+        return $this->subtitulo;
     }
     
     public function getConteudo(){
@@ -155,6 +184,10 @@ class Artigo{
     
     public function getCategoria(){
         return $this->categoria;
+    }
+    
+    public function getAcessos(){
+        return $this->acessos;
     }
     
 }

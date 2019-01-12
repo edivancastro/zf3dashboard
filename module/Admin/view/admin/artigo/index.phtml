@@ -23,12 +23,12 @@ echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissibl
 		<div class="col-sm-6 col-md-7">
 			<?php if($this->permitido($this->url('artigo',['action'=>'del']))):?>
 			<div class="btn-actions btn-group" role="group">
-				<button disabled type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<span class="glyphicon glyphicon-th" aria-hidden="true"></span>&nbsp;&nbsp;Ação
+				<button name="acao" disabled type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<span class="glyphicon glyphicon-th" aria-hidden="true"></span>&nbsp;&nbsp;AÃ§Ã£o
 					<span class="caret"></span>
 					</button>
 				<ul class="dropdown-menu">
-					<li><a href="#>">Excluir selecionados</a></li>		
+					<li><a id="excluir" href="#">Excluir selecionados</a></li>		
 				</ul>
 			</div>
 			<?php endif;?>
@@ -80,19 +80,19 @@ echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissibl
 			<tr>
 				<th title="Selecionar tudo" width="10px"><input name="selecionador" type="checkbox" /></th>
 				<th>Titulo</th>
-				<th width="200px" class="hidden-xs">Autor</th>
-				<th title="Data de criação" width="100px" class="hidden-xs">Data</th>
-				<th width="80px" class="hidden-xs">Acessos</th>
+				<th class="hidden-xs" width="200px" class="hidden-xs">Autor</th>
+				<th class="hidden-xs" title="Data de criaï¿½ï¿½o" width="120px" class="hidden-xs">Data</th>
+				<th class="hidden-xs" width="80px" class="hidden-xs">Acessos</th>
 			</tr>
 		</thead>
 		<tbody>
 			<?php if($this->artigos->getCurrentItemCount()>0):foreach($this->artigos as $artigo):?>
 			<tr>
-				<td><input type="checkbox" name="art[]" /></td>
-				<td></td>
-				<td></td>
-				<td class="hidden-xs"></td>
-				<td></td>
+				<td><input value="<?= $artigo->getId();?>" type="checkbox" name="art[]" /></td>
+				<td><a href="<?= $this->url('artigo', ['action'=>'preview','id'=>$artigo->getId()]);?>"><?= $artigo->getTitulo(); ?></a></td>
+				<td class="hidden-xs"><a href="<?= $this->url('usuario',['action'=>'detalhar','id'=>$artigo->getAutor()->getId()]);?>"><?= $this->resumeNome($artigo->getAutor()->getNome());?></a></td>
+				<td class="hidden-xs"><?= $artigo->getDatacriacao()->format('d/m/Y H:i');?></td>
+				<td class="hidden-xs"><?= $artigo->getAcessos(); ?></td>
 			</tr>
 			<?php endforeach;else:?>
 			<tr class="empty">
@@ -118,33 +118,37 @@ $().ready(function(){
     var cat = "{$this->categoria}";
     
     var query = function(){
-        var url = '?';
+        var QS='';
         if(ordem != ''){
-           url += 'ordem='+ordem;
+           QS += 'ordem='+ordem;
         }
 
         if(page != ''){
-            if(url.length > 1){
-                url += '&';
+            if(QS.length > 1){
+                QS += '&';
             }
-            url += 'page='+page;
+            QS += 'page='+page;
         }
 
         if(cat != ''){
-            if(url.length > 1){
-                url += '&';
+            if(QS.length > 1){
+                QS += '&';
             }
-            url += 'cat='+cat;
+            QS += 'cat='+cat;
         }
 
         if(busca != ''){
-            if(url.length > 1){
-                url += '&';
+            if(QS.length > 1){
+                QS += '&';
             }
-            url += 'busca='+busca;
+            QS += 'busca='+busca;
         }
-        
-        document.location.href = "{$this->url('artigo')}"+url;  
+
+        if(QS!=''){
+             document.location.href = "{$this->url('artigo')}?"+QS; 
+        }else{
+            document.location.href = "{$this->url('artigo')}";
+        } 
     };
 
 
@@ -181,6 +185,7 @@ $().ready(function(){
         if($(this).is(':checked')){
             $('.module-body button[name=acao]').attr('disabled',false);
         }else{
+            $('.module-body input[name=selecionador]').prop('checked',false);
             if($('.module-body input[name^=art]:checked').length == 0){
                  $('.module-body button[name=acao]').attr('disabled',true);
             }

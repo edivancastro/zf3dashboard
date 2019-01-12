@@ -15,13 +15,14 @@ class UploadController extends ControllerAbstract{
         $nome = explode('.', $_FILES['imagem']['name']);
         $ext = array_pop($nome);
         $nome = time().".$ext";
-        $destino = ROOT_PATH.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'files'.DIRECTORY_SEPARATOR.'img'.DIRECTORY_SEPARATOR.$nome;
+        $destino = ROOT_PATH.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'drive'.DIRECTORY_SEPARATOR.'img'.DIRECTORY_SEPARATOR.$nome;
         
         if(@move_uploaded_file($_FILES['imagem']['tmp_name'], $destino)){
             $renderer = $this->serviceManager->get('Zend\View\Renderer\RendererInterface');
+            $this->log->info('upload de imagem');
             
             return new JsonModel([
-                'link'=>$renderer->serverUrl($renderer->basePath("/files/img/$nome"))
+                'link'=>$renderer->serverUrl($renderer->basePath("/drive/img/$nome"))
             ]);
         }  
        exit; 
@@ -47,9 +48,10 @@ class UploadController extends ControllerAbstract{
         
         if(@move_uploaded_file($_FILES['arquivo']['tmp_name'], $destino)){
             $renderer = $this->serviceManager->get('Zend\View\Renderer\RendererInterface');
+            $this->log->info('upload de arquivo');
             
             return new JsonModel([
-                'link'=>$renderer->serverUrl($renderer->basePath("/files/file/$nome"))
+                'link'=>$renderer->serverUrl($renderer->basePath("/drive/file/$nome"))
             ]);
         }
         exit; 

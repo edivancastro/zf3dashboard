@@ -68,7 +68,7 @@ class CategoriaController extends ControllerAbstract{
         
         return[
             'categoria' => $categoria,
-            'artigos' =>  $this->serviceManager->get(ArtigoService::class)->find($categoria, ['categoria'], ['artigo.datacriacao'=>'desc'])
+            'artigos' =>  $this->serviceManager->get(ArtigoService::class)->find(['categoria'=>$categoria],null, ['artigo.datacriacao'=>'desc'])
         ];
     }
     

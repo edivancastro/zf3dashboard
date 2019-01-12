@@ -17,7 +17,6 @@ class ConfigController extends ControllerAbstract{
 		}
 
 		if($this->request->isPost()){
-
 			$config->setTitulo($this->request->getPost('titulo'));
 			$config->setTags($this->request->getPost('tags'));
 			$config->setEmailcontato($this->request->getPost('email'));

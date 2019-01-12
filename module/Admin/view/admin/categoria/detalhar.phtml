@@ -5,7 +5,7 @@
 	<?php if($this->permitido($this->url('categoria',['action'=>'editar','id'=>$this->categoria->getId()]))):?>
 	<div class="btn-actions btn-group pull-right" role="group">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			<span class="glyphicon glyphicon-th" aria-hidden="true"></span>&nbsp;&nbsp;Ação
+			<span class="glyphicon glyphicon-th" aria-hidden="true"></span>&nbsp;&nbsp;AÃ§Ã£o
 			<span class="caret"></span>
 		</button>
 		<ul class="dropdown-menu">
@@ -22,24 +22,24 @@
 	</div>
 	<br/>
 	<div class="container-fluid module-head">
-	<h4><?= $this->artigos->getTotalItemCount(); ?> artigos nesta categoria</h4>
+	<h4>Artigos nesta categoria</h4>
 	</div>
 	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
 				<th width="30">#</th>
 				<th>Titulo</th>
-				<th width="200">Autor</th>
-				<th width="100">Data</th>
+				<th class="hidden-xs" width="200">Autor</th>
+				<th class="hidden-xs" width="100">Data</th>
 			</tr>
 		</thead>
 		<tbody>
 			<?php if($this->artigos->count()>0):foreach($this->artigos as $artigo):?>
 			<tr>
 				<td><?= $artigo->getId();?></td>
-				<td><a href="<?=$this->url('artigo',['action'=>'detalhar','id'=>$artigo->getId()]) ?>"><?= $artigo->getTitulo();?></a></td>
-				<td><?= $artigo->getAutor()->getNome();?></td>
-				<td><?= $artigo->getDatacriacao()->format('d/m/Y');?></td>
+				<td><a href="<?=$this->url('artigo',['action'=>'preview','id'=>$artigo->getId()]) ?>"><?= $artigo->getTitulo();?></a></td>
+				<td class="hidden-xs"><?= $artigo->getAutor()->getNome();?></td>
+				<td class="hidden-xs"><?= $artigo->getDatacriacao()->format('d/m/Y');?></td>
 			</tr>
 			<?php endforeach;else:?>
 			<tr class="empty">

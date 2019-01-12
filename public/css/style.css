@@ -209,3 +209,11 @@ form input, form label{
 #msg-caixa .table tfoot .pagination{margin:0; float:right;}
 
 #msg-body{border:1px solid #ddd;background:#f2f2f2;margin-top: 2px;min-height: 200px;padding:15px 15px;}
+
+
+article > h1{font-size:30px;}
+article > h2{fontsize:14px;}
+article > hr{border:1px solid #eee;}
+article > p.data{text-align:right;color:blue;}
+article > div.conteudo{margin:50px 0;}
+article > div.conteudo *{font-size:16px;}

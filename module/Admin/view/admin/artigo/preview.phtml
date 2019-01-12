@@ -1,0 +1,22 @@
+<?php $this->headLink()->appendStylesheet($this->basePath('/froala/css/froala_style.min.css'));?>
+<div class="container-fluid module-head">
+	<h3><i class="far fa-newspaper"></i> Artigo</h3>
+</div>
+<div class="module-body">
+	<article>
+		<h1><?=$this->artigo->getTitulo();?></h1>
+		<h2><?= $this->artigo->getSubTitulo();?></h2>
+		<hr/>
+		<p class="data"><?=$this->data($this->artigo->getDatacriacao())?></p>
+		<?php if($this->artigo->getDataEdicao()<>''):?>
+		<p align="right">Atualizado: <?=$this->data($this->artigo->getDataEdicao());?></p>
+		<?php endif;?>
+		<div class="conteudo fr-view">
+			<?=$this->artigo->getConteudo(); ?>
+		</div>
+	</article>
+	<button type="reset" style="margin:15px;padding:5px 10px;" name="voltar" onClick="history.go(-1)" class="btn btn-link">
+			<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+			Voltar
+	</button>
+</div>

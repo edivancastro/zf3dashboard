@@ -10,12 +10,12 @@
 		<br/>
 	</div>
 	<div class="module-head">
-			<h3>Permissõees de acesso</h3>
+			<h3>PermissÃµes de acesso</h3>
 		</div>
 		<br/>
 	<div class="module-body clearfix">
 		<div class="form-group form-group-sm">
-			<input <?php if($role->isRoot()):?>checked="checked"<?php endif;?> class="inline" type="checkbox" name="root" value="*" />
+			<input <?php if($this->role->isRoot()):?>checked="checked"<?php endif;?> class="inline" type="checkbox" name="root" value="*" />
 			<label class="inline">Tudo</label>
 		</div>
 		<hr/>
@@ -29,7 +29,7 @@
 			<tbody>
 				<?php foreach($recurso->getPermissoes() as $permissao):?>
 				<tr>
-					<td width="30px"><input <?php if($role->isRoot()):?>disabled<?php endif;?> <?php if($role->getPermissoes()->contains($permissao) || $role->isRoot()):?>checked="checked"<?php endif;?> name="permissao[]" value="<?= $permissao->getId();?>" type="checkbox" /></td>
+					<td width="30px"><input <?php if($this->role->isRoot()):?>disabled<?php endif;?> <?php if($this->role->getPermissoes()->contains($permissao) || $this->role->isRoot()):?>checked="checked"<?php endif;?> name="permissao[]" value="<?= $permissao->getId();?>" type="checkbox" /></td>
 					<td width="150px" class="hidden-xs"><?= $permissao->getNome();?></td>
 					<td><?= $permissao->getDescricao();?></td>
 				</tr>

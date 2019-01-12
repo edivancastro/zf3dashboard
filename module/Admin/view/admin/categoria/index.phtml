@@ -23,7 +23,7 @@ echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissibl
 			<?php if($this->permitido($this->url('categoria',['action'=>'del']))):?>
 			<div class="btn-actions btn-group" role="group">
 				<button name="acao" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<span class="glyphicon glyphicon-th" aria-hidden="true"></span>&nbsp;&nbsp;Ação
+					<span class="glyphicon glyphicon-th" aria-hidden="true"></span>&nbsp;&nbsp;AÃ§Ã£o
 					<span class="caret"></span>
 					</button>
 				<ul class="dropdown-menu">
@@ -151,6 +151,7 @@ $().ready(function(){
         if($(this).is(':checked')){
             $('button[name=acao]').attr('disabled',false);
         }else{
+            $('input[name=selecionador]').prop('checked',false);
             if($('input[name^=cat]:checked').length == 0){
                  $('button[name=acao]').attr('disabled',true);
             }
