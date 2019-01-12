@@ -6,9 +6,25 @@ use Zend\View\Helper\AbstractHelper;
 Class Data extends AbstractHelper{
     protected $data;
     
-    public function __invoke(\DateTime $data){
-        $this->data = $data;
+    public function __invoke(\DateTime $data=null){
+        if(!is_object($data)){
+            $this->data = new \DateTime();
+        }else{
+            $this->data = $data;
+        }
+        return $this;
+    }
+    
+    public function getLiteral(){
         return $this->dia().", ".$this->data->format('d')." de ".$this->mes()." de ".$this->data->format('Y').', às '.$this->data->format('H:i');
+    }
+    
+    public function getDateTime(){
+        return $this->data->format('d/m/Y H:s');
+    }
+    
+    public function getDate(){
+        return $this->data->format('d/m/Y');
     }
     
     protected function dia(){

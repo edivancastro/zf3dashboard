@@ -13,23 +13,6 @@ if ( screenWidth < minWidth ) {
    dialogHeight = screenHeight * .60;
 } 
 
-var urlDialog = function(url,titulo, width=600){
-	
-	$('body').append('<div id="dialog"></div>');
-	$('#dialog').load(url).dialog({
-		width: "auto",
-		position:{my:"center top", at:"center top+100", of: window},
-		title: titulo,
-		width: dialogWidth,
-		maxHeight: dialogHeight,
-		modal: true,
-		resizable: true,
-		close: function(){
-			$('#dialog').remove();
-		},
-	});
-}
-
 
 var updateMsgBox = function(dados, url,action, table){
 	$(table).find('tbody, tfoot > tr > td').html('');

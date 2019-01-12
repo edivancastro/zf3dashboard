@@ -1,4 +1,6 @@
-<?php $this->headStyle()->captureStart();?>
+<?php 
+$this->headLink()->prependStylesheet($this->basePath('/froala/css/froala_style.min.css'));
+$this->headStyle()->captureStart();?>
 #collapse.btn {margin:0 0 2px 0;padding:0;}
 #collapse[aria-expanded=true]{display:none;}
 #mais.in{display:inline}

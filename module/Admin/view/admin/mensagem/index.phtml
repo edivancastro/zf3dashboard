@@ -2,10 +2,10 @@
 	<h3><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Mensagens</h3>
 </div>
 <?php
-#exibe mensagens do método addErrorMessage();
+#exibe mensagens do mï¿½todo addErrorMessage();
 echo $this->flashMessenger()->render('error',   array('alert', 'alert-dismissible', 'alert-danger'));
 
-#exibe mensagens do método addSucessMessage();
+#exibe mensagens do mï¿½todo addSucessMessage();
 echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissible', 'alert-success'));
 ?>
 <div style="padding:15px 10px 15px 25px;" class="module-body">
@@ -24,7 +24,7 @@ echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissibl
 						<h3><?= $this->box==1?'Caixa de entrada':'Enviadas';?></h3>
 					</div>
 					<div class="pull-right">
-						<input placeholder="Pesquisar" type="text" name="busca" />
+						<input autocomplete="off" placeholder="Pesquisar" type="text" name="busca" />
 					</div>
 				</div>
 				<table class="table table-striped table-hover">

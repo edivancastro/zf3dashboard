@@ -1,10 +1,12 @@
 <?php
  	$this->inlineScript()->appendFile($this->basePath('/froala/js/froala_editor.pkgd.min.js'));
  	$this->inlineScript()->appendFile($this->basePath('/froala/js/languages/pt_br.js'));
+ 	$this->inlineScript()->appendFile($this->basePath('/js/jquery-ui.min.js'));
  	$this->inlineScript()->appendFile($this->basePath('/js/functions.js'));
 
  	$this->headLink()->prependStylesheet($this->basePath('/froala/css/froala_editor.pkgd.min.css'));
- 	$this->headLink()->appendStylesheet('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css');
+ 	$this->headLink()->prependStylesheet($this->basePath('/froala/css/froala_style.min.css'));
+ 	$this->headLink()->prependStylesheet($this->basePath('/css/jquery-ui.min.css'));
 ?>
 <div class="module-head">
 	<h3><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Enviar mensagem</h3>

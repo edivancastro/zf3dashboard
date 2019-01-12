@@ -1,8 +1,10 @@
-<?php 
+<?php
+$this->headLink()->appendStylesheet($this->basePath('/css/jquery.datetimepicker.min.css'));
 $this->headLink()->appendStylesheet($this->basePath('/css/bootstrap-select.min.css'));
 $this->headLink()->appendStylesheet($this->basePath('/froala/css/froala_editor.pkgd.min.css'));
 $this->headLink()->appendStylesheet($this->basePath('/froala/css/froala_style.min.css'));
 
+$this->inlineScript()->appendFile($this->basePath('/js/jquery.datetimepicker.full.min.js'));
 $this->inlineScript()->appendFile($this->basePath('/js/bootstrap-select.min.js'));
 $this->inlineScript()->appendFile($this->basePath('/froala/js/froala_editor.pkgd.min.js'));
 $this->inlineScript()->appendFile($this->basePath('/froala/js/languages/pt_br.js'));
@@ -72,7 +74,7 @@ echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissibl
 					<label>Data de publicação</label>
 					<div class="input-group">
 						<div class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></div>
-						<input readonly class="form-control" name="datapublicacao" />
+						<input readonly value="<?= $this->data()->getDateTime(); ?>" class="form-control" name="datapublicacao" />
 					</div>
 				</div>
 			</div>
@@ -119,6 +121,9 @@ $().ready(function(){
         $('.module-body .tab').removeClass('visible');
         $('.module-body .tab'+id).addClass('visible');
     }); 
+
+    jQuery.datetimepicker.setLocale('pt-BR');
+    $('input[name=datapublicacao]').datetimepicker({format:'d/m/Y H:i', minDate:"{$this->data()->getDateTime()}"});
 });
 JS;
 $this->inlineScript()->appendScript($script);

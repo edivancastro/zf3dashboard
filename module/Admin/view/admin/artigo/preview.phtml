@@ -7,9 +7,9 @@
 		<h1><?=$this->artigo->getTitulo();?></h1>
 		<h2><?= $this->artigo->getSubTitulo();?></h2>
 		<hr/>
-		<p class="data"><?=$this->data($this->artigo->getDatacriacao())?></p>
+		<p class="data"><?=$this->data($this->artigo->getDatacriacao())->getLiteral();?></p>
 		<?php if($this->artigo->getDataEdicao()<>''):?>
-		<p align="right">Atualizado: <?=$this->data($this->artigo->getDataEdicao());?></p>
+		<p align="right">Atualizado: <?=$this->data($this->artigo->getDataEdicao())->getLiteral();?></p>
 		<?php endif;?>
 		<div class="conteudo fr-view">
 			<?=$this->artigo->getConteudo(); ?>
