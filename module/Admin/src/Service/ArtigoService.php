@@ -35,7 +35,7 @@ class ArtigoService extends ServiceAbstract{
         return $this;
     }
     
-    public function find($busca=null, Array $cols = null, Array $order=['artigo.datacriacao'=>'desc']){
+    public function find($busca=null, Array $cols = null, Array $order=['artigo.datapublicacao'=>'desc']){
     	$q = $this->entityManager->createQueryBuilder()
     			  ->select('artigo')
     			  ->from('Admin\Model\Artigo','artigo')

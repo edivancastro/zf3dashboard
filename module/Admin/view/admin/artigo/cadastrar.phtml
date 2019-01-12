@@ -67,8 +67,8 @@ echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissibl
 					<label>Autor</label>
 					<div class="input-group">
 						<div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
-						<input type="hidden" name="idautor" />
-						<input readonly class="form-control" name="autor" />
+						<input type="hidden" value="<?= $this->autor->getId();?>" name="idautor" />
+						<input readonly value="<?= $this->resumeNome($this->autor->getNome()); ?>" class="form-control" name="autor" />
 					</div>
 				</div>
 				<div class="col-sm-4 col-sm-offset-1">
@@ -123,8 +123,12 @@ $().ready(function(){
         $('.module-body .tab'+id).addClass('visible');
     }); 
 
+    $('.module-body input[name=autor]').click(function(){
+        
+    });
+
     jQuery.datetimepicker.setLocale('pt-BR');
-    $('input[name=datapublicacao]').datetimepicker({format:'d/m/Y H:i', minDate:"{$this->data()->getDateTime()}"});
+    $('.module-body input[name=datapublicacao]').datetimepicker({format:'d/m/Y H:i', minDate:"{$this->data()->getDateTime()}"});
 });
 JS;
 $this->inlineScript()->appendScript($script);

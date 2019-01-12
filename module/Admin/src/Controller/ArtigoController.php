@@ -13,7 +13,7 @@ class ArtigoController extends ControllerAbstract{
         
         switch($this->request->getQUery('ordem')){
             case 2:
-                $ordem = ['artigo.datacriacao'=>'asc'];
+                $ordem = ['artigo.datapublicacao'=>'asc'];
                 break;
             case 3:
                 $ordem = ['artigo.titulo'=>'asc'];
@@ -28,7 +28,7 @@ class ArtigoController extends ControllerAbstract{
                 $ordem = ['autor.nome'=>'desc'];
                 break;
             default:
-                $ordem = ['artigo.datacriacao'=>'desc'];
+                $ordem = ['artigo.datapublicacao'=>'desc'];
                 break;
         }
         
@@ -59,7 +59,7 @@ class ArtigoController extends ControllerAbstract{
                    ->setSubTitulo($this->request->getPost('subtitulo'))
                    ->setConteudo($this->request->getPost('conteudo'))
                    ->setDatapublicacao()
-                   ->setAutor()
+                   ->setAutor($this->serviceManager->get(UsuarioService::class)->get($this->request->getPost('idautor')))
                    ->setCategoria($this->serviceManager->get(CategoriaService::class)->get($this->request->getPost('categoria')));
             $this->serviceManager->get(ArtigoService::class)->salvar($artigo);
             $this->flashMessenger()->addSuccessMessage("Registro salvo");
@@ -70,6 +70,7 @@ class ArtigoController extends ControllerAbstract{
         
         return[
             'categorias' => $this->serviceManager->get(CategoriaService::class)->find(),
+            'autor' => $this->session->usuario
         ];
     }
     
@@ -82,9 +83,9 @@ class ArtigoController extends ControllerAbstract{
             ->setSubTitulo($this->request->getPost('subtitulo'))
             ->setConteudo($this->request->getPost('conteudo'))
             ->setDatapublicacao()
-            ->setDataedicao(new \DateTime())
-            ->setAutor()
-            ->setEditor($this->serviceManager->get(UsuarioService::class)->get($this->session->usuario->getId()))
+            ->setDataedicao()
+            ->setAutor($this->serviceManager->get(UsuarioService::class)->get($this->request->getPost('idautor')))
+            ->setEditor($this->serviceManager->get(UsuarioService::class)->get($this->request->getPost('ideditor')))
             ->setCategoria($this->serviceManager->get(CategoriaService::class)->get($this->request->getPost('categoria')));
             $this->serviceManager->salvar($artigo);
             $this->flashMessenger()->addSuccessMessage("Registro salvo");
@@ -94,7 +95,8 @@ class ArtigoController extends ControllerAbstract{
         }
         
         return[
-            'artigo' => $artigo
+            'artigo' => $artigo,
+            'editor' => $artigo->getEditor()==null ? $this->session->usuario : $this->$artigo->getEditor()
         ];
     }
     

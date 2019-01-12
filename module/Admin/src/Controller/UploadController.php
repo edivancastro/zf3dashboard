@@ -22,7 +22,7 @@ class UploadController extends ControllerAbstract{
             $this->log->info('upload de imagem');
             
             return new JsonModel([
-                'link'=>$renderer->serverUrl($renderer->basePath("/drive/img/$nome"))
+                'link'=>$renderer->basePath("/drive/img/$nome")
             ]);
         }  
        exit; 
@@ -51,7 +51,7 @@ class UploadController extends ControllerAbstract{
             $this->log->info('upload de arquivo');
             
             return new JsonModel([
-                'link'=>$renderer->serverUrl($renderer->basePath("/drive/file/$nome"))
+                'link'=>$renderer->basePath("/drive/file/$nome")
             ]);
         }
         exit; 

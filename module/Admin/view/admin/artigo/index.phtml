@@ -81,7 +81,7 @@ echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissibl
 				<th title="Selecionar tudo" width="10px"><input name="selecionador" type="checkbox" /></th>
 				<th>Titulo</th>
 				<th class="hidden-xs" width="200px" class="hidden-xs">Autor</th>
-				<th class="hidden-xs" title="Data de cria��o" width="120px" class="hidden-xs">Data</th>
+				<th class="hidden-xs" title="Data de cria��o" width="120px" class="hidden-xs">Publicação</th>
 				<th class="hidden-xs" width="80px" class="hidden-xs">Acessos</th>
 			</tr>
 		</thead>
@@ -91,7 +91,7 @@ echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissibl
 				<td><input value="<?= $artigo->getId();?>" type="checkbox" name="art[]" /></td>
 				<td><a href="<?= $this->url('artigo', ['action'=>'preview','id'=>$artigo->getId()]);?>"><?= $artigo->getTitulo(); ?></a></td>
 				<td class="hidden-xs"><a href="<?= $this->url('usuario',['action'=>'detalhar','id'=>$artigo->getAutor()->getId()]);?>"><?= $this->resumeNome($artigo->getAutor()->getNome());?></a></td>
-				<td class="hidden-xs"><?= $artigo->getDatacriacao()->format('d/m/Y H:i');?></td>
+				<td class="hidden-xs"><?= $this->data($artigo->getDatapublicacao())->getDateTime();?></td>
 				<td class="hidden-xs"><?= $artigo->getAcessos(); ?></td>
 			</tr>
 			<?php endforeach;else:?>
