@@ -20,7 +20,7 @@ Class Data extends AbstractHelper{
     }
     
     public function getDateTime(){
-        return $this->data->format('d/m/Y H:s');
+        return $this->data->format('d/m/Y H:i');
     }
     
     public function getDate(){

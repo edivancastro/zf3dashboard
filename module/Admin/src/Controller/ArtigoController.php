@@ -58,8 +58,8 @@ class ArtigoController extends ControllerAbstract{
             $artigo->setTitulo($this->request->getPost('titulo'))
                    ->setSubTitulo($this->request->getPost('subtitulo'))
                    ->setConteudo($this->request->getPost('conteudo'))
-                   ->setDatacriacao(new \DateTime())
-                   ->setAutor($this->serviceManager->get(UsuarioService::class)->get($this->session->usuario->getId()))
+                   ->setDatapublicacao()
+                   ->setAutor()
                    ->setCategoria($this->serviceManager->get(CategoriaService::class)->get($this->request->getPost('categoria')));
             $this->serviceManager->get(ArtigoService::class)->salvar($artigo);
             $this->flashMessenger()->addSuccessMessage("Registro salvo");
@@ -81,7 +81,9 @@ class ArtigoController extends ControllerAbstract{
             $artigo->setTitulo($this->request->getPost('titulo'))
             ->setSubTitulo($this->request->getPost('subtitulo'))
             ->setConteudo($this->request->getPost('conteudo'))
+            ->setDatapublicacao()
             ->setDataedicao(new \DateTime())
+            ->setAutor()
             ->setEditor($this->serviceManager->get(UsuarioService::class)->get($this->session->usuario->getId()))
             ->setCategoria($this->serviceManager->get(CategoriaService::class)->get($this->request->getPost('categoria')));
             $this->serviceManager->salvar($artigo);

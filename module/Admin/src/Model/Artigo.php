@@ -52,6 +52,13 @@ class Artigo{
      * @var \DateTime
      * @ORM\Column(type="datetime")
      */
+    protected $datapublicacao;
+    
+    /**
+     *
+     * @var \DateTime
+     * @ORM\Column(type="datetime")
+     */
     protected $dataedicao;
 
     /**
@@ -91,6 +98,11 @@ class Artigo{
      */
     protected $acessos=0;
     
+    public function __construct(){
+        $this->datacriacao = new \DateTime();
+        $this->datapublicacao = new \DateTime();
+    }
+    
     public function setId($id){
         $this->id = $id;
         return $this;
@@ -113,6 +125,11 @@ class Artigo{
     
     public function setDatacriacao(\Datetime $data){
         $this->datacriacao = $data;
+        return $this;
+    }
+    
+    public function setDatapublicacao(\Datetime $data){
+        $this->datapublicacao = $data;
         return $this;
     }
     
@@ -164,6 +181,10 @@ class Artigo{
     
     public function getDatacriacao(){
         return $this->datacriacao;
+    }
+    
+    public function getDatapublicacao(){
+        return $this->datapublicacao;
     }
     
     public function getDataedicao(){
